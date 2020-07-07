@@ -1,0 +1,15 @@
+.image-uploader {text-align: center;}
+.image-uploader .image-uploader-preview {
+	text-align: center;
+}
+.image-uploader .image-uploader-name {margin: 5px 0;}
+.image-uploader .image-uploader-button{
+	
+	border: 1px solid #ccc;
+	display: inline-flex;
+	padding: 6px 12px;
+	cursor: pointer;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	align-items: center;
+}
+.image-uploader img { filter: grayscale(0%) !important;}

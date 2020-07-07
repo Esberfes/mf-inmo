@@ -1,0 +1,451 @@
+/* global LANGBase */
+
+if (jQuery){
+	/**
+	 * Efecto parpadeo 
+	 */
+	jQuery.fn.parpadear = function(){
+		this.each(function parpadear(){
+			jQuery(this).fadeIn(500).delay(250)
+					.fadeOut(500).fadeIn(500).delay(250);
+			
+		});
+		return this;
+	};
+	
+	/**
+	 * Input numerico
+	 */
+	jQuery.fn.forceNumeric = function(){
+	    return this.each(function(){
+	        jQuery(this).keydown(function(e){
+	            var key = e.charCode || e.keyCode || 0;
+	            // allow backspace, tab, delete, enter, arrows, numbers and keypad numbers ONLY
+	            // home, end, period, and numpad decimal
+	            return (
+	                key === 8 || 
+	                key === 9 ||
+	                key === 13 ||
+	                key === 46 ||
+	                key === 110 ||
+	                key === 190 ||
+	                (key >= 35 && key <= 40) ||
+	                (key >= 48 && key <= 57) ||
+	                (key >= 96 && key <= 105));
+	        });
+	    });
+	};
+	
+	/**
+	 * Select camuflado
+	 */
+	jQuery.fn.selectCamuflado = function(){
+		return this.each(function(){
+			var me = jQuery(this);
+			var disabled = false;
+                        if (me.attr('disabled')) disabled = true;
+                        
+			if (me.parent('.select-hide').length===0){
+				var html_tpl='<div class="select-container"><span></span></div><button class="btn btn-select"><i class="icon-caret-down"></i></button>';
+				me.wrap('<div class="controls select-hide input-append"></div>');
+				me.parent().append(html_tpl).addClass(me.attr('class')).width(me.outerWidth()+1);
+			}
+			
+			me.change(function(){
+				var obj = jQuery(this);
+				obj.parent().find('div.select-container span').html(obj.find('option[value="'+obj.val()+'"]').html());
+			});
+			me.parent().find('div.select-container span').html(me.find('option[value="'+me.val()+'"]').html());
+                        
+                        if (disabled===true){
+                                me.parent().find('div.select-container, .btn-select').addClass('disabled');
+                        }else{
+                                me.parent().find('div.select-container, .btn-select').removeClass('disabled');
+                        }
+		});
+	};
+	
+	/**
+	 * Input numérico con los botones para incrementar y decrementar el valor
+	 */
+	jQuery.fn.inputSpinner = function(){
+		return this.each(function(){
+			var input=jQuery(this);
+                        var disabled = false;
+                        if (input.attr('disabled')) disabled = true;
+			var btns=input.parents('.controls').find('button.btn-spinner');
+			
+                        if (disabled===false){
+                                btns.click(function(){
+                                        var me=jQuery(this);
+                                        var objInput=me.parents('.controls').find('input[type=text]');
+                                        var num=0;
+                                        if (objInput.val()!==''){num=objInput.val();}
+                                        if (me.hasClass('spinner-up')){
+                                                num++;
+                                        }else{
+                                                if (me.hasClass('spinner-down')){
+                                                        if (num>0){
+                                                                num--;
+                                                        }					
+                                                }
+                                        }
+                                        objInput.val(num);
+					objInput.change();
+                                });
+			
+                                        input.keydown(function(e){
+                                    var key = e.charCode || e.keyCode || 0;
+
+                                    if (key===38){
+                                        input.parents('.controls').find('button.btn-spinner.spinner-up').click();
+                                    }if (key===40){
+                                        input.parents('.controls').find('button.btn-spinner.spinner-down').click();
+                                    }
+                                    // allow backspace, tab, delete, enter, arrows, numbers and keypad numbers ONLY
+                                    // home, end, period, and numpad decimal
+                                    return (
+                                        key === 8 || 
+                                        key === 9 ||
+                                        key === 13 ||
+                                        key === 46 ||
+                                        key === 110 ||
+                                        key === 190 ||
+                                        (key >= 35 && key <= 40) ||
+                                        (key >= 48 && key <= 57) ||
+                                        (key >= 96 && key <= 105));
+                                });
+                              
+                        }else{
+                              input.parents('.controls').find('button.btn-spinner').attr('disabled', true);  
+                        }
+                });
+	};
+	
+	/**
+	 * Transforma un textarea con conteindo html a un iframe para que el html sea interpretado
+	 * @returns {jQuery}
+	 */
+	jQuery.fn.iframeHTML = function(){
+		return this.each(function(){
+			var textarea=jQuery(this);
+			var content=textarea.val();
+			if (content.indexOf('</')==-1){
+				content=content.replace(/\n/g,'<br/>');
+			}
+			var iframe=jQuery('<iframe></iframe>');
+			textarea.after(iframe);
+			var doc = iframe[0].contentWindow.document;
+			doc.open();
+			doc.write(content);
+			doc.close();
+			
+			iframe.width('100%');
+			iframe.height(textarea.height());
+			
+			textarea.hide();
+		});
+	};
+	
+	jQuery.fn.getPath = function () {
+		var path, node = this;
+		while (node.length) {
+			var realNode = node[0], name = realNode.localName;
+			if (!name) break;
+			name = name.toLowerCase();
+
+			var parent = node.parent();
+
+			var sameTagSiblings = parent.children(name);
+			if (sameTagSiblings.length > 1) { 
+			    allSiblings = parent.children();
+			    var index = allSiblings.index(realNode) + 1;
+			    if (index > 1) {
+				name += ':nth-child(' + index + ')';
+			    }
+			}
+
+			path = name + (path ? '>' + path : '');
+			node = parent;
+		}
+
+		return path;
+	};
+
+
+	
+	/**
+	 * Mensaje tipo alert con varios modos:
+	 * 0 - Warning - amarillo
+	 * 1 - Error - rojo
+	 * 2 - Success - verde
+	 * 3 - Info - azul
+	 * @param {string} mensaje
+	 * @param {boolean} mode
+	 * @param {boolean} modal Default false
+	 * @param {boolean} preventMoveToTop Default false
+	 */
+	jQuery.alert = function(mensaje,mode,modal,preventMoveToTop){
+		if (jQuery('div.for-alert').length===1){
+			if (!preventMoveToTop){
+				jQuery(document).scrollTop(0);
+			}
+			if (jQuery('div.for-alert div.alert.jquery-plugin').length>0){
+				jQuery('div.for-alert').data('html',jQuery('div.for-alert div.alert.jquery-plugin')[0].outerHTML);
+			}else{
+				jQuery('div.for-alert').prepend(jQuery('div.for-alert').data('html'));
+			}
+			jQuery('div.for-alert div.alert.jquery-plugin > span.texto').html(mensaje);
+			jQuery('div.for-alert div.alert.jquery-plugin').removeClass('hide').show().parpadear();
+			jQuery('div.for-alert div.alert.jquery-plugin .close').unbind('click').click(function(){
+				jQuery('body div#background-alert').remove();
+			});
+			
+			if (!mode) mode=0;
+			
+			
+			switch(mode){
+				/* warning - amarillo */
+				case 0:
+					jQuery('div.for-alert div.alert.jquery-plugin').removeClass('alert-error alert-warning alert-success alert-info').addClass('alert-warning');
+					jQuery('div.for-alert div.alert.jquery-plugin i').removeClass().addClass('icon-warning-sign');
+					jQuery('div.for-alert div.alert.jquery-plugin strong:eq(0)').html(LANGBase.__('Aviso:'));
+					break;
+				/* error - rojo */
+				case 1:
+					jQuery('div.for-alert div.alert.jquery-plugin').removeClass('alert-error alert-warning alert-success alert-info').addClass('alert-error');
+					jQuery('div.for-alert div.alert.jquery-plugin i').removeClass().addClass('icon-remove-sign');
+					jQuery('div.for-alert div.alert.jquery-plugin strong:eq(0)').html(LANGBase.__('Error:'));
+					break;
+				/* success - verde */
+				case 2:
+					jQuery('div.for-alert div.alert.jquery-plugin').removeClass('alert-error alert-warning alert-success alert-info').addClass('alert-success');
+					jQuery('div.for-alert div.alert.jquery-plugin i').removeClass().addClass('icon-ok-sign');
+					jQuery('div.for-alert div.alert.jquery-plugin strong:eq(0)').html(LANGBase.__('Info:'));
+					break;
+				/* info - azul */
+				case 3:
+					jQuery('div.for-alert div.alert.jquery-plugin').removeClass('alert-error alert-warning alert-success alert-info').addClass('alert-info');
+					jQuery('div.for-alert div.alert.jquery-plugin i').removeClass().addClass('icon-info-sign');
+					jQuery('div.for-alert div.alert.jquery-plugin strong:eq(0)').html(LANGBase.__('Info:'));
+					break;
+					
+			}
+			
+			if (modal){
+				jQuery('body').append('<div id=\"background-alert\" class=\"modal-backdrop fade in\"></div>');
+			}
+		}else{
+			alert(mensaje);
+		}
+	};
+	
+	jQuery.hideAlert=function(){
+		jQuery('div.for-alert div.alert.jquery-plugin').addClass('hide').css('display','');
+		jQuery('div#background-alert').remove();
+	};
+	
+	/**
+	 * Muestra una ventana de confirm
+	 * @param {string} mensaje
+	 * @param {function} event_ok
+	 * @param {function} event_cancel Opcional
+	 * @param {string} texto_ok Opcional
+	 * @param {string} texto_cancel Opcional
+	 */
+	jQuery.confirm = function(mensaje,event_ok,event_cancel,texto_ok,texto_cancel){
+
+		if (!texto_ok){
+			texto_ok=LANGBase.__('Aceptar');
+		}
+		
+		if (!texto_cancel){
+			texto_cancel=LANGBase.__('Cancelar');
+		}
+		
+		var html=mensaje;
+		html+='<p class="alert-buttons"><button class="btn btn-ok btn-success">'+texto_ok+'</button>';
+		html+='<button class="btn btn-cancel">'+texto_cancel+'</button></p>';
+		
+		
+		jQuery.alert(html,0,1);
+		
+		jQuery('div.for-alert div.alert.jquery-plugin > span.texto button.btn-ok').click(function(){
+			event_ok();
+			jQuery.hideAlert();
+		});
+		if (event_cancel){
+			jQuery('div.for-alert div.alert.jquery-plugin > span.texto button.btn-cancel').click(event_cancel);
+		}
+		jQuery('div.for-alert div.alert.jquery-plugin > span.texto button.btn-cancel').click(function(){
+			jQuery.hideAlert();
+		});
+		
+	};
+
+	/**
+	 * Parámetros get
+	 * @param {string} parametro
+	 * @param {string} cadena Opcional, si no se pasa se usa el location.href
+	 * @return {string}
+	 */
+	jQuery.urlParam=function(parametro,cadena){
+		if (!cadena) cadena=window.location.href;
+		var valor=false;
+		var partes=cadena.split('#')[0].split('?');
+		if (partes[1]){
+			var variables = partes[1].split('&');
+			jQuery.each(variables,function(){
+				var partes=this.split('=');
+				if (partes.length===2 && partes[0]===parametro){
+					valor=partes[1];
+				}
+			});
+		}
+		return valor;
+	};
+	
+	/**
+	 * Parámetros url con almohadillas
+	 * @param {string} parametro
+	 * @param {string} cadena Opcional, si no se pasa se usa el location.href
+	 * @return {string}
+	 */
+	jQuery.urlParamAjax=function(parametro,cadena){
+		if (!cadena) cadena=window.location.href;
+		var valor=false;
+		var variables = cadena.split('#');
+		jQuery.each(variables,function(){
+			var partes=this.split('=');
+			if (partes.length===2 && partes[0]===parametro){
+				valor=partes[1];
+			}
+		});
+		return valor;
+	};
+	
+	/**
+	 * Oscurece la página y muestra un gif de carga, se puede personalizar el delay y una clase css
+	 * @param {boolean} show
+	 * @param {int} timer
+	 * @param {string} clase
+	 */
+	jQuery.windowLoading=function(show,timer,clase){
+		if (timer==null) timer=500;
+		if (show==null) show=true;
+		if (clase==null) clase='';
+		
+		try{
+			window.clearTimeout(jQuery.timerLoading);
+		}catch(e){}
+		
+		var functionloading=function(){
+			jQuery('body').append('<div id=\"background-loading\" class=\"modal-backdrop fade in '+clase+'\"></div>');
+		};
+		
+		if (show){
+			if (timer>0){
+				jQuery.timerLoading=window.setTimeout(functionloading,timer);
+			}else{
+				functionloading();
+			}
+		}else{
+			jQuery('body div#background-loading').remove();
+		}
+	
+	};
+	
+	/**
+	 * Establece que al cambiar de página aparezca un gif de carga
+	 * @param {boolean} active
+	 */
+	jQuery.setLoadingOnUnload=function(active){
+		if (active==null) {active=true;}
+		if (active){
+			jQuery(window).on('beforeunload',function(){
+				jQuery.windowLoading(true,10,'pagechange');
+			});
+		}else{
+			jQuery(window).unbind('beforeunload');
+		}
+	};
+	
+	/**
+	 * Inicializa los checkbox flipswitch
+	 */
+	jQuery.flipswitch=function(){
+		/*Checkbox switch*/
+		jQuery('div.ui-flipswitch').unbind('click').click(function(){
+			var obj=jQuery(this);
+			if (obj.hasClass('ui-flipswitch-active')){
+				obj.removeClass('ui-flipswitch-active');
+				obj.find('input[type=checkbox]').prop("checked", false);
+			}else{
+				obj.addClass('ui-flipswitch-active');
+				obj.find('input[type=checkbox]').prop("checked", true);
+			}
+			return false;
+		}).each(function(){
+			var obj=jQuery(this);
+			if(obj.find('input[type=checkbox]').prop("checked")){
+				obj.addClass('ui-flipswitch-active');
+			}else{
+				obj.removeClass('ui-flipswitch-active');
+			}
+		});
+	};
+	
+	/**
+	 * Devuelve el número formateado en moneda €uro con dos decimales
+	 * @param {double} input
+	 * @param {String} separador_miles
+	 * @param {String} separador_decimal
+	 * @returns {String}
+	 */
+	jQuery.moneyFormat=function(input,separador_miles,separador_decimal){
+		
+		if (!separador_miles){ separador_miles='.';}
+		if (!separador_decimal){ separador_decimal=',';}
+		
+		//Redondeo a 2 decimales
+		input=Math.round(input*100);
+		input=(input/100)+'';
+		if (input.indexOf('.')===-1){
+			input=input+'.00';
+		}
+		
+		if (input.indexOf('.')+3>input.length){
+			input+='0';
+		}
+		
+		var tmp=(input+'').replace('\.',separador_decimal);
+		
+		///(\d)(?=(\d{3})+\,)/g
+		var regExp=new RegExp("(\\d)(?=(\\d{3})+\\"+separador_decimal+")", "g");
+		
+		tmp=tmp.replace(regExp, '$1'+separador_miles)+' €';
+		
+		return tmp;
+	};
+		
+	if (jQuery.datepicker && jQuery.datepikcetSetES){
+		jQuery.datepikcetSetES();
+	}else{
+		jQuery(document).ready(function(){
+			if (jQuery.datepicker && jQuery.datepikcetSetES){
+				jQuery.datepikcetSetES();
+			}
+		});
+	}
+	
+	if (jQuery.timepicker && jQuery.timepikcetSetES){
+		jQuery.timepikcetSetES();
+	}else{
+		jQuery(document).ready(function(){
+			if (jQuery.timepicker && jQuery.timepikcetSetES){
+				jQuery.timepikcetSetES();
+			}
+		});
+	}
+	
+}
