@@ -21,7 +21,8 @@ class Local extends Model
         'descripcion',
         'creado_en',
         'actualizado_en',
-        'id_usuario_actualizacion'
+        'id_usuario_actualizacion',
+        'id_sector'
     ];
 
     public function caracteristicas()
@@ -42,5 +43,10 @@ class Local extends Model
     public function medias()
 	{
 		return $this->hasMany('App\Models\LocalMedia', 'id_local', 'id');
+    }
+
+    public function sector()
+    {
+        return $this->hasOne('App\Models\Sector', 'id', 'id_sector');
     }
 }

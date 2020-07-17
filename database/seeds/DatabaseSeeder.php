@@ -11,6 +11,7 @@ use App\Models\LocalCaracteristica;
 use App\Models\LocalEdificio;
 use App\Models\LocalEquipamiento;
 use App\Models\LocalMedia;
+use App\Models\Sector;
 
 use App\Http\Controllers\ImageController;
 
@@ -42,6 +43,29 @@ class DatabaseSeeder extends Seeder
             'actualizado_en' => $now
         ]);
 
+        $sectores = array();
+
+        $sector_hosteleria = Sector::create([
+            'titulo' => 'Hosteleria',
+            'descripcion' => $faker->sentence(100, true),
+            'orden' => 1,
+            'creado_en' => $now,
+            'actualizado_en' => $now,
+            'id_usuario_actualizacion' => $user->id
+        ]);
+        $sectores[] = $sector_hosteleria;
+
+        $sector_construccion = Sector::create([
+            'titulo' => 'Construcción',
+            'descripcion' => $faker->sentence(100, true),
+            'orden' => 1,
+            'creado_en' => $now,
+            'actualizado_en' => $now,
+            'id_usuario_actualizacion' => $user->id
+        ]);
+        $sectores[] = $sector_construccion;
+
+        // Locales
         for($i = 0; $i < 30; $i++)
         {
             $titulo = $faker->streetAddress;
@@ -58,7 +82,8 @@ class DatabaseSeeder extends Seeder
                 'descripcion' => $faker->sentence(300, true),
                 'creado_en' => $now,
                 'actualizado_en' => $now,
-                'id_usuario_actualizacion' => $user->id
+                'id_usuario_actualizacion' => $user->id,
+                'id_sector' => $sectores[array_rand($sectores)]->id
             ]);
 
             for($c = 0; $c < 5; $c++)
