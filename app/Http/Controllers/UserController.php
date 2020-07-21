@@ -13,6 +13,7 @@ use App\Models\Usuario;
 use App\Models\Local;
 use App\Models\Sector;
 use App\Models\Poblacion;
+use App\Models\Solicitud;
 
 use App\Helpers\Paginacion;
 use Illuminate\Support\Facades\Session;
@@ -23,6 +24,40 @@ class UserController extends BaseController
 
     private $por_pagina = 4;
 	private $max_paginacion = 5;
+
+
+    public function solicitud()
+    {
+        $data = request()->validate([
+			'nombre' => 'required',
+			'email' => ['required' , 'email'],
+			'telefono' => 'required',
+			'comentario' => '',
+			'id_local' => 'required'
+		],[
+			'nombre.required' => 'El nombre de usuario es obligatorio.',
+			'email.required' => 'El email es obligatorio.',
+			'email.email' => 'El email tiene un formato incorrecto.',
+			'telefono.required' => 'El telefono es un campo obligatorio'
+        ]);
+
+        $local = Local::find($data['id_local']);
+
+		if(empty($local))
+		{
+			return view('404');
+        }
+
+        Solicitud::create([
+			'id_local' => $data['id_local'],
+			'nombre' => $data['nombre'],
+			'email' => $data['email'],
+			'telefono' => $data['telefono'],
+			'comentario' => $data['comentario']
+        ]);
+
+        return redirect()->back()->with('success', 'Solicitud enviada con éxito');
+    }
 
     public function home()
     {

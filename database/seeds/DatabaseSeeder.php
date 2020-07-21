@@ -48,7 +48,7 @@ class DatabaseSeeder extends Seeder
         for($i = 0; $i < 15; $i++)
         {
             $sector = Sector::create([
-                'titulo' => $faker->jobTitle,
+                'titulo' => $faker->unique()->jobTitle,
                 'descripcion' => $faker->sentence(100, true),
                 'orden' => 1,
                 'creado_en' => $now,
@@ -62,7 +62,7 @@ class DatabaseSeeder extends Seeder
         for($i = 0; $i < 30; $i++)
         {
             $poblacion = Poblacion::create([
-                'nombre' => $faker->country,
+                'nombre' => $faker->unique()->country,
                 'creado_en' => $now,
                 'actualizado_en' => $now,
                 'id_usuario_actualizacion' => $user->id
@@ -73,7 +73,7 @@ class DatabaseSeeder extends Seeder
         // Locales
         for($i = 0; $i < 200; $i++)
         {
-            $titulo = $faker->streetAddress;
+            $titulo = $faker->unique()->streetAddress;
             $slug = Str::slug($titulo);
 
             $local = Local::create([

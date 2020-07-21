@@ -59,31 +59,31 @@
 
 @section('sidebar')
 <section>
-    <form class="form-solicitud mt-5" method="POST" action="">
+    <form class="form-solicitud mt-5" method="POST" action="{{ url('/solicitud') }}">
         <h2>Preguntar al anunciante</h2>
         <div class="row">
             <div class="col-12">
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" name="nombre">
+                    <input type="text" class="form-control" name="nombre" value="{{ old('nombre') }}">
                 </div>
             </div>
             <div class="col-12">
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" name="email">
+                    <input type="email" class="form-control" name="email" value="{{ old('email') }}">
                 </div>
             </div>
             <div class="col-12">
                 <div class="form-group">
                     <label for="telefono">Teléfono</label>
-                    <input type="tel" class="form-control" name="telefono">
+                    <input type="tel" class="form-control" name="telefono" value="{{ old('telefono') }}">
                 </div>
             </div>
             <div class="col-12">
                 <div class="form-group">
                     <label for="comentario">Comentario</label>
-                    <textarea class="form-control" rows="3" name="comentario"></textarea>
+                    <textarea class="form-control" rows="3" name="comentario">{{ old('comentario') }}</textarea>
                 </div>
             </div>
             <div class="col-12">
@@ -92,6 +92,24 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="id_local" value="{{ $local->id }}">
+
+        @if ($errors->any())
+        <div class="blanco mt-3">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+
+        @if(session()->has('success'))
+        <div class="alert alert-success mt-3">
+            {{ session()->get('success') }}
+        </div>
+        @endif
     </form>
 </section>
 @endsection

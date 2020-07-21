@@ -17,3 +17,5 @@ Route::get('/', 'UserController@home');
 Route::post('/', 'UserController@home_action');
 
 Route::get('/directorio/{url}', 'UserController@directorio_local');
+
+Route::post('/solicitud', 'UserController@solicitud');
