@@ -25,6 +25,12 @@
                         <div class="home-article-element-cost">
                         {{ $local->precio}}€
                         </div>
+                        <div class="home-article-element-categorie">
+                        Sector: {{ $local->sector->titulo}}
+                        </div>
+                        <div class="home-article-element-location">
+                        Poblacion: {{ $local->poblacion->nombre}}
+                        </div>
                         <div class="home-article-element-dimensioncost">
                             {{ $local->metros}} m² | {{ $local->precio_metro}} €/m²
                         </div>
@@ -49,15 +55,15 @@
 @if(!empty($paginacion))
     <div class="text-center mt-5">
         <ul class="pagination justify-content-center">
-            <li class="page-item"><a class="page-link" href="{{ url('/directorio/'.$paginacion['pagina_anterior']) }}">Anterior</a></li>
+            <li class="page-item"><a class="page-link" href="{{ url('/'.$paginacion['pagina_anterior']) }}">Anterior</a></li>
             @foreach($paginacion['paginas'] as $pagina)
                 @if($pagina == $paginacion['pagina'])
-                <li class="page-item active"><a class="page-link" href="{{ url('/directorio/'.$pagina) }}">{{ $pagina }}</a></li>
+                <li class="page-item active"><a class="page-link" href="{{ url('/'.$pagina) }}">{{ $pagina }}</a></li>
                 @else
-                <li class="page-item"><a class="page-link" href="{{ url('/directorio/'.$pagina) }}">{{ $pagina }}</a></li>
+                <li class="page-item"><a class="page-link" href="{{ url('/'.$pagina) }}">{{ $pagina }}</a></li>
                 @endif
             @endforeach
-            <li class="page-item"><a class="page-link" href="{{ url('/directorio/'.$paginacion['pagina_siguiente']) }}">Siguiente</a></li>
+            <li class="page-item"><a class="page-link" href="{{ url('/'.$paginacion['pagina_siguiente']) }}">Siguiente</a></li>
         </ul>
     </div>
 @endif

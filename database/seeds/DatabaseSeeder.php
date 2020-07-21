@@ -12,6 +12,7 @@ use App\Models\LocalEdificio;
 use App\Models\LocalEquipamiento;
 use App\Models\LocalMedia;
 use App\Models\Sector;
+use App\Models\Poblacion;
 
 use App\Http\Controllers\ImageController;
 
@@ -44,29 +45,33 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $sectores = array();
+        for($i = 0; $i < 15; $i++)
+        {
+            $sector = Sector::create([
+                'titulo' => $faker->jobTitle,
+                'descripcion' => $faker->sentence(100, true),
+                'orden' => 1,
+                'creado_en' => $now,
+                'actualizado_en' => $now,
+                'id_usuario_actualizacion' => $user->id
+            ]);
+            $sectores[] = $sector;
+        }
 
-        $sector_hosteleria = Sector::create([
-            'titulo' => 'Hosteleria',
-            'descripcion' => $faker->sentence(100, true),
-            'orden' => 1,
-            'creado_en' => $now,
-            'actualizado_en' => $now,
-            'id_usuario_actualizacion' => $user->id
-        ]);
-        $sectores[] = $sector_hosteleria;
-
-        $sector_construccion = Sector::create([
-            'titulo' => 'Construcción',
-            'descripcion' => $faker->sentence(100, true),
-            'orden' => 1,
-            'creado_en' => $now,
-            'actualizado_en' => $now,
-            'id_usuario_actualizacion' => $user->id
-        ]);
-        $sectores[] = $sector_construccion;
+        $poblaciones = array();
+        for($i = 0; $i < 30; $i++)
+        {
+            $poblacion = Poblacion::create([
+                'nombre' => $faker->country,
+                'creado_en' => $now,
+                'actualizado_en' => $now,
+                'id_usuario_actualizacion' => $user->id
+            ]);
+            $poblaciones[] = $poblacion;
+        }
 
         // Locales
-        for($i = 0; $i < 30; $i++)
+        for($i = 0; $i < 200; $i++)
         {
             $titulo = $faker->streetAddress;
             $slug = Str::slug($titulo);
@@ -83,7 +88,8 @@ class DatabaseSeeder extends Seeder
                 'creado_en' => $now,
                 'actualizado_en' => $now,
                 'id_usuario_actualizacion' => $user->id,
-                'id_sector' => $sectores[array_rand($sectores)]->id
+                'id_sector' => $sectores[array_rand($sectores)]->id,
+                'id_poblacion' => $poblaciones[array_rand($poblaciones)]->id
             ]);
 
             for($c = 0; $c < 5; $c++)

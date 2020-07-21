@@ -11,7 +11,11 @@ use App\Http\Popos\User;
 
 use App\Models\Usuario;
 use App\Models\Local;
+use App\Models\Sector;
+use App\Models\Poblacion;
+
 use App\Helpers\Paginacion;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends BaseController
 {
@@ -22,14 +26,28 @@ class UserController extends BaseController
 
     public function home()
     {
-        $paginacion = Paginacion::get(Local::count(), 0);
+        $user = $this->manage_user_session();
 
-		if($paginacion == false)
+        $query_locales = Local::take($this->por_pagina);
+
+        if($user->poblacion)
+        {
+            $query_locales->where("id_poblacion", $user->poblacion);
+        }
+
+        if($user->sector)
+        {
+            $query_locales->where("id_sector", $user->sector);
+        }
+
+        $paginacion = Paginacion::get($query_locales->count(), 0);
+
+		if(!$paginacion)
 		{
 			return view('404');
 		}
 
-        $locales =  Local::take($this->por_pagina)->get();
+        $locales = $query_locales->get();
 
         foreach($locales as $local)
         {
@@ -41,11 +59,13 @@ class UserController extends BaseController
             }
         }
 
-        $user = $this->manage_user_session();
+        $sectores = Sector::orderBy('titulo', 'asc')->get();
+        $poblaciones = Poblacion::orderBy('nombre', 'asc')->get();
 
         return view('home', [
-            'user' => $user,
             'locales' => $locales,
+            'sectores' => $sectores,
+            'poblaciones' => $poblaciones,
             'paginacion' => $paginacion
         ]);
     }
@@ -131,20 +151,63 @@ class UserController extends BaseController
             }
         }
 
-        return redirect('/')->with('user', $user);
+        if($data && array_key_exists('action', $data) && $data['action'] == 'search')
+        {
+            if(array_key_exists('sector', $data))
+            {
+                if($data['sector'] != 'none')
+                {
+                    $user->sector = $data['sector'];
+                }
+                else
+                {
+                    $user->sector = null;
+                }
+            }
+
+            if(array_key_exists('poblacion', $data))
+            {
+                if($data['poblacion'] != 'none')
+                {
+                    $user->poblacion = $data['poblacion'];
+                }
+                else
+                {
+                    $user->poblacion = null;
+                }
+            }
+
+            if(array_key_exists('busqueda', $data))
+            {
+                if(trim($data['busqueda']) && trim($data['busqueda']) != '')
+                {
+                    $user->busqueda = trim($data['busqueda']);
+                }
+                else
+                {
+                    $user->busqueda = null;
+                }
+            }
+        }
+
+        Session::put("user", $user);
+        Session::save();
+
+        return $this->home();
     }
 
     public function manage_user_session()
     {
         $user = null;
 
-        if (!session()->has('user')) {
-            $user = new User(random_int(100, 999), "Javier", null);
-            session()->put("user", $user);
+        if (!Session::exists('user')) {
+            $user = new User(random_int(100, 999), "Javier", null, null, null, null);
+            Session::put("user", $user);
+            Session::save();
         }
         else
         {
-            $user = session()->get('user');
+            $user = Session::get('user');
         }
 
         return $user;

@@ -25,24 +25,50 @@
 
     </header>
 
+    <em>
+    <?php  var_dump(Session::get('user')); ?>
+    </em>
+
     <main class="container">
         <section>
-            <form class="form-search" action="">
+            <form class="form-search" action="/" method="POST">
                 <div class="row">
                     <div class="col form-search-input-wrapper">
-                    <input type="text" class="form-control" placeholder="Busqueda">
+                        <input name="busqueda" value="{{ Session::get('user')->busqueda }}" type="search" class="form-control" placeholder="Busqueda">
                     </div>
                     <div class="col form-search-input-wrapper">
-                        <select class="custom-select" id="inlineFormCustomSelectPref">
-                            <option selected>Sector</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select name="sector" class="custom-select">
+                            <option value="none">Sector (sin filtro)</option>
+                            @if(!empty($sectores))
+                                @foreach($sectores as $sector)
+                                    @if(Session::get('user')->sector == $sector->id)
+                                    <option selected value="{{ $sector->id }}">{{ $sector->titulo }}</option>
+                                    @else
+                                    <option value="{{ $sector->id }}">{{ $sector->titulo }}</option>
+                                    @endif
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                    <div class="col form-search-input-wrapper">
+                        <select name="poblacion" class="custom-select">
+                            <option value="none">Población (sin filtro)</option>
+                            @if(!empty($poblaciones))
+                                @foreach($poblaciones as $poblacion)
+                                @if(Session::get('user')->poblacion == $poblacion->id)
+                                    <option selected value="{{ $poblacion->id }}">{{ $poblacion->nombre }}</option>
+                                    @else
+                                    <option value="{{ $poblacion->id }}">{{ $poblacion->nombre }}</option>
+                                    @endif
+                                @endforeach
+                            @endif
                         </select>
                     </div>
                 <div class="col form-search-button-wrapper">
                     <button>Encontrar</button>
                 </div>
+                <input name="action" value="search" type="hidden">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
             </div>
             </form>
             <form class="form-order-by" action="/" method="POST">

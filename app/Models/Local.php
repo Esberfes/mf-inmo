@@ -49,4 +49,9 @@ class Local extends Model
     {
         return $this->hasOne('App\Models\Sector', 'id', 'id_sector');
     }
+
+    public function poblacion()
+    {
+        return $this->hasOne('App\Models\Poblacion', 'id', 'id_poblacion');
+    }
 }
