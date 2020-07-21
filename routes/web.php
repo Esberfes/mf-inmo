@@ -19,3 +19,19 @@ Route::post('/', 'UserController@home_action');
 Route::get('/directorio/{url}', 'UserController@directorio_local');
 
 Route::post('/solicitud', 'UserController@solicitud');
+
+
+Route::get('/admin/locales', 'AdminController@locales');
+Route::get('/admin/locales/{pagina}', 'AdminController@locales')->where('pagina', '[0-9]+');
+
+Route::get('/admin/sectores', 'AdminController@sectores');
+Route::get('/admin/sectores/{pagina}', 'AdminController@sectores')->where('pagina', '[0-9]+');
+
+Route::get('/admin/poblaciones', 'AdminController@poblaciones');
+Route::get('/admin/poblaciones/{pagina}', 'AdminController@poblaciones')->where('pagina', '[0-9]+');
+
+Route::get('/admin/solicitudes', 'AdminController@solicitudes');
+Route::get('/admin/solicitudes/{pagina}', 'AdminController@solicitudes')->where('pagina', '[0-9]+');
+
+Route::get('/admin/usuarios', 'AdminController@usuarios');
+Route::get('/admin/usuarios/{pagina}', 'AdminController@usuarios')->where('pagina', '[0-9]+');

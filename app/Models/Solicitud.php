@@ -17,4 +17,9 @@ class Solicitud extends Model
         'telefono',
         'comentario'
     ];
+
+    public function local()
+    {
+        return $this->hasOne('App\Models\Local', 'id', 'id_local');
+    }
 }
