@@ -72,9 +72,36 @@
             </div>
             </form>
             <form class="form-order-by" action="/" method="POST">
-                <button name="relevancia">Relevancia</button>
-                <button name="barato">Barato</button>
-                <button name="reciente">Recientes</button>
+                <button name="relevancia" value="{{ Session::get('user')->order_direction == 'asc' && Session::get('user')->order == 'relevancia'? 'desc' : 'asc' }}">
+                    Relevancia
+                    @if(Session::get('user')->order == 'relevancia')
+                        @if(Session::get('user')->order_direction == 'asc')
+                        <i class="fas fa-arrow-up"></i>
+                        @else
+                        <i class="fas fa-arrow-down"></i>
+                        @endif
+                    @endif
+                </button>
+                <button name="barato" value="{{ Session::get('user')->order_direction == 'asc' && Session::get('user')->order == 'barato' ? 'desc' : 'asc' }}">
+                    Barato
+                    @if(Session::get('user')->order == 'barato')
+                        @if(Session::get('user')->order_direction == 'asc')
+                        <i class="fas fa-arrow-up"></i>
+                        @else
+                        <i class="fas fa-arrow-down"></i>
+                        @endif
+                    @endif
+                </button>
+                <button name="superficie" value="{{ Session::get('user')->order_direction == 'asc' && Session::get('user')->order == 'superficie' ? 'desc' : 'asc' }}">
+                    Superficie
+                    @if(Session::get('user')->order == 'superficie')
+                        @if(Session::get('user')->order_direction == 'asc')
+                        <i class="fas fa-arrow-up"></i>
+                        @else
+                        <i class="fas fa-arrow-down"></i>
+                        @endif
+                    @endif
+                </button>
                 <input name="action" value="order" type="hidden">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
             </form>

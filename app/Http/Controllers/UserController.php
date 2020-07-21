@@ -50,19 +50,21 @@ class UserController extends BaseController
 			});
         }
 
+        $order_direction = $user->order_direction && ($user->order_direction == 'asc' || $user->order_direction == 'desc') ? $user->order_direction : 'desc';
+
         if(!$user->order || $user->order == 'relevancia')
         {
-            $query_locales->orderBy("relevante", 'desc');
+            $query_locales->orderBy("relevante", $order_direction);
         }
 
         if($user->order == 'barato')
         {
-            $query_locales->orderBy("precio", 'asc');
+            $query_locales->orderBy("precio", $order_direction);
         }
 
-        if($user->order == 'reciente')
+        if($user->order == 'superficie')
         {
-            $query_locales->orderBy("creado_en", 'desc');
+            $query_locales->orderBy("metros", $order_direction);
         }
 
         $paginacion = Paginacion::get($query_locales->count(), 0);
@@ -163,16 +165,19 @@ class UserController extends BaseController
             if(array_key_exists('relevancia', $data))
             {
                 $user->order = 'relevancia';
+                $user->order_direction = $data['relevancia'];
             }
 
             if(array_key_exists('barato', $data))
             {
                 $user->order = 'barato';
+                $user->order_direction = $data['barato'];
             }
 
-            if(array_key_exists('reciente', $data))
+            if(array_key_exists('superficie', $data))
             {
-                $user->order = 'reciente';
+                $user->order = 'superficie';
+                $user->order_direction = $data['superficie'];
             }
         }
 
@@ -226,7 +231,7 @@ class UserController extends BaseController
         $user = null;
 
         if (!Session::exists('user')) {
-            $user = new User(Session::getId(), null, null, null, null);
+            $user = new User(Session::getId(), null, null, 'relevante', 'desc', null);
             Session::put("user", $user);
             Session::save();
         }
