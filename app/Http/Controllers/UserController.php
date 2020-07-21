@@ -26,7 +26,17 @@ class UserController extends BaseController
 
     public function home()
     {
-        $user = $this->manage_user_session();
+        return view('home', $this->get_local_data(null));
+    }
+
+    public function directorio($pagina)
+	{
+        return view('home', $this->get_local_data($pagina));
+    }
+
+    public function get_local_data($pagina)
+    {
+		$user = $this->manage_user_session();
 
         $query_locales = Local::take($this->por_pagina);
 
@@ -57,7 +67,7 @@ class UserController extends BaseController
             $query_locales->orderBy("relevante", $order_direction);
         }
 
-        if($user->order == 'barato')
+        if($user->order == 'precio')
         {
             $query_locales->orderBy("precio", $order_direction);
         }
@@ -67,14 +77,15 @@ class UserController extends BaseController
             $query_locales->orderBy("metros", $order_direction);
         }
 
-        $paginacion = Paginacion::get($query_locales->count(), 0);
+        $paginacion = Paginacion::get($query_locales->count(), $pagina != null ? $pagina : 1, $this->por_pagina);
 
 		if(!$paginacion)
 		{
 			return view('404');
-		}
+        }
 
-        $locales = $query_locales->get();
+        $locales = $query_locales->skip($paginacion['offset'])
+            ->take($this->por_pagina)->get();
 
         foreach($locales as $local)
         {
@@ -89,43 +100,12 @@ class UserController extends BaseController
         $sectores = Sector::orderBy('titulo', 'asc')->get();
         $poblaciones = Poblacion::orderBy('nombre', 'asc')->get();
 
-        return view('home', [
+        return [
             'locales' => $locales,
             'sectores' => $sectores,
             'poblaciones' => $poblaciones,
             'paginacion' => $paginacion
-        ]);
-    }
-
-    public function directorio($pagina)
-	{
-		$paginacion = Paginacion::get(Local::count(), $pagina, $this->por_pagina);
-
-		if($paginacion == false)
-		{
-			return view('404');
-		}
-
-        $locales = Local::skip($paginacion['offset'])
-            ->take($this->por_pagina)->get();
-
-        foreach($locales as $local)
-        {
-            foreach($local->medias as $media)
-            {
-                if($media->tipo == 'principal') {
-                    $local->imagen_principal = $media;
-                }
-            }
-        }
-
-        $user = $this->manage_user_session();
-
-        return view('home', [
-            'user' => $user,
-            'locales' => $locales,
-            'paginacion' => $paginacion
-        ]);
+        ];
     }
 
     public function directorio_local($url)
@@ -148,9 +128,13 @@ class UserController extends BaseController
             }
         }
 
+        $sectores = Sector::orderBy('titulo', 'asc')->get();
+        $poblaciones = Poblacion::orderBy('nombre', 'asc')->get();
+
 		return view('local' , [
 			"local" => $local[0],
-            "user" => $user
+            'sectores' => $sectores,
+            'poblaciones' => $poblaciones
 		]);
     }
 
@@ -168,10 +152,10 @@ class UserController extends BaseController
                 $user->order_direction = $data['relevancia'];
             }
 
-            if(array_key_exists('barato', $data))
+            if(array_key_exists('precio', $data))
             {
-                $user->order = 'barato';
-                $user->order_direction = $data['barato'];
+                $user->order = 'precio';
+                $user->order_direction = $data['precio'];
             }
 
             if(array_key_exists('superficie', $data))

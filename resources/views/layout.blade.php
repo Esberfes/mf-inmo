@@ -21,9 +21,12 @@
     <link rel="stylesheet" href="{{asset('css/font-awesome.css')}}">
 </head>
 <body>
-    <header>
+    <a href="/">
+        <header>
 
-    </header>
+        </header>
+    </a>
+
 
     <em>
     <?php  var_dump(Session::get('user')); ?>
@@ -82,9 +85,9 @@
                         @endif
                     @endif
                 </button>
-                <button name="barato" value="{{ Session::get('user')->order_direction == 'asc' && Session::get('user')->order == 'barato' ? 'desc' : 'asc' }}">
-                    Barato
-                    @if(Session::get('user')->order == 'barato')
+                <button name="precio" value="{{ Session::get('user')->order_direction == 'asc' && Session::get('user')->order == 'precio' ? 'desc' : 'asc' }}">
+                    Precio
+                    @if(Session::get('user')->order == 'precio')
                         @if(Session::get('user')->order_direction == 'asc')
                         <i class="fas fa-arrow-up"></i>
                         @else
