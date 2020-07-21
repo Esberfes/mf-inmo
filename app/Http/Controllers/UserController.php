@@ -15,6 +15,8 @@ use App\Models\Sector;
 use App\Models\Poblacion;
 use App\Models\Solicitud;
 
+use App\Jobs\SendEmail;
+
 use App\Helpers\Paginacion;
 use Illuminate\Support\Facades\Session;
 
@@ -56,6 +58,12 @@ class UserController extends BaseController
 			'comentario' => $data['comentario']
         ]);
 
+        SendEmail::dispatch([
+            'nombre' => $data['nombre'],
+            'email' => $data['email'],
+            'local' => $local
+        ]);
+
         return redirect()->back()->with('success', 'Solicitud enviada con éxito');
     }
 
@@ -90,8 +98,8 @@ class UserController extends BaseController
             $search = $user->busqueda;
             $query_locales->where(function($query)  use ($search){
 				$query->where('titulo','LIKE',"%{$search}%")
-				->orWhere('extracto','LIKE',"%{$search}%")
-				->orWhere('descripcion','LIKE',"%{$search}%");
+				    ->orWhere('extracto','LIKE',"%{$search}%")
+				    ->orWhere('descripcion','LIKE',"%{$search}%");
 			});
         }
 
@@ -119,14 +127,14 @@ class UserController extends BaseController
 			return view('404');
         }
 
-        $locales = $query_locales->skip($paginacion['offset'])
-            ->take($this->por_pagina)->get();
+        $locales = $query_locales->skip($paginacion['offset'])->take($this->por_pagina)->get();
 
         foreach($locales as $local)
         {
             foreach($local->medias as $media)
             {
-                if($media->tipo == 'principal') {
+                if($media->tipo == 'principal')
+                {
                     $local->imagen_principal = $media;
                 }
             }
