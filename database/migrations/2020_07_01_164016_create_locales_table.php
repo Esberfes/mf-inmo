@@ -20,7 +20,7 @@ class CreateLocalesTable extends Migration
             $table->string('url_amigable')->unique();
             $table->decimal('precio', 12, 2);
             $table->decimal('metros', 12, 2);
-            $table->decimal('precio_metro', 12, 2);
+            $table->boolean('relevante')->default(0);
             $table->mediumText('extracto');
             $table->mediumText('descripcion');
             $table->dateTime('creado_en', 0)->useCurrent();

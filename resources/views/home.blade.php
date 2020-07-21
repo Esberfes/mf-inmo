@@ -31,8 +31,11 @@
                         <div class="home-article-element-location">
                         Poblacion: {{ $local->poblacion->nombre}}
                         </div>
+                        <div class="home-article-element-relevante">
+                        Relevante: {{ $local->relevante}}
+                        </div>
                         <div class="home-article-element-dimensioncost">
-                            {{ $local->metros}} m² | {{ $local->precio_metro}} €/m²
+                            {{ $local->metros}} m²
                         </div>
                         <div class="home-article-element-title">
                             {{ $local->titulo}}

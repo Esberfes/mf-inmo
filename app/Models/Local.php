@@ -16,7 +16,6 @@ class Local extends Model
         'telefono',
         'precio',
         'metros',
-        'precio_metro',
         'extracto',
         'descripcion',
         'creado_en',

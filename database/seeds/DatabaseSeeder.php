@@ -82,7 +82,7 @@ class DatabaseSeeder extends Seeder
                 'telefono' => $faker->phoneNumber,
                 'precio' => $faker->randomFloat(2, 5000, 40000),
                 'metros' => $faker->randomNumber(3, false),
-                'precio_metro' => $faker->randomFloat(2, 5, 100),
+                'relevante' => 0,
                 'extracto' => $faker->sentence(40, true),
                 'descripcion' => $faker->sentence(300, true),
                 'creado_en' => $now,

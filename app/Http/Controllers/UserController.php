@@ -50,6 +50,21 @@ class UserController extends BaseController
 			});
         }
 
+        if(!$user->order || $user->order == 'relevancia')
+        {
+            $query_locales->orderBy("relevante", 'desc');
+        }
+
+        if($user->order == 'barato')
+        {
+            $query_locales->orderBy("precio", 'asc');
+        }
+
+        if($user->order == 'reciente')
+        {
+            $query_locales->orderBy("creado_en", 'desc');
+        }
+
         $paginacion = Paginacion::get($query_locales->count(), 0);
 
 		if(!$paginacion)
@@ -211,7 +226,7 @@ class UserController extends BaseController
         $user = null;
 
         if (!Session::exists('user')) {
-            $user = new User(random_int(100, 999), "Javier", null, null, null, null);
+            $user = new User(Session::getId(), null, null, null, null);
             Session::put("user", $user);
             Session::save();
         }
