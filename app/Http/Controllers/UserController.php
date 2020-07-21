@@ -40,6 +40,16 @@ class UserController extends BaseController
             $query_locales->where("id_sector", $user->sector);
         }
 
+        if($user->busqueda)
+        {
+            $search = $user->busqueda;
+            $query_locales->where(function($query)  use ($search){
+				$query->where('titulo','LIKE',"%{$search}%")
+				->orWhere('extracto','LIKE',"%{$search}%")
+				->orWhere('descripcion','LIKE',"%{$search}%");
+			});
+        }
+
         $paginacion = Paginacion::get($query_locales->count(), 0);
 
 		if(!$paginacion)
