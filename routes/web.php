@@ -63,7 +63,12 @@ Route::get('/admin/solicitudes/{pagina}', 'AdminController@solicitudes')->where(
 
 // Admin usuarios
 Route::get('/admin/usuarios', 'AdminController@usuarios');
+Route::post('/admin/usuarios', 'AdminController@usuarios_search');
 Route::get('/admin/usuarios/{pagina}', 'AdminController@usuarios')->where('pagina', '[0-9]+');
+Route::get('/admin/usuarios/editar/{id}', 'AdminController@editar_usuario')->where('id', '[0-9]+')->name('usuarios.editar');
+Route::post('/admin/usuarios/editar/{id}', 'AdminController@editar_usuario_editar');
+Route::get('/admin/usuarios/crear', 'AdminController@usuarios_crear');
+Route::post('/admin/usuarios/crear', 'AdminController@usuarios_crear_nuevo');
 
 Route::get('/admin/login', 'LoginController@login_view')->name('login');
 Route::post('/admin/logout', 'LoginController@logout')->name('logout');

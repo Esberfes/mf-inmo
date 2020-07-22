@@ -15,6 +15,7 @@ use App\Http\Controllers\LocalesController;
 use App\Http\Controllers\SectoresController;
 use App\Http\Controllers\PoblacionesController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UsuariosController;
 
 use App\Models\Usuario;
 use App\Models\Local;
@@ -404,15 +405,75 @@ class AdminController extends BaseController
             return redirect()->route('login');
         }
 
-        $query_usuarios = Usuario::take($this->por_pagina);
+        $filter = UsuariosController::manage_filter_session(SessionConstants::ADMIN_USUARIOS_FILTER);
 
-        $paginacion = Paginacion::get($query_usuarios->count(), $pagina != null ? $pagina : 1, $this->por_pagina);
+        return view('admin.admin-usuarios', UsuariosController::get_filtered($filter, $pagina, $this->por_pagina));
+    }
 
-        $usuarios = $query_usuarios->skip($paginacion['offset'])->take($this->por_pagina)->get();
+    public function usuarios_search()
+    {
+        if(!LoginController::check())
+        {
+            return redirect()->route('login');
+        }
 
-        return view('admin.admin-usuarios', [
-            'usuarios' => $usuarios,
-            'paginacion' => $paginacion
+        $data = request()->all();
+
+        $filter = UsuariosController::manage_filter(SessionConstants::ADMIN_USUARIOS_FILTER, $data);
+
+        return $this->usuarios(null);
+    }
+
+    public function editar_usuario($id)
+    {
+        if(!LoginController::check())
+        {
+            return redirect()->route('login');
+        }
+
+        $usuario = Usuario::find($id);
+
+        if(empty($usuario))
+		{
+			return view('404');
+        }
+
+        return view('admin.admin-editar-usuario', [
+            'usuario' => $usuario
         ]);
+    }
+
+    public function editar_usuario_editar($id)
+    {
+        if(!LoginController::check())
+        {
+            return redirect()->route('login');
+        }
+
+        UsuariosController::update($id, request());
+
+        return redirect()->back()->with('success', 'Usuario modificado con éxito');
+    }
+
+    public function usuarios_crear()
+    {
+        if(!LoginController::check())
+        {
+            return redirect()->route('login');
+        }
+
+        return view('admin.admin-crear-usuario');
+    }
+
+    public function usuarios_crear_nuevo()
+    {
+        if(!LoginController::check())
+        {
+            return redirect()->route('login');
+        }
+
+        $usuario = UsuariosController::create(request());
+
+        return redirect()->route('usuarios.editar', ['id' => $usuario->id])->with('success', 'Usuario creado con éxito, puede continuar editando.');
     }
 }

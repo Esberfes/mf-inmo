@@ -2,6 +2,19 @@
 
 @section('content')
 
+<section>
+    <form class="form-search" action="{{ url('/admin/usuarios') }}" method="POST">
+        <div class="row">
+            <div class="col d-flex align-items-center justify-content-end">
+                <input style="max-width: 400px;" name="busqueda" value="{{ Session::get(\App\Constants\SessionConstants::ADMIN_USUARIOS_FILTER)->busqueda }}" type="search" class="form-control" placeholder="Busqueda">
+                <button class="ml-3">Encontrar</button>
+            </div>
+            <input name="action" value="search" type="hidden">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        </div>
+    </form>
+</section>
+
 @if(!empty($usuarios))
     <table class="table">
         <thead>
@@ -24,7 +37,7 @@
             <td>{{ $usuario->telefono }}</td>
             <td>{{ \Carbon\Carbon::parse($usuario->ultimo_login)->format('d/m/Y H:i:s') }}</td>
             <td>{{ \Carbon\Carbon::parse($usuario->creado_en)->format('d/m/Y H:i:s') }}</td>
-            <td><button type="button" class="btn btn-primary">Editar</button></td>
+            <td><a class="btn btn-primary" href="{{ url('/admin/usuarios/editar/'.$usuario->id) }}">Editar</a></td>
         </tr>
         @endforeach
         </tbody>
