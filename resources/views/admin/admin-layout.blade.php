@@ -28,7 +28,15 @@
         </button>
         <div class="collapse navbar-collapse" id="adminNavbar">
             <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="{{ url('/admin/locales') }}">Locales</a>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownLocales" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Locales
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownLocales">
+                        <a class="dropdown-item" href="{{ url('/admin/locales') }}">Listar</a>
+                        <a class="dropdown-item" href="{{ url('/admin/locales/crear') }}">Crear</a>
+                    </div>
+                </div>
                 <a class="nav-item nav-link" href="{{ url('/admin/sectores') }}">Sectores</a>
                 <a class="nav-item nav-link" href="{{ url('/admin/poblaciones') }}">Poblaciones</a>
                 <a class="nav-item nav-link" href="{{ url('/admin/solicitudes') }}">Solicitudes</a>

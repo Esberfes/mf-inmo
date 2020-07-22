@@ -21,11 +21,15 @@ Route::get('/directorio/{url}', 'UserController@directorio_local');
 Route::post('/solicitud', 'UserController@solicitud');
 
 // Admin locales
+Route::get('/admin', 'AdminController@locales');
 Route::get('/admin/locales', 'AdminController@locales');
 Route::post('/admin/locales', 'AdminController@locales_search');
 Route::get('/admin/locales/{pagina}', 'AdminController@locales')->where('pagina', '[0-9]+');
-Route::get('/admin/locales/editar/{id}', 'AdminController@editar_local')->where('id', '[0-9]+');
+Route::get('/admin/locales/editar/{id}', 'AdminController@editar_local')->where('id', '[0-9]+')->name('locales.editar');
 Route::post('/admin/locales/editar/{id}', 'AdminController@editar_local_editar');
+
+Route::get('/admin/locales/crear', 'AdminController@locales_crear');
+Route::post('/admin/locales/crear', 'AdminController@locales_crear_nuevo');
 
 Route::post('/admin/locales/editar/{id_local}/caracteristica', 'AdminController@editar_local_crear_caracteristica');
 Route::post('/admin/locales/editar/{id_local}/caracteristica/{id_caracteristica}', 'AdminController@editar_local_editar_caracteristica');

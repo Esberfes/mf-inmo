@@ -172,6 +172,63 @@ class AdminController extends BaseController
         return $this->locales(null);
     }
 
+    public function locales_crear()
+    {
+        $sectores = Sector::orderBy('titulo', 'asc')->get();
+        $poblaciones = Poblacion::orderBy('nombre', 'asc')->get();
+
+        return view('admin.admin-crear-local', [
+            'sectores' => $sectores,
+            'poblaciones' => $poblaciones,
+        ]);
+    }
+
+    public function locales_crear_nuevo()
+    {
+        $data = request()->validate([
+            'titulo' => 'unique:locales,titulo',
+            'telefono' => 'required',
+            'precio' => 'required',
+            'metros' => 'required',
+            'sector' => 'required',
+            'poblacion' => 'required',
+            'extracto' => 'required',
+            'descripcion' => 'required'
+		],[
+            'titulo.required' => 'El valor titulo es obligatorio.',
+            'titulo.unique' => 'El valor titulo ya existe en la base de datos.',
+            'telefono.required' => 'El valor teléfono es obligatorio.',
+            'precio.required' => 'El valor precio es obligatorio.',
+            'metros.required' => 'El valor metros es obligatorio.',
+            'sector.required' => 'El valor sector es obligatorio.',
+            'poblacion.required' => 'El valor poblacion es obligatorio.',
+            'extracto.required' => 'El valor extracto es obligatorio.',
+            'descripcion.required' => 'El valor descripcion es obligatorio.'
+        ]);
+
+        $local_url = Local::where('url_amigable' , '=' , Str::slug($data['titulo']))->first();
+
+        if(!empty($local_url))
+        {
+            return redirect()->back()->withErrors('Se ha intentado generar una url duplicada, pruebe con otro titulo')->withInput();
+        }
+
+        $local = Local::create([
+            'titulo' => $data['titulo'],
+            'url_amigable' => Str::slug($data['titulo']),
+            'telefono' => $data['telefono'],
+            'precio' => $data['precio'],
+            'metros' => $data['metros'],
+            'relevante' => 0,
+            'extracto' => $data['extracto'],
+            'descripcion' => $data['descripcion'],
+            'id_sector' => $data['sector'],
+            'id_poblacion' => $data['poblacion']
+        ]);
+
+        return redirect()->route('locales.editar', ['id' => $local->id])->with('success', 'Local creado con éxito, puede continuar editando.');;
+    }
+
     public function sectores($pagina = null)
     {
         $query_sectores = Sector::take($this->por_pagina);
