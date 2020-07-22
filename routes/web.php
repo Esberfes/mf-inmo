@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/{pagina}', 'UserController@home')->where('pagina', '[0-9]+');
 Route::get('/', 'UserController@home');
-Route::post('/', 'UserController@home_action');
+Route::post('/', 'UserController@home_search');
 
 Route::get('/directorio/{url}', 'UserController@directorio_local');
 

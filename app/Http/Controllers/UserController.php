@@ -70,9 +70,9 @@ class UserController extends BaseController
 
     public function home($pagina = null)
     {
-        $filter = LocalesController::manage_locales_filter_session(SessionConstants::USER_LOCALES_FILTER);
+        $filter = LocalesController::manage_filter_session(SessionConstants::USER_LOCALES_FILTER);
 
-        return view('home', LocalesController::get_filtered_locales($filter, $pagina, $this->por_pagina));
+        return view('home', LocalesController::get_filtered($filter, $pagina, $this->por_pagina));
     }
 
     public function directorio_local($url)
@@ -103,11 +103,11 @@ class UserController extends BaseController
 		]);
     }
 
-    public function home_action()
+    public function home_search()
     {
         $data = request()->all();
 
-        $filter = LocalesController::manage_locales_filter(SessionConstants::USER_LOCALES_FILTER, $data);
+        $filter = LocalesController::manage_filter(SessionConstants::USER_LOCALES_FILTER, $data);
 
         return $this->home(null);
     }
