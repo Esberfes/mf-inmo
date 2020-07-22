@@ -26,7 +26,7 @@
             <td>{{ $local->poblacion->nombre}}</td>
             <td>{{ $local->creado_en}}</td>
             <td>{{ $local->actualizado_en}}</td>
-            <td><button type="button" class="btn btn-primary">Editar</button></td>
+            <td><a class="btn btn-primary" href="{{ url('/admin/locales/editar/'.$local->id) }}">Editar</a></td>
         </tr>
         @endforeach
         </tbody>

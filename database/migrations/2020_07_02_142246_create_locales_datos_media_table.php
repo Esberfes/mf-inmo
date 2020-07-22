@@ -21,7 +21,7 @@ class CreateLocalesDatosMediaTable extends Migration
             $table->bigInteger('orden');
             $table->dateTime('creado_en', 0)->useCurrent();
             $table->dateTime('actualizado_en', 0)->useCurrent();
-            $table->foreignId('id_usuario_actualizacion');
+            $table->foreignId('id_usuario_actualizacion')->nullable();
         });
     }
 

@@ -21,7 +21,8 @@ class Local extends Model
         'creado_en',
         'actualizado_en',
         'id_usuario_actualizacion',
-        'id_sector'
+        'id_sector',
+        'id_poblacion'
     ];
 
     public function caracteristicas()

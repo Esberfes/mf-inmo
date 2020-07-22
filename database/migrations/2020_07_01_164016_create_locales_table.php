@@ -25,7 +25,7 @@ class CreateLocalesTable extends Migration
             $table->mediumText('descripcion');
             $table->dateTime('creado_en', 0)->useCurrent();
             $table->dateTime('actualizado_en', 0)->useCurrent();
-            $table->foreignId('id_usuario_actualizacion');
+            $table->foreignId('id_usuario_actualizacion')->nullable();
             $table->foreignId('id_sector');
             $table->foreignId('id_poblacion');
         });
