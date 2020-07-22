@@ -498,7 +498,7 @@ class AdminController extends BaseController
     function editar_local_imagen_principal($id)
     {
         $local = Local::find($id);
-        $now = Carbon::now(new DateTimeZone('Europe/Madrid'));
+        $now = Carbon::now(new \DateTimeZone('Europe/Madrid'));
 
         if(empty($local))
 		{

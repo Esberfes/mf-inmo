@@ -27,11 +27,6 @@
         </header>
     </a>
 
-
-    <em>
-    <?php  var_dump(Session::get('user')); ?>
-    </em>
-
     <main class="container">
         <section>
             <form class="form-search" action="/" method="POST">
