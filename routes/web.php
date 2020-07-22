@@ -24,6 +24,7 @@ Route::post('/solicitud', 'UserController@solicitud');
 Route::get('/admin/locales', 'AdminController@locales');
 Route::get('/admin/locales/{pagina}', 'AdminController@locales')->where('pagina', '[0-9]+');
 Route::get('/admin/locales/editar/{id}', 'AdminController@editar_local')->where('id', '[0-9]+');
+Route::post('/admin/locales/editar/{id}', 'AdminController@editar_local_editar');
 
 Route::post('/admin/locales/editar/{id_local}/caracteristica', 'AdminController@editar_local_crear_caracteristica');
 Route::post('/admin/locales/editar/{id_local}/caracteristica/{id_caracteristica}', 'AdminController@editar_local_editar_caracteristica');

@@ -25,6 +25,7 @@ use App\Helpers\Paginacion;
 use Illuminate\Support\Facades\Session;
 
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class AdminController extends BaseController
 {
@@ -112,6 +113,15 @@ class AdminController extends BaseController
 			return view('404');
         }
 
+        $imagen_principal = null;
+
+        foreach($local->medias as $media)
+        {
+            if($media->tipo == 'principal') {
+                $local->imagen_principal = $media;
+            }
+        }
+
         $sectores = Sector::orderBy('titulo', 'asc')->get();
         $poblaciones = Poblacion::orderBy('nombre', 'asc')->get();
 
@@ -120,6 +130,50 @@ class AdminController extends BaseController
             'sectores' => $sectores,
             'poblaciones' => $poblaciones,
         ]);
+    }
+
+    public function editar_local_editar($id)
+    {
+        $local = Local::find($id);
+
+        if(empty($local))
+		{
+			return view('404');
+        }
+
+        $data = request()->validate([
+            'titulo' => 'required',
+            'telefono' => 'required',
+            'precio' => 'required',
+            'metros' => 'required',
+            'sector' => 'required',
+            'poblacion' => 'required',
+            'extracto' => 'required',
+            'descripcion' => 'required'
+		],[
+            'titulo.required' => 'El valor titulo es obligatorio.',
+            'telefono.required' => 'El valor teléfono es obligatorio.',
+            'precio.required' => 'El valor precio es obligatorio.',
+            'metros.required' => 'El valor metros es obligatorio.',
+            'sector.required' => 'El valor sector es obligatorio.',
+            'poblacion.required' => 'El valor poblacion es obligatorio.',
+            'extracto.required' => 'El valor extracto es obligatorio.',
+            'descripcion.required' => 'El valor descripcion es obligatorio.'
+        ]);
+
+        $local->titulo = $data['titulo'];
+        $local->url_amigable = Str::slug($data['titulo']);
+        $local->telefono = $data['telefono'];
+        $local->precio = $data['precio'];
+        $local->metros = $data['metros'];
+        $local->id_sector = $data['sector'];
+        $local->id_poblacion = $data['poblacion'];
+        $local->extracto = $data['extracto'];
+        $local->descripcion = $data['descripcion'];
+
+        $local->save();
+
+        return redirect()->back()->with('success', 'Local modificado con éxito');
     }
 
     public function editar_local_crear_caracteristica($id)

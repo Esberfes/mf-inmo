@@ -164,10 +164,10 @@ class UserController extends BaseController
 
         $imagen_principal = null;
 
-        foreach($local[0]->medias as $media)
+        foreach($local->medias as $media)
         {
             if($media->tipo == 'principal') {
-                $local[0]->imagen_principal = $media;
+                $local->imagen_principal = $media;
             }
         }
 
