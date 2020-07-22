@@ -22,7 +22,7 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5 sticky-top">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#adminNavbar" aria-controls="adminNavbar" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -37,10 +37,42 @@
                         <a class="dropdown-item" href="{{ url('/admin/locales/crear') }}">Crear</a>
                     </div>
                 </div>
-                <a class="nav-item nav-link" href="{{ url('/admin/sectores') }}">Sectores</a>
-                <a class="nav-item nav-link" href="{{ url('/admin/poblaciones') }}">Poblaciones</a>
-                <a class="nav-item nav-link" href="{{ url('/admin/solicitudes') }}">Solicitudes</a>
-                <a class="nav-item nav-link" href="{{ url('/admin/usuarios') }}">Usuarios</a>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownSectores" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sectores
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownSectores">
+                        <a class="dropdown-item" href="{{ url('/admin/sectores') }}">Listar</a>
+                        <a class="dropdown-item" href="{{ url('/admin/sectores/crear') }}">Crear</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownPoblaciones" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Poblaciones
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownPoblaciones">
+                        <a class="dropdown-item" href="{{ url('/admin/poblaciones') }}">Listar</a>
+                        <a class="dropdown-item" href="{{ url('/admin/poblaciones/crear') }}">Crear</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownSolicitudes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Solicitudes
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownSolicitudes">
+                        <a class="dropdown-item" href="{{ url('/admin/solicitudes') }}">Listar</a>
+                        <a class="dropdown-item" href="{{ url('/admin/solicitudes/crear') }}">Crear</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownUsuarios" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Usuarios
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownUsuarios">
+                        <a class="dropdown-item" href="{{ url('/admin/usuarios') }}">Listar</a>
+                        <a class="dropdown-item" href="{{ url('/admin/usuarios/crear') }}">Crear</a>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -64,6 +96,12 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
+    <script>
+        $(".btn-danger").click(function(){
+			if(confirm("Deseas eliminar el registro?")) return true;
+			return false;
+		});
+    </script>
     @section('scripts')
 	@show
 </body>
