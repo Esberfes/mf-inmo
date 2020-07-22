@@ -386,16 +386,23 @@ class AdminController extends BaseController
             return redirect()->route('login');
         }
 
-        $query_solicitudes = Solicitud::take($this->por_pagina);
+        $filter = SolicitudesController::manage_filter_session(SessionConstants::ADMIN_SOLICITUDES_FILTER);
 
-        $paginacion = Paginacion::get($query_solicitudes->count(), $pagina != null ? $pagina : 1, $this->por_pagina);
+        return view('admin.admin-solicitudes', SolicitudesController::get_filtered($filter, $pagina, $this->por_pagina));
+    }
 
-        $solicitudes = $query_solicitudes->skip($paginacion['offset'])->take($this->por_pagina)->get();
+    public function solicitudes_search()
+    {
+        if(!LoginController::check())
+        {
+            return redirect()->route('login');
+        }
 
-        return view('admin.admin-solicitudes', [
-            'solicitudes' => $solicitudes,
-            'paginacion' => $paginacion
-        ]);
+        $data = request()->all();
+
+        $filter = SolicitudesController::manage_filter(SessionConstants::ADMIN_SOLICITUDES_FILTER, $data);
+
+        return $this->solicitudes(null);
     }
 
     public function usuarios($pagina = null)

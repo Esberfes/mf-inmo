@@ -1,6 +1,34 @@
 @extends('admin.admin-layout')
 
 @section('content')
+<section>
+    <form class="form-search" action="{{ url('/admin/solicitudes') }}" method="POST">
+        <div class="row">
+            <div class="col d-flex align-items-center justify-content-end">
+                <input style="max-width: 400px;" name="busqueda" value="{{ Session::get(\App\Constants\SessionConstants::ADMIN_SOLICITUDES_FILTER)->busqueda }}" type="search" class="form-control" placeholder="Busqueda">
+                <button class="ml-3">Encontrar</button>
+            </div>
+            <input name="action" value="search" type="hidden">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        </div>
+    </form>
+</section>
+
+@if ($errors->any())
+    <div class="alert alert-danger mt-3">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+@if(session()->has('success'))
+<div class="alert alert-success mt-3">
+    {{ session()->get('success') }}
+</div>
+@endif
 
 @if(!empty($solicitudes))
     <table class="table">
@@ -8,9 +36,11 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Local</th>
+                <th scope="col">Sector</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Email</th>
                 <th scope="col">Telefono</th>
+                <th scope="col">Atendido en</th>
                 <th scope="col">Fecha creación</th>
                 <th scope="col">Detalle</th>
             </tr>
@@ -20,9 +50,11 @@
         <tr>
             <th scope="row">{{ $solicitud->id }}</th>
             <td>{{ $solicitud->local->titulo }}</td>
+            <td>{{ $solicitud->local->sector->titulo }}</td>
             <td>{{ $solicitud->nombre }}</td>
             <td>{{ $solicitud->email }}</td>
             <td>{{ $solicitud->telefono }}</td>
+            <td>{{ $solicitud->atendido_en ? \Carbon\Carbon::parse($solicitud->atendido_en)->format('d/m/Y H:i:s') : '' }}</td>
             <td>{{ \Carbon\Carbon::parse($solicitud->creado_en)->format('d/m/Y H:i:s') }}</td>
             <td><button type="button" class="btn btn-primary">Detalle</button></td>
         </tr>

@@ -15,7 +15,8 @@ class Solicitud extends Model
         'nombre',
         'email',
         'telefono',
-        'comentario'
+        'comentario',
+        'atendido_en',
     ];
 
     public function local()

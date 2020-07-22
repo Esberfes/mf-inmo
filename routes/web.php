@@ -62,6 +62,7 @@ Route::post('/admin/poblaciones/eliminar/{id}', 'AdminController@eliminar_poblac
 
 // Admin solicitudes
 Route::get('/admin/solicitudes', 'AdminController@solicitudes');
+Route::post('/admin/solicitudes', 'AdminController@solicitudes_search');
 Route::get('/admin/solicitudes/{pagina}', 'AdminController@solicitudes')->where('pagina', '[0-9]+');
 
 // Admin usuarios

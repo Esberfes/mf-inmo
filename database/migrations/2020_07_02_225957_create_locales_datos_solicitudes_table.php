@@ -20,6 +20,7 @@ class CreateLocalesDatosSolicitudesTable extends Migration
             $table->string('email');
             $table->string('telefono');
             $table->mediumText('comentario')->nullable();
+            $table->dateTime('atendido_en', 0)->nullable();
             $table->dateTime('creado_en', 0)->useCurrent();
         });
     }
