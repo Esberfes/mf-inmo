@@ -14,7 +14,7 @@ class ImageController extends BaseController
 	public static function local_pricipal($file)
 	{
 		$name_destacada = md5_file($file);
-		$storage_path = storage_path('app\public\img\locales\principal');
+		$storage_path = storage_path('app/public/img/locales/principal');
 		$path_destacada = $storage_path.'/'.$name_destacada.'.'.$file->getClientOriginalExtension();;
 
 		$img = Image::make($file->getRealPath());

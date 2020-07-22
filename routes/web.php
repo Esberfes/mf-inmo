@@ -32,7 +32,7 @@ Route::post('/admin/locales/editar/{id_local}/edificio', 'AdminController@editar
 Route::post('/admin/locales/editar/{id_local}/edificio/{id_edificio}', 'AdminController@editar_local_editar_edificio');
 Route::post('/admin/locales/editar/{id_local}/equipamiento', 'AdminController@editar_local_crear_equipamiento');
 Route::post('/admin/locales/editar/{id_local}/equipamiento/{id_equipamiento}', 'AdminController@editar_local_editar_equipamiento');
-
+Route::post('/admin/locales/editar/{id_local}/media/principal', 'AdminController@editar_local_imagen_principal');
 
 
 Route::get('/admin/sectores', 'AdminController@sectores');

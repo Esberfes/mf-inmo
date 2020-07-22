@@ -9,6 +9,8 @@ use Illuminate\Routing\Controller as BaseController;
 
 use App\Http\Popos\User;
 
+use App\Http\Controllers\ImageController;
+
 use App\Models\Usuario;
 use App\Models\Local;
 use App\Models\Sector;
@@ -135,6 +137,7 @@ class AdminController extends BaseController
     public function editar_local_editar($id)
     {
         $local = Local::find($id);
+        $now = Carbon::now(new \DateTimeZone('Europe/Madrid'));
 
         if(empty($local))
 		{
@@ -170,6 +173,7 @@ class AdminController extends BaseController
         $local->id_poblacion = $data['poblacion'];
         $local->extracto = $data['extracto'];
         $local->descripcion = $data['descripcion'];
+        $local->actualizado_en = $now;
 
         $local->save();
 
@@ -203,6 +207,7 @@ class AdminController extends BaseController
     public function editar_local_editar_caracteristica($id, $id_caracteristica)
     {
         $local = Local::find($id);
+        $now = Carbon::now(new \DateTimeZone('Europe/Madrid'));
 
         if(empty($local))
 		{
@@ -227,6 +232,7 @@ class AdminController extends BaseController
         if(array_key_exists('guardar', $data))
         {
             $caracteristica->valor = $data['caracteristica'];
+            $caracteristica->actualizado_en = $now;
             $caracteristica->save();
         }
 
@@ -265,6 +271,7 @@ class AdminController extends BaseController
     public function editar_local_editar_edificio($id, $id_edificio)
     {
         $local = Local::find($id);
+        $now = Carbon::now(new \DateTimeZone('Europe/Madrid'));
 
         if(empty($local))
 		{
@@ -289,6 +296,7 @@ class AdminController extends BaseController
         if(array_key_exists('guardar', $data))
         {
             $edificio->valor = $data['edificio'];
+            $edificio->actualizado_en = $now;
             $edificio->save();
         }
 
@@ -327,6 +335,7 @@ class AdminController extends BaseController
     public function editar_local_editar_equipamiento($id, $id_equipamiento)
     {
         $local = Local::find($id);
+        $now = Carbon::now(new \DateTimeZone('Europe/Madrid'));
 
         if(empty($local))
 		{
@@ -351,6 +360,8 @@ class AdminController extends BaseController
         if(array_key_exists('guardar', $data))
         {
             $equipamiento->valor = $data['equipamiento'];
+            $equipamiento->actualizado_en = $now;
+
             $equipamiento->save();
         }
 
@@ -360,5 +371,49 @@ class AdminController extends BaseController
         }
 
         return redirect()->back()->with('success', 'Equipamiento eliminado con éxito');
+    }
+
+    function editar_local_imagen_principal($id)
+    {
+        $local = Local::find($id);
+        $now = Carbon::now(new DateTimeZone('Europe/Madrid'));
+
+        if(empty($local))
+		{
+			return view('404');
+        }
+
+        $data = request()->validate([
+            'imagen_principal' => 'required'
+		],[
+			'imagen_principal.required' => 'La imagen es obligatoria.'
+        ]);
+
+        $found = false;
+        $path = ImageController::local_pricipal(request()->file('imagen_principal'));
+
+        foreach($local->medias as $media)
+        {
+            if($media->tipo == 'principal')
+            {
+                $media->ruta = $path;
+                $media->actualizado_en = $now;
+                $media->save();
+                $found = true;
+                break;
+            }
+        }
+
+        if(!$found)
+        {
+            $media = LocalMedia::create([
+                'id_local'=> $local->id,
+                'ruta' => $path,
+                'tipo' => 'principal',
+                'orden' => 1
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Imagen principal añadida con éxito');
     }
 }

@@ -117,13 +117,13 @@
     <div class="card mb-3">
         <div class="card-header mb-3">Media</div>
         <div class="card-body">
-            <form action="{{ url('/admin/locales/editar/' . $local->id . '/media/destacada/') }}" method="POST">
+            <form action="{{ url('/admin/locales/editar/' . $local->id . '/media/principal/') }}" method="POST" enctype="multipart/form-data">
                 <div class="file-uploader">
                     <label for="file-upload" class="file-upload">
-                        <i class="fas fa-cloud-upload-alt"></i> Destacada
+                        <i class="fas fa-cloud-upload-alt"></i> Principal
                     </label>
 
-                    <input name="imagen_destacada" class="file-uploader-input" type="file" accept="image/*">
+                    <input name="imagen_principal" class="file-uploader-input" type="file" accept="image/*">
                     <div class="file-uploader-name"></div>
 
                     <div class="file-uploader-preview">
