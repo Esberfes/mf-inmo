@@ -8,7 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
 use App\Http\Popos\User;
-use App\Http\Popos\SectorFilter;
+use App\Http\Popos\PoblacionFilter;
 
 use App\Http\Controllers\ImageController;
 
@@ -30,14 +30,14 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
-class SectoresController extends BaseController
+class PoblacionesController extends BaseController
 {
     public static function manage_filter_session($key)
     {
         $filter = null;
 
         if (!Session::exists($key)) {
-            $filter = new SectorFilter(Session::getId(), null);
+            $filter = new PoblacionFilter(Session::getId(), null);
             Session::put($key, $filter);
             Session::save();
         }
@@ -51,28 +51,27 @@ class SectoresController extends BaseController
 
     public static function get_filtered($filter, $page, $max_per_page)
     {
-        $query_sectores = Sector::take($max_per_page);
+        $query_poblaciones = Poblacion::take($max_per_page);
 
         if($filter->busqueda)
         {
             $search = $filter->busqueda;
-            $query_sectores->where(function($query)  use ($search){
-				$query->where('titulo','LIKE',"%{$search}%")
-				    ->orWhere('descripcion','LIKE',"%{$search}%");
+            $query_poblaciones->where(function($query)  use ($search){
+				$query->where('nombre','LIKE',"%{$search}%");
 			});
         }
 
-        $paginacion = Paginacion::get($query_sectores->count(), $page != null ? $page : 1, $max_per_page);
+        $paginacion = Paginacion::get($query_poblaciones->count(), $page != null ? $page : 1, $max_per_page);
 
 		if(!$paginacion)
 		{
 			return view('404');
         }
 
-        $sectores = $query_sectores->skip($paginacion['offset'])->take($max_per_page)->get();
+        $poblaciones = $query_poblaciones->skip($paginacion['offset'])->take($max_per_page)->get();
 
         return [
-            'sectores' => $sectores,
+            'poblaciones' => $poblaciones,
             'paginacion' => $paginacion
         ];
     }
@@ -100,46 +99,42 @@ class SectoresController extends BaseController
     public static function create($request)
     {
         $data = $request->validate([
-            'titulo' => 'required|unique:sectores,titulo',
-            'descripcion' => ''
+            'nombre' => 'required|unique:poblaciones,nombre',
 		],[
-            'titulo.required' => 'El valor titulo es obligatorio.',
-            'titulo.unique' => 'El valor titulo ya existe en la base de datos.'
+            'nombre.required' => 'El valor titulo es obligatorio.',
+            'nombre.unique' => 'El valor titulo ya existe en la base de datos.'
         ]);
 
-        $sector = Sector::create([
-            'titulo' => $data['titulo'],
-            'orden' => 0,
-            'descripcion' => $data['descripcion'],
+        $poblacion = Poblacion::create([
+            'nombre' => $data['nombre'],
+            'orden' => 0
         ]);
 
-        return $sector;
+        return $poblacion;
     }
 
-    public static function update($id_sector, $request)
+    public static function update($id_poblacion, $request)
     {
-        $sector = Sector::find($id_sector);
+        $poblacion = Poblacion::find($id_poblacion);
         $now = Carbon::now(new \DateTimeZone('Europe/Madrid'));
 
-        if(empty($sector))
+        if(empty($poblacion))
 		{
 			return view('404');
         }
 
         $data = $request->validate([
-            'titulo' => 'required|unique:sectores,titulo,'.$id_sector,
-            'descripcion' => ''
+            'nombre' => 'required|unique:poblaciones,nombre,'.$id_poblacion,
 		],[
-            'titulo.required' => 'El valor titulo es obligatorio.',
-            'titulo.unique' => 'El valor titulo ya existe en la base de datos.',
+            'nombre.required' => 'El valor nombre es obligatorio.',
+            'nombre.unique' => 'El valor nombre ya existe en la base de datos.',
         ]);
 
-        $sector->titulo = $data['titulo'];
-        $sector->descripcion = $data['descripcion'];
-        $sector->actualizado_en = $now;
+        $poblacion->nombre = $data['nombre'];
+        $poblacion->actualizado_en = $now;
 
-        $sector->save();
+        $poblacion->save();
 
-        return $sector;
+        return $poblacion;
     }
 }

@@ -39,7 +39,7 @@ Route::post('/admin/locales/editar/{id_local}/equipamiento', 'AdminController@ed
 Route::post('/admin/locales/editar/{id_local}/equipamiento/{id_equipamiento}', 'AdminController@editar_local_editar_equipamiento');
 Route::post('/admin/locales/editar/{id_local}/media/principal', 'AdminController@editar_local_imagen_principal');
 
-
+// Admin sectores
 Route::get('/admin/sectores', 'AdminController@sectores');
 Route::post('/admin/sectores', 'AdminController@sectores_search');
 Route::get('/admin/sectores/{pagina}', 'AdminController@sectores')->where('pagina', '[0-9]+');
@@ -48,17 +48,20 @@ Route::post('/admin/sectores/editar/{id}', 'AdminController@editar_sector_editar
 Route::get('/admin/sectores/crear', 'AdminController@sectores_crear');
 Route::post('/admin/sectores/crear', 'AdminController@sectores_crear_nuevo');
 
-
+// Admin pobalciones
 Route::get('/admin/poblaciones', 'AdminController@poblaciones');
+Route::post('/admin/poblaciones', 'AdminController@poblaciones_search');
 Route::get('/admin/poblaciones/{pagina}', 'AdminController@poblaciones')->where('pagina', '[0-9]+');
 Route::get('/admin/poblaciones/editar/{id}', 'AdminController@editar_poblacion')->where('id', '[0-9]+')->name('poblaciones.editar');
 Route::post('/admin/poblaciones/editar/{id}', 'AdminController@editar_poblacion_editar');
 Route::get('/admin/poblaciones/crear', 'AdminController@poblaciones_crear');
 Route::post('/admin/poblaciones/crear', 'AdminController@poblaciones_crear_nuevo');
 
+// Admin solicitudes
 Route::get('/admin/solicitudes', 'AdminController@solicitudes');
 Route::get('/admin/solicitudes/{pagina}', 'AdminController@solicitudes')->where('pagina', '[0-9]+');
 
+// Admin usuarios
 Route::get('/admin/usuarios', 'AdminController@usuarios');
 Route::get('/admin/usuarios/{pagina}', 'AdminController@usuarios')->where('pagina', '[0-9]+');
 

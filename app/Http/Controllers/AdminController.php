@@ -13,6 +13,7 @@ use App\Http\Popos\LocalFilter;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LocalesController;
 use App\Http\Controllers\SectoresController;
+use App\Http\Controllers\PoblacionesController;
 
 use App\Models\Usuario;
 use App\Models\Local;
@@ -185,27 +186,7 @@ class AdminController extends BaseController
 
     public function editar_sector_editar($id)
     {
-        $sector = Sector::find($id);
-        $now = Carbon::now(new \DateTimeZone('Europe/Madrid'));
-
-        if(empty($sector))
-		{
-			return view('404');
-        }
-
-        $data = request()->validate([
-            'titulo' => 'required|unique:sectores,titulo,'.$id,
-            'descripcion' => ''
-		],[
-            'titulo.required' => 'El valor titulo es obligatorio.',
-            'titulo.unique' => 'El valor titulo ya existe en la base de datos.',
-        ]);
-
-        $sector->titulo = $data['titulo'];
-        $sector->descripcion = $data['descripcion'];
-        $sector->actualizado_en = $now;
-
-        $sector->save();
+        $sector = SectoresController::update($id, request());
 
         return redirect()->back()->with('success', 'Sector modificado con éxito');
     }
@@ -217,35 +198,25 @@ class AdminController extends BaseController
 
     public function sectores_crear_nuevo()
     {
-        $data = request()->validate([
-            'titulo' => 'required|unique:sectores,titulo',
-            'descripcion' => ''
-		],[
-            'titulo.required' => 'El valor titulo es obligatorio.',
-            'titulo.unique' => 'El valor titulo ya existe en la base de datos.'
-        ]);
-
-        $sector = Sector::create([
-            'titulo' => $data['titulo'],
-            'orden' => 0,
-            'descripcion' => $data['descripcion'],
-        ]);
+        $sector = SectoresController::create(request());
 
         return redirect()->route('sectores.editar', ['id' => $sector->id])->with('success', 'Sector creado con éxito, puede continuar editando.');
     }
 
     public function poblaciones($pagina = null)
     {
-        $query_poblaciones = Poblacion::take($this->por_pagina);
+        $filter = PoblacionesController::manage_filter_session(SessionConstants::ADMIN_POBLACIONES_FILTER);
 
-        $paginacion = Paginacion::get($query_poblaciones->count(), $pagina != null ? $pagina : 1, $this->por_pagina);
+        return view('admin.admin-poblaciones', PoblacionesController::get_filtered($filter, $pagina, $this->por_pagina));
+    }
 
-        $poblaciones = $query_poblaciones->skip($paginacion['offset'])->take($this->por_pagina)->get();
+    public function poblaciones_search()
+    {
+        $data = request()->all();
 
-        return view('admin.admin-poblaciones', [
-            'poblaciones' => $poblaciones,
-            'paginacion' => $paginacion
-        ]);
+        $filter = PoblacionesController::manage_filter(SessionConstants::ADMIN_POBLACIONES_FILTER, $data);
+
+        return $this->poblaciones(null);
     }
 
     public function editar_poblacion($id)
@@ -264,25 +235,7 @@ class AdminController extends BaseController
 
     public function editar_poblacion_editar($id)
     {
-        $poblacion = Poblacion::find($id);
-        $now = Carbon::now(new \DateTimeZone('Europe/Madrid'));
-
-        if(empty($poblacion))
-		{
-			return view('404');
-        }
-
-        $data = request()->validate([
-            'nombre' => 'required|unique:poblaciones,nombre,'.$id,
-		],[
-            'nombre.required' => 'El valor nombre es obligatorio.',
-            'nombre.unique' => 'El valor nombre ya existe en la base de datos.',
-        ]);
-
-        $poblacion->nombre = $data['nombre'];
-        $poblacion->actualizado_en = $now;
-
-        $poblacion->save();
+        PoblacionesController::update($id, request());
 
         return redirect()->back()->with('success', 'Poblacion modificado con éxito');
     }
@@ -294,17 +247,7 @@ class AdminController extends BaseController
 
     public function poblaciones_crear_nuevo()
     {
-        $data = request()->validate([
-            'nombre' => 'required|unique:poblaciones,nombre',
-		],[
-            'nombre.required' => 'El valor titulo es obligatorio.',
-            'nombre.unique' => 'El valor titulo ya existe en la base de datos.'
-        ]);
-
-        $poblacion = Poblacion::create([
-            'nombre' => $data['nombre'],
-            'orden' => 0
-        ]);
+        $poblacion = PoblacionesController::create(request());
 
         return redirect()->route('poblaciones.editar', ['id' => $poblacion->id])->with('success', 'Población creado con éxito, puede continuar editando.');
     }
