@@ -1,7 +1,82 @@
 @extends('admin.admin-layout')
 
 @section('content')
-
+    <section>
+        <form class="form-search" action="{{ url('/admin/locales') }}" method="POST">
+            <div class="row">
+                <div class="col form-search-input-wrapper">
+                    <input name="busqueda" value="{{ Session::get('admin-local-filter')->busqueda }}" type="search" class="form-control" placeholder="Busqueda">
+                </div>
+                <div class="col form-search-input-wrapper">
+                    <select name="sector" class="custom-select">
+                        <option value="none">Sector (sin filtro)</option>
+                        @if(!empty($sectores))
+                            @foreach($sectores as $sector)
+                                @if(Session::get('admin-local-filter')->sector == $sector->id)
+                                <option selected value="{{ $sector->id }}">{{ $sector->titulo }}</option>
+                                @else
+                                <option value="{{ $sector->id }}">{{ $sector->titulo }}</option>
+                                @endif
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+                <div class="col form-search-input-wrapper">
+                    <select name="poblacion" class="custom-select">
+                        <option value="none">Población (sin filtro)</option>
+                        @if(!empty($poblaciones))
+                            @foreach($poblaciones as $poblacion)
+                            @if(Session::get('admin-local-filter')->poblacion == $poblacion->id)
+                                <option selected value="{{ $poblacion->id }}">{{ $poblacion->nombre }}</option>
+                                @else
+                                <option value="{{ $poblacion->id }}">{{ $poblacion->nombre }}</option>
+                                @endif
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+                <div class="col form-search-button-wrapper">
+                    <button>Encontrar</button>
+                </div>
+                <input name="action" value="search" type="hidden">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            </div>
+        </form>
+        <form class="form-order-by" action="{{ url('/admin/locales') }}" method="POST">
+            <button name="relevancia" value="{{ Session::get('admin-local-filter')->order_direction == 'asc' && Session::get('admin-local-filter')->order == 'relevancia'? 'desc' : 'asc' }}">
+                Relevancia
+                @if(Session::get('admin-local-filter')->order == 'relevancia')
+                    @if(Session::get('admin-local-filter')->order_direction == 'asc')
+                    <i class="fas fa-arrow-up"></i>
+                    @else
+                    <i class="fas fa-arrow-down"></i>
+                    @endif
+                @endif
+            </button>
+            <button name="precio" value="{{ Session::get('admin-local-filter')->order_direction == 'asc' && Session::get('admin-local-filter')->order == 'precio' ? 'desc' : 'asc' }}">
+                Precio
+                @if(Session::get('admin-local-filter')->order == 'precio')
+                    @if(Session::get('admin-local-filter')->order_direction == 'asc')
+                    <i class="fas fa-arrow-up"></i>
+                    @else
+                    <i class="fas fa-arrow-down"></i>
+                    @endif
+                @endif
+            </button>
+            <button name="superficie" value="{{ Session::get('admin-local-filter')->order_direction == 'asc' && Session::get('admin-local-filter')->order == 'superficie' ? 'desc' : 'asc' }}">
+                Superficie
+                @if(Session::get('admin-local-filter')->order == 'superficie')
+                    @if(Session::get('admin-local-filter')->order_direction == 'asc')
+                    <i class="fas fa-arrow-up"></i>
+                    @else
+                    <i class="fas fa-arrow-down"></i>
+                    @endif
+                @endif
+            </button>
+            <input name="action" value="order" type="hidden">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        </form>
+    </section>
 @if(!empty($locales))
     <table class="table">
         <thead>

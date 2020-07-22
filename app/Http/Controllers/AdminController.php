@@ -8,6 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
 use App\Http\Popos\User;
+use App\Http\Popos\LocalFilter;
 
 use App\Http\Controllers\ImageController;
 
@@ -38,16 +39,137 @@ class AdminController extends BaseController
 
     public function locales($pagina = null)
     {
+        $filter = $this->manage_local_filter_session();
+
         $query_locales = Local::take($this->por_pagina);
+
+        if($filter->poblacion)
+        {
+            $query_locales->where("id_poblacion", $filter->poblacion);
+        }
+
+        if($filter->sector)
+        {
+            $query_locales->where("id_sector", $filter->sector);
+        }
+
+        if($filter->busqueda)
+        {
+            $search = $filter->busqueda;
+            $query_locales->where(function($query)  use ($search){
+				$query->where('titulo','LIKE',"%{$search}%")
+				    ->orWhere('extracto','LIKE',"%{$search}%")
+				    ->orWhere('descripcion','LIKE',"%{$search}%");
+			});
+        }
+
+        $order_direction = $filter->order_direction && ($filter->order_direction == 'asc' || $filter->order_direction == 'desc') ? $filter->order_direction : 'desc';
+
+        if(!$filter->order || $filter->order == 'relevancia')
+        {
+            $query_locales->orderBy("relevante", $order_direction);
+        }
+
+        if($filter->order == 'precio')
+        {
+            $query_locales->orderBy("precio", $order_direction);
+        }
+
+        if($filter->order == 'superficie')
+        {
+            $query_locales->orderBy("metros", $order_direction);
+        }
 
         $paginacion = Paginacion::get($query_locales->count(), $pagina != null ? $pagina : 1, $this->por_pagina);
 
+		if(!$paginacion)
+		{
+			return view('404');
+        }
+
         $locales = $query_locales->skip($paginacion['offset'])->take($this->por_pagina)->get();
+
+        $sectores = Sector::orderBy('titulo', 'asc')->get();
+        $poblaciones = Poblacion::orderBy('nombre', 'asc')->get();
 
         return view('admin.admin-locales', [
             'locales' => $locales,
+            'sectores' => $sectores,
+            'poblaciones' => $poblaciones,
             'paginacion' => $paginacion
         ]);
+    }
+
+    public function locales_search()
+    {
+        $filter = $this->manage_local_filter_session();
+
+        $data = request()->all();
+
+        if($data && array_key_exists('action', $data) && $data['action'] == 'order')
+        {
+            if(array_key_exists('relevancia', $data))
+            {
+                $filter->order = 'relevancia';
+                $filter->order_direction = $data['relevancia'];
+            }
+
+            if(array_key_exists('precio', $data))
+            {
+                $filter->order = 'precio';
+                $filter->order_direction = $data['precio'];
+            }
+
+            if(array_key_exists('superficie', $data))
+            {
+                $filter->order = 'superficie';
+                $filter->order_direction = $data['superficie'];
+            }
+        }
+
+        if($data && array_key_exists('action', $data) && $data['action'] == 'search')
+        {
+            if(array_key_exists('sector', $data))
+            {
+                if($data['sector'] != 'none')
+                {
+                    $filter->sector = $data['sector'];
+                }
+                else
+                {
+                    $filter->sector = null;
+                }
+            }
+
+            if(array_key_exists('poblacion', $data))
+            {
+                if($data['poblacion'] != 'none')
+                {
+                    $filter->poblacion = $data['poblacion'];
+                }
+                else
+                {
+                    $filter->poblacion = null;
+                }
+            }
+
+            if(array_key_exists('busqueda', $data))
+            {
+                if(trim($data['busqueda']) && trim($data['busqueda']) != '')
+                {
+                    $filter->busqueda = trim($data['busqueda']);
+                }
+                else
+                {
+                    $filter->busqueda = null;
+                }
+            }
+        }
+
+        Session::put("admin-local-filter", $filter);
+        Session::save();
+
+        return $this->locales(null);
     }
 
     public function sectores($pagina = null)
@@ -415,5 +537,22 @@ class AdminController extends BaseController
         }
 
         return redirect()->back()->with('success', 'Imagen principal añadida con éxito');
+    }
+
+    public function manage_local_filter_session()
+    {
+        $filter = null;
+
+        if (!Session::exists('admin-local-filter')) {
+            $filter = new LocalFilter(Session::getId(), null, null, 'relevante', 'desc', null);
+            Session::put("admin-local-filter", $filter);
+            Session::save();
+        }
+        else
+        {
+            $filter = Session::get('admin-local-filter');
+        }
+
+        return $filter;
     }
 }

@@ -22,6 +22,7 @@ Route::post('/solicitud', 'UserController@solicitud');
 
 // Admin locales
 Route::get('/admin/locales', 'AdminController@locales');
+Route::post('/admin/locales', 'AdminController@locales_search');
 Route::get('/admin/locales/{pagina}', 'AdminController@locales')->where('pagina', '[0-9]+');
 Route::get('/admin/locales/editar/{id}', 'AdminController@editar_local')->where('id', '[0-9]+');
 Route::post('/admin/locales/editar/{id}', 'AdminController@editar_local_editar');
