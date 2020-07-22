@@ -5,14 +5,14 @@
         <form class="form-search" action="{{ url('/admin/locales') }}" method="POST">
             <div class="row">
                 <div class="col form-search-input-wrapper">
-                    <input name="busqueda" value="{{ Session::get('admin-local-filter')->busqueda }}" type="search" class="form-control" placeholder="Busqueda">
+                    <input name="busqueda" value="{{ Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_FILTER)->busqueda }}" type="search" class="form-control" placeholder="Busqueda">
                 </div>
                 <div class="col form-search-input-wrapper">
                     <select name="sector" class="custom-select">
                         <option value="none">Sector (sin filtro)</option>
                         @if(!empty($sectores))
                             @foreach($sectores as $sector)
-                                @if(Session::get('admin-local-filter')->sector == $sector->id)
+                                @if(Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_FILTER)->sector == $sector->id)
                                 <option selected value="{{ $sector->id }}">{{ $sector->titulo }}</option>
                                 @else
                                 <option value="{{ $sector->id }}">{{ $sector->titulo }}</option>
@@ -26,7 +26,7 @@
                         <option value="none">Población (sin filtro)</option>
                         @if(!empty($poblaciones))
                             @foreach($poblaciones as $poblacion)
-                            @if(Session::get('admin-local-filter')->poblacion == $poblacion->id)
+                            @if(Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_FILTER)->poblacion == $poblacion->id)
                                 <option selected value="{{ $poblacion->id }}">{{ $poblacion->nombre }}</option>
                                 @else
                                 <option value="{{ $poblacion->id }}">{{ $poblacion->nombre }}</option>
@@ -43,30 +43,30 @@
             </div>
         </form>
         <form class="form-order-by" action="{{ url('/admin/locales') }}" method="POST">
-            <button name="relevancia" value="{{ Session::get('admin-local-filter')->order_direction == 'asc' && Session::get('admin-local-filter')->order == 'relevancia'? 'desc' : 'asc' }}">
+            <button name="relevancia" value="{{ Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_FILTER)->order_direction == 'asc' && Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_FILTER)->order == 'relevancia'? 'desc' : 'asc' }}">
                 Relevancia
-                @if(Session::get('admin-local-filter')->order == 'relevancia')
-                    @if(Session::get('admin-local-filter')->order_direction == 'asc')
+                @if(Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_FILTER)->order == 'relevancia')
+                    @if(Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_FILTER)->order_direction == 'asc')
                     <i class="fas fa-arrow-up"></i>
                     @else
                     <i class="fas fa-arrow-down"></i>
                     @endif
                 @endif
             </button>
-            <button name="precio" value="{{ Session::get('admin-local-filter')->order_direction == 'asc' && Session::get('admin-local-filter')->order == 'precio' ? 'desc' : 'asc' }}">
+            <button name="precio" value="{{ Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_FILTER)->order_direction == 'asc' && Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_FILTER)->order == 'precio' ? 'desc' : 'asc' }}">
                 Precio
-                @if(Session::get('admin-local-filter')->order == 'precio')
-                    @if(Session::get('admin-local-filter')->order_direction == 'asc')
+                @if(Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_FILTER)->order == 'precio')
+                    @if(Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_FILTER)->order_direction == 'asc')
                     <i class="fas fa-arrow-up"></i>
                     @else
                     <i class="fas fa-arrow-down"></i>
                     @endif
                 @endif
             </button>
-            <button name="superficie" value="{{ Session::get('admin-local-filter')->order_direction == 'asc' && Session::get('admin-local-filter')->order == 'superficie' ? 'desc' : 'asc' }}">
+            <button name="superficie" value="{{ Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_FILTER)->order_direction == 'asc' && Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_FILTER)->order == 'superficie' ? 'desc' : 'asc' }}">
                 Superficie
-                @if(Session::get('admin-local-filter')->order == 'superficie')
-                    @if(Session::get('admin-local-filter')->order_direction == 'asc')
+                @if(Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_FILTER)->order == 'superficie')
+                    @if(Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_FILTER)->order_direction == 'asc')
                     <i class="fas fa-arrow-up"></i>
                     @else
                     <i class="fas fa-arrow-down"></i>

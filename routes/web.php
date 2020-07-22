@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/{pagina}', 'UserController@directorio')->where('pagina', '[0-9]+');
+Route::get('/{pagina}', 'UserController@home')->where('pagina', '[0-9]+');
 Route::get('/', 'UserController@home');
 Route::post('/', 'UserController@home_action');
 
