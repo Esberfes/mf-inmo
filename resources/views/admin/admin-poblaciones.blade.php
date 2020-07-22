@@ -14,6 +14,22 @@
     </form>
 </section>
 
+@if ($errors->any())
+    <div class="alert alert-danger mt-3">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+@if(session()->has('success'))
+<div class="alert alert-success mt-3">
+    {{ session()->get('success') }}
+</div>
+@endif
+
 @if(!empty($poblaciones))
     <table class="table">
         <thead>
@@ -23,6 +39,7 @@
                 <th scope="col">Fecha creación</th>
                 <th scope="col">Fecha modificación</th>
                 <th scope="col">Editar</th>
+                <th scope="col">Eliminar</th>
             </tr>
         </thead>
         <tbody>
@@ -33,6 +50,12 @@
             <td>{{ \Carbon\Carbon::parse($poblacion->creado_en)->format('d/m/Y H:i:s') }}</td>
             <td>{{ \Carbon\Carbon::parse($poblacion->actualizado_en)->format('d/m/Y H:i:s') }}</td>
             <td><a class="btn btn-primary" href="{{ url('/admin/poblaciones/editar/'.$poblacion->id) }}">Editar</a></td>
+            <td>
+                <form action="{{ url('/admin/poblaciones/eliminar/'.$poblacion->id) }}" method="post">
+                    <button class="btn btn-danger">Eliminar</button>
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                </form>
+            </td>
         </tr>
         @endforeach
         </tbody>

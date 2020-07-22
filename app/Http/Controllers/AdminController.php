@@ -476,4 +476,62 @@ class AdminController extends BaseController
 
         return redirect()->route('usuarios.editar', ['id' => $usuario->id])->with('success', 'Usuario creado con éxito, puede continuar editando.');
     }
+
+    public function eliminar_usuario($id)
+    {
+        if(!LoginController::check())
+        {
+            return redirect()->route('login');
+        }
+
+        UsuariosController::delete($id);
+
+        return redirect()->back()->with('success', 'Usuario eliminado con éxito');
+    }
+
+    public function eliminar_local($id)
+    {
+        if(!LoginController::check())
+        {
+            return redirect()->route('login');
+        }
+
+        LocalesController::delete($id);
+
+        return redirect()->back()->with('success', 'Local eliminado con éxito');
+    }
+
+    public function eliminar_sector($id)
+    {
+        if(!LoginController::check())
+        {
+            return redirect()->route('login');
+        }
+
+        $result = SectoresController::delete($id);
+
+        if($result != null)
+        {
+            return $result;
+        }
+
+        return redirect()->back()->with('success', 'Sector eliminado con éxito');
+    }
+
+    public function eliminar_poblacion($id)
+    {
+        if(!LoginController::check())
+        {
+            return redirect()->route('login');
+        }
+
+        $result = PoblacionesController::delete($id);
+
+        if($result != null)
+        {
+            return $result;
+        }
+
+        return redirect()->back()->with('success', 'Población eliminada con éxito');
+    }
 }

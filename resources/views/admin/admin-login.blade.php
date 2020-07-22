@@ -10,13 +10,13 @@
         <div class="card-body">
             <form action="{{ url('/admin/login') }}" method="POST">
                 @if ($errors->any())
-                <div class="blanco mt-3">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
+                    <div class="alert alert-danger mt-3">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
                 @endif
 
                 @if(session()->has('success'))

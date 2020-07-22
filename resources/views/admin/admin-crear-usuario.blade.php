@@ -3,14 +3,15 @@
 @section('content')
 
 
+
 @if ($errors->any())
-<div class="blanco mt-3">
-    <ul>
-        @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
+    <div class="alert alert-danger mt-3">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
 @endif
 
 @if(session()->has('success'))
@@ -18,7 +19,6 @@
     {{ session()->get('success') }}
 </div>
 @endif
-
 <div class="card mb-3">
     <div class="card-header mb-3">Crear nuevo usuario</div>
     <div class="card-body">

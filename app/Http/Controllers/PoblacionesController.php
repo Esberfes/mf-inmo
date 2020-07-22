@@ -137,4 +137,23 @@ class PoblacionesController extends BaseController
 
         return $poblacion;
     }
+
+    public static function delete($id_poblacion)
+    {
+        $poblacion = Poblacion::find($id_poblacion);
+
+        if(empty($poblacion))
+		{
+			return view('404');
+        }
+
+        if(!empty($poblacion->locales) && $poblacion->locales->count() > 0)
+        {
+            return redirect()->back()->withErrors("No se puede eliminar la población, tiene locales asociados.");
+        }
+
+        $poblacion->delete();
+
+        return null;
+    }
 }

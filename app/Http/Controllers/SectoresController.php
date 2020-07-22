@@ -142,4 +142,23 @@ class SectoresController extends BaseController
 
         return $sector;
     }
+
+    public static function delete($id_sector)
+    {
+        $sector = Sector::find($id_sector);
+
+        if(empty($sector))
+		{
+			return view('404');
+        }
+
+        if(!empty($sector->locales) && $sector->locales->count() > 0)
+        {
+            return redirect()->back()->withErrors("No se puede eliminar el sector, tiene locales asociados.");
+        }
+
+        $sector->delete();
+
+        return null;
+    }
 }

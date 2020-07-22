@@ -157,4 +157,16 @@ class UsuariosController extends BaseController
 
         return $usuario;
     }
+
+    public static function delete($id_usuario)
+    {
+        $usuario = Usuario::find($id_usuario);
+
+        if(empty($usuario))
+		{
+			return view('404');
+        }
+
+        $usuario->delete();
+    }
 }

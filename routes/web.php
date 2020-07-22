@@ -38,6 +38,7 @@ Route::post('/admin/locales/editar/{id_local}/edificio/{id_edificio}', 'AdminCon
 Route::post('/admin/locales/editar/{id_local}/equipamiento', 'AdminController@editar_local_crear_equipamiento');
 Route::post('/admin/locales/editar/{id_local}/equipamiento/{id_equipamiento}', 'AdminController@editar_local_editar_equipamiento');
 Route::post('/admin/locales/editar/{id_local}/media/principal', 'AdminController@editar_local_imagen_principal');
+Route::post('/admin/locales/eliminar/{id}', 'AdminController@eliminar_local');
 
 // Admin sectores
 Route::get('/admin/sectores', 'AdminController@sectores');
@@ -47,6 +48,7 @@ Route::get('/admin/sectores/editar/{id}', 'AdminController@editar_sector')->wher
 Route::post('/admin/sectores/editar/{id}', 'AdminController@editar_sector_editar');
 Route::get('/admin/sectores/crear', 'AdminController@sectores_crear');
 Route::post('/admin/sectores/crear', 'AdminController@sectores_crear_nuevo');
+Route::post('/admin/sectores/eliminar/{id}', 'AdminController@eliminar_sector');
 
 // Admin pobalciones
 Route::get('/admin/poblaciones', 'AdminController@poblaciones');
@@ -56,6 +58,7 @@ Route::get('/admin/poblaciones/editar/{id}', 'AdminController@editar_poblacion')
 Route::post('/admin/poblaciones/editar/{id}', 'AdminController@editar_poblacion_editar');
 Route::get('/admin/poblaciones/crear', 'AdminController@poblaciones_crear');
 Route::post('/admin/poblaciones/crear', 'AdminController@poblaciones_crear_nuevo');
+Route::post('/admin/poblaciones/eliminar/{id}', 'AdminController@eliminar_poblacion');
 
 // Admin solicitudes
 Route::get('/admin/solicitudes', 'AdminController@solicitudes');
@@ -69,6 +72,7 @@ Route::get('/admin/usuarios/editar/{id}', 'AdminController@editar_usuario')->whe
 Route::post('/admin/usuarios/editar/{id}', 'AdminController@editar_usuario_editar');
 Route::get('/admin/usuarios/crear', 'AdminController@usuarios_crear');
 Route::post('/admin/usuarios/crear', 'AdminController@usuarios_crear_nuevo');
+Route::post('/admin/usuarios/eliminar/{id}', 'AdminController@eliminar_usuario');
 
 Route::get('/admin/login', 'LoginController@login_view')->name('login');
 Route::post('/admin/logout', 'LoginController@logout')->name('logout');

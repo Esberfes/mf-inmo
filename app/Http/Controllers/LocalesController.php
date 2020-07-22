@@ -288,6 +288,18 @@ class LocalesController extends BaseController
         return $local;
     }
 
+    public static function delete($id_local)
+    {
+        $local = Local::find($id_local);
+
+        if(empty($local))
+		{
+			return view('404');
+        }
+
+        $local->delete();
+    }
+
     public static function create_caracteristica($id_local, $request)
     {
         $local = Local::find($id_local);

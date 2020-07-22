@@ -106,7 +106,9 @@
         $(".btn-danger").click(function(){
 			if(confirm("Deseas eliminar el registro?")) return true;
 			return false;
-		});
+        });
+        $(".alert.alert-success").delay(8000).fadeOut(500);
+		$(".alert.alert-danger").delay(8000).fadeOut(500);
     </script>
     @section('scripts')
 	@show
