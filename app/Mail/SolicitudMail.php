@@ -30,7 +30,7 @@ class SolicitudMail extends Mailable
      */
     public function build()
     {
-        return $this->from('info@mundofranquicia.com', 'mundoFranquicia inmobiliaria')
+        return $this->from(env('MAIL_FROM_ADDRESS', 'info@mundofranquicia.com'), 'mundoFranquicia inmobiliaria')
         ->subject('Solicitud de contacto')
         ->view('mails.solicitud');
     }
