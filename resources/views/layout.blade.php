@@ -21,11 +21,16 @@
     <link rel="stylesheet" href="{{asset('css/font-awesome.css')}}">
 </head>
 <body>
-    <a href="/">
-        <header>
 
-        </header>
-    </a>
+    <header class="d-flex justify-content-between">
+        <div class="d-flex align-items-center">
+            <a href="{{ url('/') }}"><img width="200px" src="{{asset('img/card-mf.jpg')}}" alt=""></a>
+        </div>
+        <div class="d-flex align-items-center">
+            <a href="{{ url('/admin') }}"><i style="font-size:30px; color:#FFFFFF;margin-right:10px;" class="fas fa-user-lock"></i></a>
+        </div>
+    </header>
+
 
     <main class="container">
         <section>
