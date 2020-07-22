@@ -44,6 +44,9 @@ Route::get('/admin/sectores', 'AdminController@sectores');
 Route::get('/admin/sectores/{pagina}', 'AdminController@sectores')->where('pagina', '[0-9]+');
 Route::get('/admin/sectores/editar/{id}', 'AdminController@editar_sector')->where('id', '[0-9]+')->name('sectores.editar');
 Route::post('/admin/sectores/editar/{id}', 'AdminController@editar_sector_editar');
+Route::get('/admin/sectores/crear', 'AdminController@sectores_crear');
+Route::post('/admin/sectores/crear', 'AdminController@sectores_crear_nuevo');
+
 
 Route::get('/admin/poblaciones', 'AdminController@poblaciones');
 Route::get('/admin/poblaciones/{pagina}', 'AdminController@poblaciones')->where('pagina', '[0-9]+');

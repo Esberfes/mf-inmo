@@ -26,30 +26,28 @@
 
             <form action="{{ url('/admin/sectores/editar/' . $sector->id) }}" method="POST">
                 <div class="row">
-                    <div class="col-9">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="titulo" value="{{ $sector->titulo }}">
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <textarea required class="form-control" rows="3" name="descripcion">{{ $sector->descripcion }}</textarea>
-                                </div>
-                            </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="titulo">Titulo</label>
+                            <input type="text" class="form-control" name="titulo" value="{{ $sector->titulo }}">
                         </div>
                     </div>
-
-                    <div class="col-3 d-flex align-items-center">
-                        <button type="submit" name="guardar" class="btn btn-primary mr-3 ml-3">Guardar</button>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="descripcion">Descripción</label>
+                            <textarea class="form-control" rows="6" name="descripcion">{{ $sector->descripcion }}</textarea>
+                        </div>
                     </div>
+                    <div class="col-12">
+                        <div class="form-group mb-0">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </div>
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 </div>
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
             </form>
         </div>
     </div>
-
 @endif
 @endsection
 

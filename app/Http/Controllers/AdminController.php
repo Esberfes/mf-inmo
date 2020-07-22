@@ -67,7 +67,7 @@ class AdminController extends BaseController
     public function locales_crear_nuevo()
     {
         $data = request()->validate([
-            'titulo' => 'required|unique:locales,titulo,'.$id,
+            'titulo' => 'required|unique:locales,titulo',
             'telefono' => 'required',
             'precio' => 'required',
             'metros' => 'required',
@@ -164,6 +164,29 @@ class AdminController extends BaseController
         return redirect()->back()->with('success', 'Sector modificado con éxito');
     }
 
+    public function sectores_crear()
+    {
+        return view('admin.admin-crear-sector');
+    }
+
+    public function sectores_crear_nuevo()
+    {
+        $data = request()->validate([
+            'titulo' => 'required|unique:locales,titulo',
+            'descripcion' => ''
+		],[
+            'titulo.required' => 'El valor titulo es obligatorio.',
+            'titulo.unique' => 'El valor titulo ya existe en la base de datos.'
+        ]);
+
+        $sector = Sector::create([
+            'titulo' => $data['titulo'],
+            'orden' => 0,
+            'descripcion' => $data['descripcion'],
+        ]);
+
+        return redirect()->route('sectores.editar', ['id' => $sector->id])->with('success', 'Sector creado con éxito, puede continuar editando.');
+    }
     public function poblaciones($pagina = null)
     {
         $query_poblaciones = Poblacion::take($this->por_pagina);
