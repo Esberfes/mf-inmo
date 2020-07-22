@@ -2,6 +2,19 @@
 
 @section('content')
 
+<section>
+    <form class="form-search" action="{{ url('/admin/sectores') }}" method="POST">
+        <div class="row">
+            <div class="col d-flex align-items-center justify-content-end">
+                <input style="max-width: 400px;" name="busqueda" value="{{ Session::get(\App\Constants\SessionConstants::ADMIN_SECTORES_FILTER)->busqueda }}" type="search" class="form-control" placeholder="Busqueda">
+                <button class="ml-3">Encontrar</button>
+            </div>
+            <input name="action" value="search" type="hidden">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        </div>
+    </form>
+</section>
+
 @if(!empty($sectores))
     <table class="table">
         <thead>

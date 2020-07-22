@@ -41,6 +41,7 @@ Route::post('/admin/locales/editar/{id_local}/media/principal', 'AdminController
 
 
 Route::get('/admin/sectores', 'AdminController@sectores');
+Route::post('/admin/sectores', 'AdminController@sectores_search');
 Route::get('/admin/sectores/{pagina}', 'AdminController@sectores')->where('pagina', '[0-9]+');
 Route::get('/admin/sectores/editar/{id}', 'AdminController@editar_sector')->where('id', '[0-9]+')->name('sectores.editar');
 Route::post('/admin/sectores/editar/{id}', 'AdminController@editar_sector_editar');

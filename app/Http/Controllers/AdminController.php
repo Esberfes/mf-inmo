@@ -12,6 +12,7 @@ use App\Http\Popos\LocalFilter;
 
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LocalesController;
+use App\Http\Controllers\SectoresController;
 
 use App\Models\Usuario;
 use App\Models\Local;
@@ -154,16 +155,18 @@ class AdminController extends BaseController
 
     public function sectores($pagina = null)
     {
-        $query_sectores = Sector::take($this->por_pagina);
+        $filter = SectoresController::manage_filter_session(SessionConstants::ADMIN_SECTORES_FILTER);
 
-        $paginacion = Paginacion::get($query_sectores->count(), $pagina != null ? $pagina : 1, $this->por_pagina);
+        return view('admin.admin-sectores', SectoresController::get_filtered($filter, $pagina, $this->por_pagina));
+    }
 
-        $sectores = $query_sectores->skip($paginacion['offset'])->take($this->por_pagina)->get();
+    public function sectores_search()
+    {
+        $data = request()->all();
 
-        return view('admin.admin-sectores', [
-            'sectores' => $sectores,
-            'paginacion' => $paginacion
-        ]);
+        $filter = SectoresController::manage_filter(SessionConstants::ADMIN_SECTORES_FILTER, $data);
+
+        return $this->sectores(null);
     }
 
     public function editar_sector($id)
