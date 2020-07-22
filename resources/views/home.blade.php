@@ -41,7 +41,7 @@
                             {{ $local->titulo}}
                         </div>
                         <div class="home-article-element-description">
-                            {{ $local->extracto}}
+                            {!! $local->extracto !!}
                         </div>
                         <div class="home-article-element-contact">
                             <div>

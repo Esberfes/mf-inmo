@@ -20,7 +20,7 @@
             <td>{{ $sector->titulo }}</td>
             <td>{{ $sector->creado_en}}</td>
             <td>{{ $sector->actualizado_en}}</td>
-            <td><button type="button" class="btn btn-primary">Editar</button></td>
+            <td><a class="btn btn-primary" href="{{ url('/admin/sectores/editar/'.$sector->id) }}">Editar</a></td>
         </tr>
         @endforeach
         </tbody>

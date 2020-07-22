@@ -186,7 +186,7 @@ class AdminController extends BaseController
     public function locales_crear_nuevo()
     {
         $data = request()->validate([
-            'titulo' => 'unique:locales,titulo',
+            'titulo' => 'required|unique:locales,titulo,'.$id,
             'telefono' => 'required',
             'precio' => 'required',
             'metros' => 'required',
@@ -226,7 +226,7 @@ class AdminController extends BaseController
             'id_poblacion' => $data['poblacion']
         ]);
 
-        return redirect()->route('locales.editar', ['id' => $local->id])->with('success', 'Local creado con éxito, puede continuar editando.');;
+        return redirect()->route('locales.editar', ['id' => $local->id])->with('success', 'Local creado con éxito, puede continuar editando.');
     }
 
     public function sectores($pagina = null)
@@ -241,6 +241,46 @@ class AdminController extends BaseController
             'sectores' => $sectores,
             'paginacion' => $paginacion
         ]);
+    }
+
+    public function editar_sector($id)
+    {
+        $sector = Sector::find($id);
+
+        if(empty($sector))
+		{
+			return view('404');
+        }
+        return view('admin.admin-editar-sector', [
+            'sector' => $sector
+        ]);
+    }
+
+    public function editar_sector_editar($id)
+    {
+        $sector = Sector::find($id);
+        $now = Carbon::now(new \DateTimeZone('Europe/Madrid'));
+
+        if(empty($sector))
+		{
+			return view('404');
+        }
+
+        $data = request()->validate([
+            'titulo' => 'required|unique:sectores,titulo,'.$id,
+            'descripcion' => ''
+		],[
+            'titulo.required' => 'El valor titulo es obligatorio.',
+            'titulo.unique' => 'El valor titulo ya existe en la base de datos.',
+        ]);
+
+        $sector->titulo = $data['titulo'];
+        $sector->descripcion = $data['descripcion'];
+        $sector->actualizado_en = $now;
+
+        $sector->save();
+
+        return redirect()->back()->with('success', 'Sector modificado con éxito');
     }
 
     public function poblaciones($pagina = null)
@@ -324,7 +364,7 @@ class AdminController extends BaseController
         }
 
         $data = request()->validate([
-            'titulo' => 'required',
+            'titulo' => 'required|unique:locales,titulo,'.$id,
             'telefono' => 'required',
             'precio' => 'required',
             'metros' => 'required',
@@ -342,6 +382,13 @@ class AdminController extends BaseController
             'extracto.required' => 'El valor extracto es obligatorio.',
             'descripcion.required' => 'El valor descripcion es obligatorio.'
         ]);
+
+        $local_url = Local::where('url_amigable' , '=' , Str::slug($data['titulo']))->first();
+
+        if(!empty($local_url))
+        {
+            return redirect()->back()->withErrors('Se ha intentado generar una url duplicada, pruebe con otro titulo')->withInput();
+        }
 
         $local->titulo = $data['titulo'];
         $local->url_amigable = Str::slug($data['titulo']);
