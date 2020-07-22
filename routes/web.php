@@ -50,6 +50,10 @@ Route::post('/admin/sectores/crear', 'AdminController@sectores_crear_nuevo');
 
 Route::get('/admin/poblaciones', 'AdminController@poblaciones');
 Route::get('/admin/poblaciones/{pagina}', 'AdminController@poblaciones')->where('pagina', '[0-9]+');
+Route::get('/admin/poblaciones/editar/{id}', 'AdminController@editar_poblacion')->where('id', '[0-9]+')->name('poblaciones.editar');
+Route::post('/admin/poblaciones/editar/{id}', 'AdminController@editar_poblacion_editar');
+Route::get('/admin/poblaciones/crear', 'AdminController@poblaciones_crear');
+Route::post('/admin/poblaciones/crear', 'AdminController@poblaciones_crear_nuevo');
 
 Route::get('/admin/solicitudes', 'AdminController@solicitudes');
 Route::get('/admin/solicitudes/{pagina}', 'AdminController@solicitudes')->where('pagina', '[0-9]+');

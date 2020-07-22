@@ -20,7 +20,7 @@
             <td>{{ $poblacion->nombre }}</td>
             <td>{{ $poblacion->creado_en}}</td>
             <td>{{ $poblacion->actualizado_en}}</td>
-            <td><button type="button" class="btn btn-primary">Editar</button></td>
+            <td><a class="btn btn-primary" href="{{ url('/admin/poblaciones/editar/'.$poblacion->id) }}">Editar</a></td>
         </tr>
         @endforeach
         </tbody>
