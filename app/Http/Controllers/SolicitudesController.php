@@ -141,9 +141,19 @@ class SolicitudesController extends BaseController
         ]);
     }
 
-    public static function update($id_sector, $request)
+    public static function update($id_solicitud)
     {
+        $now = Carbon::now(new \DateTimeZone('Europe/Madrid'));
 
+        $solicitud = Solicitud::find($id_solicitud);
+
+        if(empty($solicitud))
+		{
+			return view('404');
+        }
+
+        $solicitud->atendido_en = $now;
+        $solicitud->save();
     }
 
     public static function delete($id_sector)

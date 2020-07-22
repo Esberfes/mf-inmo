@@ -405,6 +405,18 @@ class AdminController extends BaseController
         return $this->solicitudes(null);
     }
 
+    public function solicitudes_atender($id_solicitud)
+    {
+        if(!LoginController::check())
+        {
+            return redirect()->route('login');
+        }
+
+        SolicitudesController::update($id_solicitud);
+
+        return redirect()->back()->with('success', 'Solicitud atendida con éxito');
+    }
+
     public function usuarios($pagina = null)
     {
         if(!LoginController::check())

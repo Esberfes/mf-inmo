@@ -42,7 +42,7 @@
                 <th scope="col">Telefono</th>
                 <th scope="col">Atendido en</th>
                 <th scope="col">Fecha creación</th>
-                <th scope="col">Detalle</th>
+                <th scope="col">Atender</th>
             </tr>
         </thead>
         <tbody>
@@ -56,7 +56,12 @@
             <td>{{ $solicitud->telefono }}</td>
             <td>{{ $solicitud->atendido_en ? \Carbon\Carbon::parse($solicitud->atendido_en)->format('d/m/Y H:i:s') : '' }}</td>
             <td>{{ \Carbon\Carbon::parse($solicitud->creado_en)->format('d/m/Y H:i:s') }}</td>
-            <td><button type="button" class="btn btn-primary">Detalle</button></td>
+            <td>
+                <form action="{{ url('/admin/solicitudes/atender/'.$solicitud->id) }}" method="post">
+                    <button {{ $solicitud->atendido_en ? 'disabled' : '' }} class="btn btn-primary">Atender</button>
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                </form>
+            </td>
         </tr>
         @endforeach
         </tbody>
