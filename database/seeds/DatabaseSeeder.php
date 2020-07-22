@@ -34,10 +34,10 @@ class DatabaseSeeder extends Seeder
         $now = Carbon::now(new DateTimeZone('Europe/Madrid'));
 
         $user = Usuario::create([
-			'nombre' => 'jose',
-            'email' => 'j@j.com',
+			'nombre' => 'Javier',
+            'email' => 'casas222@gmail.com',
             'telefono' => '616666666',
-            'pass' => 'pass',
+            'pass' => md5(env('APP_ENV').'admin'),
             'rol' => 'administrador',
             'ultimo_login' => $now,
             'creado_en' => $now,

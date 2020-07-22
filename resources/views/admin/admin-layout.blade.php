@@ -21,8 +21,14 @@
     <link rel="stylesheet" href="{{asset('css/font-awesome.css')}}">
 </head>
 <body>
-
+    @section('nonav')
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5 sticky-top">
+
+        <form style="position: absolute;right: 15px;" action="{{ url('/admin/logout') }}" method="post">
+            <button style="background:transparent;border:none;"><i style="color:#FFFFFF;" class="fas fa-power-off"></i></button>
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        </form>
+
         <a class="navbar-brand" href="{{ url('/') }}"><i class="fas fa-home"></i></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#adminNavbar" aria-controls="adminNavbar" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -62,7 +68,6 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownSolicitudes">
                         <a class="dropdown-item" href="{{ url('/admin/solicitudes') }}">Listar</a>
-                        <a class="dropdown-item" href="{{ url('/admin/solicitudes/crear') }}">Crear</a>
                     </div>
                 </div>
                 <div class="dropdown">
@@ -77,7 +82,7 @@
             </div>
         </div>
     </nav>
-
+    @show
     <main class="container-fluid">
     @yield('content')
     </main>

@@ -99,8 +99,8 @@
             <td>{{ $local->destacado ? 'Si' : 'No'}}</td>
             <td>{{ $local->sector->titulo}}</td>
             <td>{{ $local->poblacion->nombre}}</td>
-            <td>{{ $local->creado_en}}</td>
-            <td>{{ $local->actualizado_en}}</td>
+            <td>{{ \Carbon\Carbon::parse($local->creado_en)->format('d/m/Y H:i:s') }}</td>
+            <td>{{ \Carbon\Carbon::parse($local->actualizado_en)->format('d/m/Y H:i:s') }}</td>
             <td><a class="btn btn-primary" href="{{ url('/admin/locales/editar/'.$local->id) }}">Editar</a></td>
         </tr>
         @endforeach

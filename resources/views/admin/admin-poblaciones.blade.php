@@ -30,8 +30,8 @@
         <tr>
             <th scope="row">{{ $poblacion->id }}</th>
             <td>{{ $poblacion->nombre }}</td>
-            <td>{{ $poblacion->creado_en}}</td>
-            <td>{{ $poblacion->actualizado_en}}</td>
+            <td>{{ \Carbon\Carbon::parse($poblacion->creado_en)->format('d/m/Y H:i:s') }}</td>
+            <td>{{ \Carbon\Carbon::parse($poblacion->actualizado_en)->format('d/m/Y H:i:s') }}</td>
             <td><a class="btn btn-primary" href="{{ url('/admin/poblaciones/editar/'.$poblacion->id) }}">Editar</a></td>
         </tr>
         @endforeach

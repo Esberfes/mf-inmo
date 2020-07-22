@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/{pagina}', 'UserController@home')->where('pagina', '[0-9]+');
-Route::get('/', 'UserController@home');
+Route::get('/', 'UserController@home')->name('home');
 Route::post('/', 'UserController@home_search');
 
 Route::get('/directorio/{url}', 'UserController@directorio_local');
@@ -22,7 +22,7 @@ Route::post('/solicitud', 'UserController@solicitud');
 
 // Admin locales
 Route::get('/admin', 'AdminController@locales');
-Route::get('/admin/locales', 'AdminController@locales');
+Route::get('/admin/locales', 'AdminController@locales')->name('locales');
 Route::post('/admin/locales', 'AdminController@locales_search');
 Route::get('/admin/locales/{pagina}', 'AdminController@locales')->where('pagina', '[0-9]+');
 Route::get('/admin/locales/editar/{id}', 'AdminController@editar_local')->where('id', '[0-9]+')->name('locales.editar');
@@ -65,3 +65,6 @@ Route::get('/admin/solicitudes/{pagina}', 'AdminController@solicitudes')->where(
 Route::get('/admin/usuarios', 'AdminController@usuarios');
 Route::get('/admin/usuarios/{pagina}', 'AdminController@usuarios')->where('pagina', '[0-9]+');
 
+Route::get('/admin/login', 'LoginController@login_view')->name('login');
+Route::post('/admin/logout', 'LoginController@logout')->name('logout');
+Route::post('/admin/login', 'LoginController@login');

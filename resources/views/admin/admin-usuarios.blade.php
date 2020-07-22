@@ -10,6 +10,7 @@
                 <th scope="col">Nombre</th>
                 <th scope="col">Email</th>
                 <th scope="col">Telefono</th>
+                <th scope="col">Ultimo login</th>
                 <th scope="col">Fecha creación</th>
                 <th scope="col">Editar</th>
             </tr>
@@ -21,7 +22,8 @@
             <td>{{ $usuario->nombre }}</td>
             <td>{{ $usuario->email }}</td>
             <td>{{ $usuario->telefono }}</td>
-            <td>{{ $usuario->creado_en}}</td>
+            <td>{{ \Carbon\Carbon::parse($usuario->ultimo_login)->format('d/m/Y H:i:s') }}</td>
+            <td>{{ \Carbon\Carbon::parse($usuario->creado_en)->format('d/m/Y H:i:s') }}</td>
             <td><button type="button" class="btn btn-primary">Editar</button></td>
         </tr>
         @endforeach

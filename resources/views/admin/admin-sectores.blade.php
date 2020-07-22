@@ -31,8 +31,8 @@
         <tr>
             <th scope="row">{{ $sector->id }}</th>
             <td>{{ $sector->titulo }}</td>
-            <td>{{ $sector->creado_en}}</td>
-            <td>{{ $sector->actualizado_en}}</td>
+            <td>{{ \Carbon\Carbon::parse($sector->creado_en)->format('d/m/Y H:i:s') }}</td>
+            <td>{{ \Carbon\Carbon::parse($sector->actualizado_en)->format('d/m/Y H:i:s') }}</td>
             <td><a class="btn btn-primary" href="{{ url('/admin/sectores/editar/'.$sector->id) }}">Editar</a></td>
         </tr>
         @endforeach

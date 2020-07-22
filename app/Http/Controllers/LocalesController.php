@@ -219,7 +219,7 @@ class LocalesController extends BaseController
             'descripcion.required' => 'El valor descripcion es obligatorio.'
         ]);
 
-        $local_url = Local::where('url_amigable' , '=' , Str::slug($data['titulo']))->first();
+        $local_url = Local::where('url_amigable' , '=' , Str::slug($data['titulo']))->where('id', '!=', $id)->first();
 
         if(!empty($local_url))
         {

@@ -23,7 +23,7 @@
             <td>{{ $solicitud->nombre }}</td>
             <td>{{ $solicitud->email }}</td>
             <td>{{ $solicitud->telefono }}</td>
-            <td>{{ $solicitud->creado_en}}</td>
+            <td>{{ \Carbon\Carbon::parse($solicitud->creado_en)->format('d/m/Y H:i:s') }}</td>
             <td><button type="button" class="btn btn-primary">Detalle</button></td>
         </tr>
         @endforeach
