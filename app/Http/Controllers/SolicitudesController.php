@@ -69,6 +69,16 @@ class SolicitudesController extends BaseController
            // dd($query_solicitudes->toSql());
         }
 
+        if($filter->mostrar_atendidos == 0)
+        {
+            $query_solicitudes->whereNotNull("atendido_en");
+        }
+
+        if($filter->mostrar_atendidos == 1)
+        {
+            $query_solicitudes->whereNull("atendido_en");
+        }
+
         $paginacion = Paginacion::get($query_solicitudes->count(), $page != null ? $page : 1, $max_per_page);
 
 		if(!$paginacion)
@@ -98,6 +108,11 @@ class SolicitudesController extends BaseController
             {
                 $filter->busqueda = null;
             }
+        }
+
+        if(array_key_exists('mostrar_atendidos', $data))
+        {
+            $filter->mostrar_atendidos = $data['mostrar_atendidos'];
         }
 
         Session::put($session_key, $filter);

@@ -5,6 +5,11 @@
     <form class="form-search" action="{{ url('/admin/solicitudes') }}" method="POST">
         <div class="row">
             <div class="col d-flex align-items-center justify-content-end">
+                <select style="max-width: 400px;" name="mostrar_atendidos" class="custom-select mr-3">
+                        <option {{ Session::get(\App\Constants\SessionConstants::ADMIN_SOLICITUDES_FILTER)->mostrar_atendidos == -1 ? 'selected' : '' }} value="-1">Todas</option>
+                        <option {{ Session::get(\App\Constants\SessionConstants::ADMIN_SOLICITUDES_FILTER)->mostrar_atendidos == 0 ? 'selected' : ''}} value="0">Atendidas</option>
+                        <option {{ Session::get(\App\Constants\SessionConstants::ADMIN_SOLICITUDES_FILTER)->mostrar_atendidos == 1 ? 'selected' : ''}} value="1">Sin atender</option>
+                    </select>
                 <input style="max-width: 400px;" name="busqueda" value="{{ Session::get(\App\Constants\SessionConstants::ADMIN_SOLICITUDES_FILTER)->busqueda }}" type="search" class="form-control" placeholder="Busqueda">
                 <button class="ml-3">Encontrar</button>
             </div>
