@@ -38,7 +38,7 @@
                     <label for="busqueda">Busqueda global</label>
                     <input name="busqueda"
                         value="{{ Session::get(\App\Constants\SessionConstants::ADMIN_SECTORES_FILTER)->busqueda }}"
-                        type="search" class="form-control" placeholder="Busqueda">
+                        type="search" class="form-control" placeholder="--Sin filtro--">
                 </div>
                 <div class="admin-table-wrapper-filters-group">
                     <button class="btn btn-sm btn-outline-primary">Buscar</button>
