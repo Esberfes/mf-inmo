@@ -1,18 +1,6 @@
 @extends('admin.admin-layout')
 
 @section('content')
-<section>
-    <form class="form-search" action="{{ url('/admin/poblaciones') }}" method="POST">
-        <div class="row">
-            <div class="col d-flex align-items-center justify-content-end">
-                <input style="max-width: 400px;" name="busqueda" value="{{ Session::get(\App\Constants\SessionConstants::ADMIN_POBLACIONES_FILTER)->busqueda }}" type="search" class="form-control" placeholder="Busqueda">
-                <button class="ml-3">Encontrar</button>
-            </div>
-            <input name="action" value="search" type="hidden">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-        </div>
-    </form>
-</section>
 
 @if ($errors->any())
     <div class="alert alert-danger mt-3">
@@ -31,49 +19,90 @@
 @endif
 
 @if(!empty($poblaciones))
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Titulo</th>
-                <th scope="col">Fecha creación</th>
-                <th scope="col">Fecha modificación</th>
-                <th scope="col">Editar</th>
-                <th scope="col">Eliminar</th>
-            </tr>
-        </thead>
-        <tbody>
-        @foreach($poblaciones as $poblacion)
-        <tr>
-            <th scope="row">{{ $poblacion->id }}</th>
-            <td>{{ $poblacion->nombre }}</td>
-            <td>{{ \Carbon\Carbon::parse($poblacion->creado_en)->format('d/m/Y H:i:s') }}</td>
-            <td>{{ \Carbon\Carbon::parse($poblacion->actualizado_en)->format('d/m/Y H:i:s') }}</td>
-            <td><a class="btn btn-primary" href="{{ url('/admin/poblaciones/editar/'.$poblacion->id) }}">Editar</a></td>
-            <td>
-                <form action="{{ url('/admin/poblaciones/eliminar/'.$poblacion->id) }}" method="post">
-                    <button class="btn btn-danger">Eliminar</button>
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                </form>
-            </td>
-        </tr>
-        @endforeach
-        </tbody>
-    </table>
-@endif
-@if(!empty($paginacion))
-    <div class="text-center mt-5">
-        <ul class="pagination justify-content-center">
-            <li class="page-item"><a class="page-link" href="{{ url('/admin/poblaciones/'.$paginacion['pagina_anterior']) }}">Anterior</a></li>
-            @foreach($paginacion['paginas'] as $pagina)
-                @if($pagina == $paginacion['pagina'])
-                <li class="page-item active"><a class="page-link" href="{{ url('/admin/poblaciones/'.$pagina) }}">{{ $pagina }}</a></li>
-                @else
-                <li class="page-item"><a class="page-link" href="{{ url('/admin/poblaciones/'.$pagina) }}">{{ $pagina }}</a></li>
+<section>
+    <div class="card mb-3 admin-table-wrapper">
+        <div class="admin-table-wrapper-header">
+            <div class="admin-table-wrapper-header-title">
+                Poblaciones
+            </div>
+            <div class="admin-table-wrapper-header-info">
+                @if(!empty($paginacion))
+                Mostrando desde {{ $paginacion['offset'] }} a {{ ($paginacion['offset'] + $poblaciones->count()) }} de
+                {{ $paginacion['total'] }}
                 @endif
-            @endforeach
-            <li class="page-item"><a class="page-link" href="{{ url('/admin/poblaciones/'.$paginacion['pagina_siguiente']) }}">Siguiente</a></li>
-        </ul>
+            </div>
+        </div>
+        <div class="admin-table-wrapper-body">
+            <form class="admin-table-wrapper-filters" action=" {{ url('/admin/poblaciones') }}" method="POST">
+                <div class="admin-table-wrapper-filters-group ">
+                    <label for="busqueda">Busqueda global</label>
+                    <input name="busqueda"
+                        value="{{ Session::get(\App\Constants\SessionConstants::ADMIN_POBLACIONES_FILTER)->busqueda }}"
+                        type="search" class="form-control" placeholder="--Sin filtro--">
+                </div>
+                <div class="admin-table-wrapper-filters-group">
+                    <button class="btn btn-sm btn-outline-primary">Buscar</button>
+                </div>
+
+                <input name="action" value="search" type="hidden">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            </form>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Fecha creación</th>
+                        <th scope="col">Fecha modificación</th>
+                        <th scope="col">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($poblaciones as $poblacion)
+                    <tr>
+                        <td scope="row">{{ $poblacion->id }}</td>
+                        <td>{{ $poblacion->nombre }}</td>
+                        <td>{{ \Carbon\Carbon::parse($poblacion->creado_en)->format('d/m/Y H:i:s') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($poblacion->actualizado_en)->format('d/m/Y H:i:s') }}</td>
+                        <td>
+                            <div class="admin-table-actions-col-wrapper">
+                                <a class="btn btn-sm btn-outline-primary"
+                                    href="{{ url('/admin/poblaciones/editar/'.$poblacion->id) }}">Editar</a>
+
+                                <form action="{{ url('/admin/poblaciones/eliminar/'.$poblacion->id) }}" method="post">
+                                    <button class="btn btn-sm btn-outline-danger">Eliminar</button>
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="admin-table-wrapper-footer">
+            @if(!empty($paginacion))
+            <div class="text-center">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item"><a class="page-link"
+                            href="{{ url('/admin/poblaciones/'.$paginacion['pagina_anterior']) }}">Anterior</a></li>
+                    @foreach($paginacion['paginas'] as $pagina)
+                    @if($pagina == $paginacion['pagina'])
+                    <li class="page-item active"><a class="page-link"
+                            href="{{ url('/admin/poblaciones/'.$pagina) }}">{{ $pagina }}</a>
+                    </li>
+                    @else
+                    <li class="page-item"><a class="page-link"
+                            href="{{ url('/admin/poblaciones/'.$pagina) }}">{{ $pagina }}</a></li>
+                    @endif
+                    @endforeach
+                    <li class="page-item"><a class="page-link"
+                            href="{{ url('/admin/poblaciones/'.$paginacion['pagina_siguiente']) }}">Siguiente</a></li>
+                </ul>
+            </div>
+            @endif
+        </div>
     </div>
+</section>
 @endif
 @endsection
