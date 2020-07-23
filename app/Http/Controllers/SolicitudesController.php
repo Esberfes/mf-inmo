@@ -50,15 +50,14 @@ class SolicitudesController extends BaseController
 
     public static function get_filtered($filter, $page, $max_per_page)
     {
-        $query_solicitudes = Solicitud::take($max_per_page);
+        $query_solicitudes = Solicitud::select('locales_datos_solicitudes.*','locales.id_sector', 'locales.titulo', 'sectores.titulo')
+            ->leftJoin('locales', 'locales.id', '=', 'id_local')
+            ->leftJoin('sectores', 'locales.id_sector', '=', 'sectores.id');
 
         if($filter->busqueda)
         {
             $search = $filter->busqueda;
-            $query_solicitudes->select('locales_datos_solicitudes.*','locales.id_sector', 'locales.titulo', 'sectores.titulo')
-            ->leftJoin('locales', 'locales.id', '=', 'id_local')
-            ->leftJoin('sectores', 'locales.id_sector', '=', 'sectores.id')
-            ->where(function($query)  use ($search){
+            $query_solicitudes->where(function($query)  use ($search){
 				$query->where('nombre','LIKE',"%{$search}%")
                     ->orWhere('locales.titulo','LIKE',"%{$search}%")
                     ->orWhere('email','LIKE',"%{$search}%")
@@ -67,6 +66,11 @@ class SolicitudesController extends BaseController
             });
 
            // dd($query_solicitudes->toSql());
+        }
+
+        if($filter->sector)
+        {
+            $query_solicitudes->where('locales.id_sector', '=', $filter->sector);
         }
 
         if($filter->mostrar_atendidos == 0)
@@ -88,8 +92,11 @@ class SolicitudesController extends BaseController
 
         $solicitudes = $query_solicitudes->skip($paginacion['offset'])->take($max_per_page)->get();
 
+        $sectores = Sector::orderBy('titulo', 'asc')->get();
+
         return [
             'solicitudes' => $solicitudes,
+            'sectores' => $sectores,
             'paginacion' => $paginacion
         ];
     }
@@ -113,6 +120,18 @@ class SolicitudesController extends BaseController
         if(array_key_exists('mostrar_atendidos', $data))
         {
             $filter->mostrar_atendidos = $data['mostrar_atendidos'];
+        }
+
+        if(array_key_exists('sector', $data))
+        {
+            if($data['sector'] != 'none')
+            {
+                $filter->sector = $data['sector'];
+            }
+            else
+            {
+                $filter->sector = null;
+            }
         }
 
         Session::put($session_key, $filter);

@@ -34,9 +34,23 @@
         </div>
         <div class="admin-table-wrapper-body">
             <form class="admin-table-wrapper-filters" action=" {{ url('/admin/solicitudes') }}" method="POST">
-
+                <div class="admin-table-wrapper-filters-group">
+                    <label for="sector">Sector</label>
+                    <select name="sector" class="custom-select">
+                        <option value="none">--Sin filtro--</option>
+                        @if(!empty($sectores))
+                        @foreach($sectores as $sector)
+                        @if(Session::get(\App\Constants\SessionConstants::ADMIN_SOLICITUDES_FILTER)->sector == $sector->id)
+                        <option selected value="{{ $sector->id }}">{{ $sector->titulo }}</option>
+                        @else
+                        <option value="{{ $sector->id }}">{{ $sector->titulo }}</option>
+                        @endif
+                        @endforeach
+                        @endif
+                    </select>
+                </div>
                 <div class="admin-table-wrapper-filters-group ">
-                <label for="busqueda">Atendidas</label>
+                    <label for="busqueda">Atendidas</label>
                     <select name="mostrar_atendidos" class="custom-select mr-3">
                         <option
                             {{ Session::get(\App\Constants\SessionConstants::ADMIN_SOLICITUDES_FILTER)->mostrar_atendidos == -1 ? 'selected' : '' }}

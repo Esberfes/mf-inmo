@@ -197,11 +197,23 @@ footer {
     display: flex;
     flex-direction: column;
     margin-left: 1rem;
+    overflow: hidden;
+    padding-top: 25px;
+    position: relative;
 }
 .admin-table-wrapper-filters-group label {
     font-size: 0.8rem;
     margin-left: 0.2rem;
     margin-bottom: 0.2rem;
+    position: absolute;
+    top: 0;
+    transition: all 0.3s;
+}
+
+.admin-table-wrapper-filters-group:hover label {
+    font-size: 1rem;
+    transition: all 0.3s;
+    top: -5px;;
 }
 .admin-table-wrapper-filters-group input, .admin-table-wrapper-filters-group select {
     padding: .25rem .5rem;
