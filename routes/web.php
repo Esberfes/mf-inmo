@@ -79,3 +79,13 @@ Route::post('/admin/usuarios/eliminar/{id}', 'AdminController@eliminar_usuario')
 Route::get('/admin/login', 'LoginController@login_view')->name('login');
 Route::post('/admin/logout', 'LoginController@logout')->name('logout');
 Route::post('/admin/login', 'LoginController@login');
+
+
+
+
+
+Route::prefix('v1')->group(function () {
+
+    // resource recibe nos parámetros(URI del recurso, Controlador que gestionará las peticiones)
+    Route::resource('locales','LocalesApiController',['except'=>['edit','create'] ]);   // Todos los métodos menos Edit que mostraría un formulario de edición.
+});
