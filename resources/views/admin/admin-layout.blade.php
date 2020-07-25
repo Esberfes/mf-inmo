@@ -97,7 +97,7 @@
     <main class="container-fluid" id="app">
         @yield('content')
 
-        <div data-gridId="locales" class="react-data-grid"></div>
+        <div data-title="Locales" class="react-data-grid"></div>
     </main>
 
     <link rel="stylesheet" href="{{ asset('css/file-uploader.css') }}">
@@ -118,7 +118,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
     </script>
-    <script src="{{ mix('/js/app.js') }}"></script>
+    <script src="{{ asset('/js/app.js') }}"></script>
     <script>
     $(".btn-danger,.btn-outline-danger").click(function() {
         if (confirm("Deseas eliminar el registro?")) return true;

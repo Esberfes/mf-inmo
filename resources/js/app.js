@@ -13,4 +13,4 @@ require('./bootstrap');
  */
 
 require('./components/Example');
-require('./components/DataGrid');
+require('./components/datagrid/DataGrid');

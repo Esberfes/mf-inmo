@@ -17,7 +17,9 @@ class LocalesApiController extends BaseController
      */
     public function index()
     {
-        $locales=Cache::remember('cachelocales',15/60,function()
+        $raw_query = null;
+
+        $locales = Cache::remember('cachelocales',15/60, function() use (&$raw_query)
 		{
 			// Para la paginación en Laravel se usa "Paginator"
 			// En lugar de devolver
@@ -28,10 +30,41 @@ class LocalesApiController extends BaseController
 			// Paginator tiene un método llamado render() que permite construir
 			// los enlaces a página siguiente, anterior, etc..
 			// Para la API RESTFUL usaremos un método más sencillo llamado simplePaginate() que
-			// aporta la misma funcionalidad
-			return Local::simplePaginate(10);  // Paginamos cada 10 elementos.
+            // aporta la misma funcionalidad
 
-		});
+            $query = Local::select("locales.*", "sectores.titulo as sectores.titulo", "poblaciones.nombre as poblaciones.nombre")
+                ->leftJoin('sectores', 'sectores.id', '=', 'id_sector')
+                ->leftJoin('poblaciones', 'poblaciones.id', '=', 'id_poblacion');
+
+            $data = request()->all();
+            if(array_key_exists("filter", $data)) {
+                $filters = explode(";", $data['filter']);
+                foreach($filters as $filter)
+                {
+                    if($filter && count(explode(":",  $filter)) == 2) {
+                        $column = explode(":",  $filter)[0];
+                        $value = explode(":",  $filter)[1];
+                        $query->where($column, 'like', '%'.$value.'%');
+                    }
+                }
+            }
+
+            if(array_key_exists("order", $data)) {
+                $orders = explode(";", $data['order']);
+                foreach($orders as $order)
+                {
+                    if($order && count(explode(":",  $order)) == 2) {
+                        $column = explode(":",  $order)[0];
+                        $value = explode(":",  $order)[1];
+                        $query->orderBy($column, $value);
+                    }
+                }
+            }
+            $raw_query = $query->toSql();
+			return $query->paginate(10);  // Paginamos cada 10 elementos.
+
+        });
+
 
 		// Para devolver un JSON con código de respuesta HTTP sin caché.
 		// return response()->json(['status'=>'ok', 'data'=>Fabricante::all()],200);
@@ -41,7 +74,15 @@ class LocalesApiController extends BaseController
 
 		// Con la paginación lo haremos de la siguiente forma:
 		// Devolviendo también la URL a l
-		return response()->json(['status'=>'ok', 'next' => $locales->nextPageUrl(),'previous' => $locales->previousPageUrl(),'data' => $locales->items()], 200);
+		return response()->json([
+            'query' => $raw_query,
+            'status'=>'ok',
+            'count' => $locales->count(),
+            'total' => $locales->total(),
+            'next' => $locales->nextPageUrl(),
+            'previous' => $locales->previousPageUrl(),
+            'data' => $locales->items()
+            ], 200);
     }
 
     /**

@@ -278,3 +278,19 @@ footer {
     padding: .30rem .70rem;
     vertical-align: middle;
 }
+
+.admin-table-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-table-pagination i {
+    margin: 0rem 1rem 1rem 1rem;
+    font-size: 25px;
+    cursor: pointer;
+}
+.admin-table-pagination span {
+    margin: 0rem 1rem 1rem 1rem;
+    font-size: 18px;
+}
