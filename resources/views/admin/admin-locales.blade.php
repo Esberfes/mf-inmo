@@ -17,7 +17,7 @@
     {{ session()->get('success') }}
 </div>
 @endif
-
+<div data-title="Locales" id="localesGrid"></div>
 @if(!empty($locales))
 <section>
     <div class="card mb-3 admin-table-wrapper">

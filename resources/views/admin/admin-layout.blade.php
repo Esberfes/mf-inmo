@@ -96,8 +96,6 @@
     @show
     <main class="container-fluid" id="app">
         @yield('content')
-
-        <div data-title="Locales" class="react-data-grid"></div>
     </main>
 
     <link rel="stylesheet" href="{{ asset('css/file-uploader.css') }}">

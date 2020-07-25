@@ -77,6 +77,7 @@ class LocalesApiController extends BaseController
 		return response()->json([
             'query' => $raw_query,
             'status'=>'ok',
+            'page' => $locales->currentPage(),
             'count' => $locales->count(),
             'total' => $locales->total(),
             'next' => $locales->nextPageUrl(),
@@ -148,6 +149,11 @@ class LocalesApiController extends BaseController
      */
     public function destroy($id)
     {
-        //
+        Local::find($id)->delete();
+
+        return response()->json([
+
+            ], 200);
+
     }
 }

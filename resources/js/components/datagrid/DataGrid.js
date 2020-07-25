@@ -1,25 +1,9 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import Axios from "axios";
 import * as Qs from "query-string";
-import './loading.css';
 
-import {
-    DataGridColumnConf,
-    DataGridConf,
-    DataGridEndpointConf
-} from "./DataGridConf";
 import DataGridColumnSorter from "./DataGridColumnSorter";
-
-class DataGridLoading extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return <div className="lds-ring"><div></div><div></div><div></div><div></div></div>;
-    }
-}
+import DataGridLoading from "./DataGridLoading";
 
 class DataGrid extends React.Component {
     constructor(props) {
@@ -47,34 +31,35 @@ class DataGrid extends React.Component {
 
     async getData(page) {
         const { filters, orders } = this.state;
-        const { endpoints } = this.props.conf;
-        const getEndpoint = endpoints.get.endsWith("/")
-            ? endpoints.get
-            : endpoints.get + "/";
+        const {
+            endpoint,
+            currentPageResolver,
+            sortResolver,
+            filterResolver
+        } = this.props.conf;
 
-        const filter = Object.keys(filters)
-            .map(key => `${key}:${filters[key]}`)
-            .join(";");
+        const getEndpoint = endpoint.endsWith("/") ? endpoint : endpoint + "/";
+        const filterFields = filterResolver(filters);
+        const orderFields = sortResolver(orders.filter(o => o.active));
 
-        const order = orders
-            .filter(o => o.active)
-            .map(o => `${o.column}:${o.direction}`)
-            .join(";");
+        const params = new URLSearchParams(
+            Object.assign(
+                page ? page : {},
+                orderFields ? orderFields : {},
+                filterFields ? filterFields : {}
+            )
+        ).toString();
 
-        const params = new URLSearchParams({
-            page: page ? page : 1,
-            filter,
-            order
-        }).toString();
+        console.log(params);
 
         this.setState({ loading: true }, () => {
             Axios.get(`${getEndpoint}?${params}`).then(res => {
                 const data = res.data;
                 this.setState({
                     data,
-                    currentPage: page ? page : 1
+                    currentPage: currentPageResolver(data)
                 });
-                setTimeout(() => this.setState({loading: false}), 500);
+                setTimeout(() => this.setState({ loading: false }), 300);
             });
         });
     }
@@ -96,22 +81,54 @@ class DataGrid extends React.Component {
         this.getData(null);
     }
 
+    async onFilterChange(e, filter) {
+        const value = e.target.value;
+        await this.setState(prevState => ({
+            filters: {
+                ...prevState.filters,
+                [filter]: value
+            }
+        }));
+
+        this.getData(null);
+    }
+
+    async onNextPage() {
+        const { nextPageResolver } = this.props.conf;
+        const { data } = this.state;
+
+        if (data) this.getData(nextPageResolver(data));
+        else this.getData(null);
+    }
+
+    async onPreviousPage() {
+        const { previousPageResolver } = this.props.conf;
+        const { data } = this.state;
+
+        if (data) this.getData(previousPageResolver(data));
+        else this.getData(null);
+    }
+
     renderHeaders() {
         const { columns } = this.state;
 
         return columns.map((c, i) => {
             const query = c.query ? c.query : c.name;
             const key = "gridTh_" + i;
+            const sortable = c.sortable;
+
             return (
                 <th key={key}>
                     <div className="d-flex align-items-center justify-content-between">
                         <span>{c.title}</span>
-                        <DataGridColumnSorter
-                            column={query}
-                            handler={(column, direction, active) =>
-                                this.orderHandler(column, direction, active)
-                            }
-                        />
+                        {sortable ? (
+                            <DataGridColumnSorter
+                                column={query}
+                                handler={(column, direction, active) =>
+                                    this.orderHandler(column, direction, active)
+                                }
+                            />
+                        ) : null}
                     </div>
                 </th>
             );
@@ -122,10 +139,13 @@ class DataGrid extends React.Component {
         return this.state.columns.map((c, i) => {
             const key = "gridThf_" + i;
             const query = c.query ? c.query : c.name;
+            const filterable = c.filterable;
+
             return (
                 <th key={key}>
                     <div className="admin-table-wrapper-filters-group pt-0 ml-0">
                         <input
+                            disabled={!filterable}
                             placeholder="--Sin filtro--"
                             className="form-control"
                             onChange={e => this.onFilterChange(e, query)}
@@ -135,12 +155,6 @@ class DataGrid extends React.Component {
                 </th>
             );
         });
-    }
-
-    renderLoding() {
-        const { loading } = this.state;
-
-        return loading ? <DataGridLoading /> : null;
     }
 
     renderDataRows() {
@@ -163,21 +177,23 @@ class DataGrid extends React.Component {
 
         return data.map((row, iRow) => {
             const keyRow = "gridDr_" + iRow;
+            const keyComponent = "gridComp_" + iRow;
             const cells = Object.keys(row).map((key, iCell) => {
                 const keyCell = "gridDc_" + iCell;
                 return <td key={keyCell}>{row[key]}</td>;
             });
+            const { actionComponents } = this.props.conf;
+
+            const components = actionComponents.map((c, i) =>
+                React.cloneElement(c, { key: `gridComp_${iRow}_${i}`, row })
+            );
+
             return (
                 <tr key={keyRow}>
                     {cells}
                     <td>
                         <div className="admin-table-actions-col-wrapper">
-                            <button className="btn btn-sm btn-outline-primary">
-                                Editar
-                            </button>
-                            <button className="btn btn-sm btn-outline-danger">
-                                Eliminar
-                            </button>
+                            {components}
                         </div>
                     </td>
                 </tr>
@@ -195,40 +211,9 @@ class DataGrid extends React.Component {
         return newObject;
     }
 
-    async onFilterChange(e, filter) {
-        const value = e.target.value;
-        await this.setState(prevState => ({
-            filters: {
-                ...prevState.filters,
-                [filter]: value
-            }
-        }));
-
-        this.getData(null);
-    }
-
-    async onNextPage() {
-        if (this.state.data && this.state.data.next) {
-            const urlParams = Qs.parse(this.state.data.next.split("?")[1]);
-            const page = urlParams.page ? urlParams.page : 1;
-            this.getData(page);
-        } else {
-            this.getData(null);
-        }
-    }
-
-    async onPreviousPage() {
-        if (this.state.data && this.state.data.previous) {
-            const urlParams = Qs.parse(this.state.data.previous.split("?")[1]);
-            const page = urlParams.page ? urlParams.page : 1;
-            this.getData(page);
-        } else {
-            this.getData(null);
-        }
-    }
-
     render() {
         const { title } = this.props;
+        const { loading } = this.state;
 
         return (
             <div className={"card mb-3 admin-table-wrapper"}>
@@ -242,7 +227,9 @@ class DataGrid extends React.Component {
                         <thead>
                             <tr key="filters">
                                 {this.renderFilters()}
-                                <th>{this.renderLoding()}</th>
+                                <th>
+                                    <DataGridLoading loading={loading} />{" "}
+                                </th>
                             </tr>
                             <tr key="headers">
                                 {this.renderHeaders()}
@@ -268,27 +255,6 @@ class DataGrid extends React.Component {
             </div>
         );
     }
-}
-
-const conf = new DataGridConf(
-    [
-        new DataGridColumnConf("id", "#"),
-        new DataGridColumnConf("titulo", "Titulo", "locales.titulo"),
-        new DataGridColumnConf("sectores.titulo", "Sector"),
-        new DataGridColumnConf("telefono", "Teléfono"),
-        new DataGridColumnConf("poblaciones.nombre", "Población"),
-        new DataGridColumnConf("precio", "Precio"),
-        new DataGridColumnConf("metros", "Metros"),
-        new DataGridColumnConf("relevante", "Relevante")
-    ],
-    new DataGridEndpointConf("/v1/locales")
-);
-
-if (document.querySelectorAll(".react-data-grid")) {
-    document.querySelectorAll(".react-data-grid").forEach(e => {
-        const props = Object.assign({}, e.dataset);
-        ReactDOM.render(<DataGrid conf={conf} {...props} />, e);
-    });
 }
 
 export default DataGrid;

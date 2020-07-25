@@ -1,6 +1,7 @@
 import React from "react";
 
 export default class DataGridColumnSorter extends React.Component {
+
     constructor(props) {
         super(props);
 
@@ -30,7 +31,7 @@ export default class DataGridColumnSorter extends React.Component {
 
     render() {
         const { column, direction, active } = this.state;
-        const opacity = active ? {} : { opacity: "0.2" };
+        const opacity = active ? {} : { opacity: "0.2", cursor: "pointer" };
         const key = "gridOrder_" + column;
 
         return direction === "desc" ? (
@@ -50,3 +51,4 @@ export default class DataGridColumnSorter extends React.Component {
         );
     }
 }
+
