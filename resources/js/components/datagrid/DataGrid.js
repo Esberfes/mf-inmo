@@ -1,6 +1,5 @@
 import React from "react";
 import Axios from "axios";
-import * as Qs from "query-string";
 
 import DataGridColumnSorter from "./DataGridColumnSorter";
 import DataGridLoading from "./DataGridLoading";
@@ -228,7 +227,7 @@ class DataGrid extends React.Component {
                             <tr key="filters">
                                 {this.renderFilters()}
                                 <th>
-                                    <DataGridLoading loading={loading} />{" "}
+                                    <DataGridLoading loading={loading} />
                                 </th>
                             </tr>
                             <tr key="headers">

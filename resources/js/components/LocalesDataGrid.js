@@ -115,9 +115,11 @@ class LocalesDataGrid extends React.Component {
 
     filterResolver(filters) {
         return {
-            filter: Object.keys(filters)
-                .map(key => `${key}:${filters[key]}`)
-                .join(";")
+            filter: filters
+                ? Object.keys(filters)
+                      .map(key => `${key}:${filters[key]}`)
+                      .join(";")
+                : null
         };
     }
 
@@ -137,10 +139,9 @@ class LocalesDataGrid extends React.Component {
         if (!data || !data.previous) return null;
 
         const urlParams = Qs.parse(data.previous.split("?")[1]);
-        const page = urlParams.page ? urlParams.page : 1;
 
         return {
-            page
+            page: urlParams.page ? urlParams.page : 1
         };
     }
 
@@ -148,10 +149,9 @@ class LocalesDataGrid extends React.Component {
         if (!data || !data.next) return null;
 
         const urlParams = Qs.parse(data.next.split("?")[1]);
-        const page = urlParams.page ? urlParams.page : 1;
 
         return {
-            page
+            page: rlParams.page ? urlParams.page : 1
         };
     }
 
