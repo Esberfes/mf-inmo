@@ -19,7 +19,7 @@
 @endif
 
 @if(!empty($solicitudes))
-<section>
+<section class="admin-table-section">
     <div class="card mb-3 admin-table-wrapper">
         <div class="admin-table-wrapper-header">
             <div class="admin-table-wrapper-header-title">
@@ -95,8 +95,8 @@
                     @foreach($solicitudes as $solicitud)
                     <tr>
                         <td scope="row">{{ $solicitud->id }}</td>
-                        <td>{{ $solicitud->local->titulo }}</td>
-                        <td>{{ $solicitud->local->sector->titulo }}</td>
+                        <td>{{ $solicitud->local ? $solicitud->local->titulo : '' }}</td>
+                        <td>{{ $solicitud->local && $solicitud->local->sector ? $solicitud->local->sector->titulo : '' }}</td>
                         <td>{{ $solicitud->nombre }}</td>
                         <td>{{ $solicitud->email }}</td>
                         <td>{{ $solicitud->telefono }}</td>

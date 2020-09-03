@@ -19,7 +19,7 @@
 @endif
 
 @if(!empty($poblaciones))
-<section>
+<section class="admin-table-section">
     <div class="card mb-3 admin-table-wrapper">
         <div class="admin-table-wrapper-header">
             <div class="admin-table-wrapper-header-title">
