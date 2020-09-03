@@ -69,9 +69,17 @@
                     </div>
                     <div class="col form-search-input-wrapper">
                         <select name="precio" class="custom-select">
-                            <option value="none">Precio (sin filtro)</option>
-                            <option value="none">1000 €</option>
-                            <option value="none">10000 €</option>
+                            <?php
+                            $precios = [1000,10000,20000,40000,80000,160000, 500000,1000000];
+                            ?>
+                            <option value="none">Precio máximo (sin filtro)</option>
+                            @foreach($precios as $precio)
+                            @if(Session::get(\App\Constants\SessionConstants::USER_LOCALES_FILTER)->precio == $precio)
+                                    <option selected value="{{ $precio }}">{{ $precio }} €</option>
+                                    @else
+                                    <option value="{{ $precio }}">{{ $precio }} €</option>
+                             @endif
+                            @endforeach
                         </select>
                     </div>
                 <div class="col form-search-button-wrapper">

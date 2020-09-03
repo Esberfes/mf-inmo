@@ -37,7 +37,7 @@ class LocalesController extends BaseController
         $filter = null;
 
         if (!Session::exists($key)) {
-            $filter = new LocalFilter(Session::getId(), null, null, 'relevante', 'desc', null);
+            $filter = new LocalFilter(Session::getId(), null, null, 'relevante', 'desc', null, null);
             Session::put($key, $filter);
             Session::save();
         }
@@ -61,6 +61,11 @@ class LocalesController extends BaseController
         if($filter->sector)
         {
             $query_locales->where("id_sector", $filter->sector);
+        }
+
+        if($filter->precio)
+        {
+            $query_locales->where("precio", '<=', $filter->precio);
         }
 
         if($filter->busqueda)
@@ -181,6 +186,18 @@ class LocalesController extends BaseController
                 else
                 {
                     $filter->busqueda = null;
+                }
+            }
+
+            if(array_key_exists('precio', $data))
+            {
+                if($data['precio'] != 'none')
+                {
+                    $filter->precio = $data['precio'];
+                }
+                else
+                {
+                    $filter->precio = null;
                 }
             }
         }
