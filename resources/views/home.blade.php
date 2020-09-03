@@ -15,33 +15,32 @@
             <div class="row no-gutters">
                 <div class="col-lg-4 col-12">
                     @if($local->imagen_principal != null)
-                    <img class="home-article-element-mainimg" src="{{ url($local->imagen_principal->ruta) }}" class="card-img" alt="...">
+                    <figure class="position-relative" style=" background-image: url({{ url($local->imagen_principal->ruta) }});">
+                            @if($local->relevante)
+                            <i class="fas fa-medal home-article-element-relevante"></i>
+                            @endif
+                    </figure>
                     @endif
                 </div>
 
                 <div class="col-lg-8 col-12">
                     <div class="home-article-element-body">
                         <img class="home-article-element-body-logo" src="{{asset('img/card-mf.jpg')}}" alt="">
+
+                        <div class="home-article-element-title">
+                            {{ $local->titulo}}, {{ $local->poblacion->nombre}}
+                        </div>
                         <div class="home-article-element-cost">
                         {{ $local->precio}}€
                         </div>
-                        <div class="home-article-element-categorie">
-                        Sector: {{ $local->sector->titulo}}
-                        </div>
-                        <div class="home-article-element-location">
-                        Poblacion: {{ $local->poblacion->nombre}}
-                        </div>
-                        <div class="home-article-element-relevante">
-                        Relevante: {{ $local->relevante}}
-                        </div>
                         <div class="home-article-element-dimensioncost">
-                            {{ $local->metros}} m²
+                            {{ $local->metros}} m² - {{ $local->sector->titulo}}
                         </div>
-                        <div class="home-article-element-title">
-                            {{ $local->titulo}}
+                        <div class="home-article-element-categorie">
+
                         </div>
                         <div class="home-article-element-description">
-                            {!! $local->extracto !!}
+                        <?= \Illuminate\Support\Str::limit(strip_tags( $local->extracto), $limit = 150, $end = '...');  ?>
                         </div>
                         <div class="home-article-element-contact">
                             <div>

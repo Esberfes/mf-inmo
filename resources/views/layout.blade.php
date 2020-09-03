@@ -33,9 +33,9 @@
 
 
     <main class="container">
-        <section>
+        <section class="section-form-search">
             <form class="form-search" action="/" method="POST">
-                <div class="row">
+                <div class="row no-gutters">
                     <div class="col form-search-input-wrapper">
                         <input name="busqueda" value="{{ Session::get(\App\Constants\SessionConstants::USER_LOCALES_FILTER)->busqueda }}" type="search" class="form-control" placeholder="Busqueda">
                     </div>
@@ -67,15 +67,25 @@
                             @endif
                         </select>
                     </div>
+                    <div class="col form-search-input-wrapper">
+                        <select name="precio" class="custom-select">
+                            <option value="none">Precio (sin filtro)</option>
+                            <option value="none">1000 €</option>
+                            <option value="none">10000 €</option>
+                        </select>
+                    </div>
                 <div class="col form-search-button-wrapper">
-                    <button>Encontrar</button>
+                    <button class="btn btn-secondary" >Encontrar</button>
                 </div>
                 <input name="action" value="search" type="hidden">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
             </div>
             </form>
             <form class="form-order-by" action="/" method="POST">
-                <button name="relevancia" value="{{ Session::get(\App\Constants\SessionConstants::USER_LOCALES_FILTER)->order_direction == 'asc' && Session::get(\App\Constants\SessionConstants::USER_LOCALES_FILTER)->order == 'relevancia'? 'desc' : 'asc' }}">
+                <div class="mr-3">
+                    Ordenar:
+                </div>
+                <button class="btn btn-secondary {{ Session::get(\App\Constants\SessionConstants::USER_LOCALES_FILTER)->order == 'relevancia' ? 'active-button' : ''}}" name="relevancia" value="{{ Session::get(\App\Constants\SessionConstants::USER_LOCALES_FILTER)->order_direction == 'asc' && Session::get(\App\Constants\SessionConstants::USER_LOCALES_FILTER)->order == 'relevancia'? 'desc' : 'asc' }}">
                     Relevancia
                     @if(Session::get(\App\Constants\SessionConstants::USER_LOCALES_FILTER)->order == 'relevancia')
                         @if(Session::get(\App\Constants\SessionConstants::USER_LOCALES_FILTER)->order_direction == 'asc')
@@ -85,7 +95,7 @@
                         @endif
                     @endif
                 </button>
-                <button name="precio" value="{{ Session::get(\App\Constants\SessionConstants::USER_LOCALES_FILTER)->order_direction == 'asc' && Session::get(\App\Constants\SessionConstants::USER_LOCALES_FILTER)->order == 'precio' ? 'desc' : 'asc' }}">
+                <button class="btn btn-secondary {{ Session::get(\App\Constants\SessionConstants::USER_LOCALES_FILTER)->order == 'precio' ? 'active-button' : ''}}"  name="precio" value="{{ Session::get(\App\Constants\SessionConstants::USER_LOCALES_FILTER)->order_direction == 'asc' && Session::get(\App\Constants\SessionConstants::USER_LOCALES_FILTER)->order == 'precio' ? 'desc' : 'asc' }}">
                     Precio
                     @if(Session::get(\App\Constants\SessionConstants::USER_LOCALES_FILTER)->order == 'precio')
                         @if(Session::get(\App\Constants\SessionConstants::USER_LOCALES_FILTER)->order_direction == 'asc')
@@ -95,7 +105,7 @@
                         @endif
                     @endif
                 </button>
-                <button name="superficie" value="{{ Session::get(\App\Constants\SessionConstants::USER_LOCALES_FILTER)->order_direction == 'asc' && Session::get(\App\Constants\SessionConstants::USER_LOCALES_FILTER)->order == 'superficie' ? 'desc' : 'asc' }}">
+                <button class="btn btn-secondary {{ Session::get(\App\Constants\SessionConstants::USER_LOCALES_FILTER)->order == 'superficie' ? 'active-button' : ''}}"  name="superficie" value="{{ Session::get(\App\Constants\SessionConstants::USER_LOCALES_FILTER)->order_direction == 'asc' && Session::get(\App\Constants\SessionConstants::USER_LOCALES_FILTER)->order == 'superficie' ? 'desc' : 'asc' }}">
                     Superficie
                     @if(Session::get(\App\Constants\SessionConstants::USER_LOCALES_FILTER)->order == 'superficie')
                         @if(Session::get(\App\Constants\SessionConstants::USER_LOCALES_FILTER)->order_direction == 'asc')
