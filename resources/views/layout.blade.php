@@ -38,7 +38,7 @@
 
     <main class="container">
         <section class="section-form-search">
-            <form class="form-search" action="/" method="POST">
+            <form class="form-search" action="/" method="GET">
                 <div class="row no-gutters">
                     <div class="col form-search-input-wrapper">
                         <input name="busqueda" value="{{ Session::get(\App\Constants\SessionConstants::USER_LOCALES_FILTER)->busqueda }}" type="search" class="form-control" placeholder="Busqueda">
