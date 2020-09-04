@@ -120,10 +120,10 @@ main section article.home-article-element figure {
 
 main section article.home-article-element .home-article-element-relevante {
     position: absolute;
-    top: 10px;
+    top: 0;
     right: 10px;
     color: #FFF;
-    font-size: 26px;
+    font-size: 28px;
 }
 
 main section article.home-article-element a  {
@@ -221,7 +221,38 @@ main section .form-solicitud button {
 
 /* @FOOTER SECTION */
 footer {
+    background-color: #313131;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    margin-top: 5rem;
+}
+footer .footer-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3rem;
+    font-size: 16px;
+    color: #999999;
+}
+footer .footer-links > span {
+    margin: 0 0.4rem;
+}
 
+footer .footer-links a {
+    text-decoration: none;
+    color: #eb3e4f;
+}
+
+footer .footer-links a:hover {
+    text-decoration: none;
+}
+footer .footer-logos {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+footer .footer-logos img {
+    width: 100%;
 }
 /* #FOOTER SECTION */
 

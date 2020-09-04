@@ -23,7 +23,7 @@
     <div class="card mb-3 admin-table-wrapper">
         <div class="admin-table-wrapper-header">
             <div class="admin-table-wrapper-header-title">
-                Sectores
+                Solicitudes
             </div>
             <div class="admin-table-wrapper-header-info">
                 @if(!empty($paginacion))

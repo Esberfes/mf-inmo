@@ -29,7 +29,7 @@
                     <a href="{{ url('/') }}"><img width="200px" class="logo" src="{{asset('img/card-mf.jpg')}}" alt=""></a>
                 </div>
                 <div class="d-flex align-items-center">
-                    <a href="{{ url('/admin') }}"><i style="font-size:30px; color:#FFFFFF;margin-right: 1.4rem;" class="fas fa-user-lock"></i></a>
+                    <a href="{{ url('/admin') }}"><i style="font-size:25px; color:#FFFFFF;margin-right: 1.4rem;" class="fas fa-user-lock"></i></a>
                 </div>
             </div>
         </div>
@@ -160,7 +160,29 @@
     </main>
 
     <footer>
-        footer
+        <div class="container">
+            <div class="footer-links">
+                <div>© 2020</div>
+                <span>|</span>
+                <div> <a target="_blank" href="https://www.mundofranquicia.com/aviso-legal/">Aviso legal</a></div>
+                <span>|</span>
+                <div> <a target="_blank" href="https://www.mundofranquicia.com/aviso-legal/">Política de privacidad</a></div>
+                <span>|</span>
+                <div> <a target="_blank" href="https://www.mundofranquicia.com/aviso-legal/">Política de Cookies</a></div>
+            </div>
+
+            <div class="footer-logos row">
+                <div class="col-lg-2 footer-logo">
+                    <img src="{{asset('img/footer/logo20anyos.png')}}" alt="">
+                </div>
+                <div class="col-lg-4 footer-logo">
+                    <img src="{{asset('img/footer/logo-mundofranquicia-negativo.png')}}" alt="">
+                </div>
+                <div class="col-lg-6 footer-logo">
+                    <img src="{{asset('img/footer/logos-footer-membersof-mf.png')}}" alt="">
+                </div>
+            </div>
+        </div>
     </footer>
 
     <!-- Bootstrap -->
