@@ -580,6 +580,6 @@ class AdminController extends BaseController
         return response([
             'error'=>false,
             'error-msg'=>"NOT_CONTENT ".$data['checked']
-        ], 200);
+        ], 204);
     }
 }

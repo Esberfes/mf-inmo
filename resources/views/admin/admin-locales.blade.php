@@ -170,7 +170,7 @@ $(".relevante-check").each(function(e){
                 checked: checked ? 1 : 0
             },
             success: function(data) {
-                console.log(data)
+
             },
             error: function(data) {
                 console.log(data)
