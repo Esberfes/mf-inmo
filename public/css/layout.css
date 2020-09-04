@@ -136,7 +136,13 @@ main section article.home-article-element a:hover {
 
 main section article.home-article-element .home-article-element-body {
     position: relative;
-    padding: 1.25rem 1.25rem;
+    padding: 1.25rem 1.25rem 1rem 1.25rem;
+}
+
+main section article.home-article-element  .home-article-element-footer {
+    border-top: 1px solid rgba(160,160,160,0.2);
+    position: relative;
+    padding: 1rem 1.25rem 1rem 1.25rem;
 }
 
 main section article.home-article-element .home-article-element-body .home-article-element-body-logo {
@@ -163,7 +169,7 @@ main section article.home-article-element .home-article-element-description {
     color: #818387;
 }
 main section article.home-article-element .home-article-element-contact {
-    margin-top: 0.7rem;
+
 }
 
 main section article.home-article-element .home-article-element-contact i {

@@ -23,7 +23,7 @@
                     @endif
                 </div>
 
-                <div class="col-lg-8 col-12">
+                <div class="col-lg-8 col-12 d-flex flex-column">
                     <div class="home-article-element-body">
                         <img class="home-article-element-body-logo" src="{{asset('img/card-mf.jpg')}}" alt="">
 
@@ -42,6 +42,9 @@
                         <div class="home-article-element-description">
                         <?= \Illuminate\Support\Str::limit(strip_tags( $local->extracto), $limit = 150, $end = '...');  ?>
                         </div>
+
+                    </div>
+                    <div class="home-article-element-footer">
                         <div class="home-article-element-contact">
                             <div>
                                 <i class="fas fa-phone"></i>{{ $local->telefono}}

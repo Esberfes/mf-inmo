@@ -37,7 +37,7 @@ class LocalesController extends BaseController
         $filter = null;
 
         if (!Session::exists($key)) {
-            $filter = new LocalFilter(Session::getId(), null, null, 'relevante', 'desc', null, null);
+            $filter = new LocalFilter(Session::getId(), null, null, 'relevancia', 'desc', null, null);
             Session::put($key, $filter);
             Session::save();
         }
