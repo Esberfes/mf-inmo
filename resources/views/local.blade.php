@@ -1,5 +1,29 @@
 @extends('layout')
 
+@section('rrss')
+<!-- RRSS -->
+<meta property="og:locale" content="es_ES" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="1er Portal inmobiliario para franquicias. Con la garantía de mundoFranquicia." />
+<meta property="og:description" content="1er Portal inmobiliario para franquicias. Con la garantía de mundoFranquicia." />
+<meta property="og:url" content="{{ url(Request::url()) }}" />
+<meta property="og:site_name" content="mfinmobiliaria" />
+
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="900" />
+<meta property="og:image:height" content="324" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="1er Portal inmobiliario para franquicias. Con la garantía de mundoFranquicia." />
+<meta name="twitter:title" content="1er Portal inmobiliario para franquicias. Con la garantía de mundoFranquicia." />
+<link rel="canonical" href="{{ url(Request::url()) }}" />
+@if($local->imagen_principal != null)
+<meta property="og:image" content="{{ url($local->imagen_principal->ruta) }}" />
+<meta property="og:image:secure_url" content="{{ url($local->imagen_principal->ruta) }}" />
+<meta name="twitter:image" content="{{ url($local->imagen_principal->ruta) }}" />
+@endif
+<!-- RRSS -->
+@endsection
+
 @section('content')
 <section>
 

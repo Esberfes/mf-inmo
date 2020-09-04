@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="robots" content="index,follow" />
 
+    @section('rrss')
     <!-- RRSS -->
     <meta property="og:locale" content="es_ES" />
 	<meta property="og:type" content="website" />
@@ -23,6 +24,7 @@
 	<meta name="twitter:image" content="{{asset('img/card-mf.jpg')}}" />
 	<link rel="canonical" href="{{ url(Request::url()) }}" />
     <!-- RRSS -->
+    @show
 
 	<meta name="csrf-token" content="{{ csrf_token() }}" >
 
