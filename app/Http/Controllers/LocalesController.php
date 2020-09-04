@@ -130,7 +130,7 @@ class LocalesController extends BaseController
     {
         $filter = self::manage_filter_session($session_key);
 
-        if($data && array_key_exists('action', $data) && $data['action'] == 'order')
+        if($data && array_key_exists('actionOrder', $data))
         {
             if(array_key_exists('relevancia', $data))
             {
@@ -138,10 +138,10 @@ class LocalesController extends BaseController
                 $filter->order_direction = $data['relevancia'];
             }
 
-            if(array_key_exists('precio', $data))
+            if(array_key_exists('precioOrder', $data))
             {
                 $filter->order = 'precio';
-                $filter->order_direction = $data['precio'];
+                $filter->order_direction = $data['precioOrder'];
             }
 
             if(array_key_exists('superficie', $data))
@@ -151,7 +151,7 @@ class LocalesController extends BaseController
             }
         }
 
-        if($data && array_key_exists('action', $data) && $data['action'] == 'search')
+        if($data && array_key_exists('actionSearch', $data))
         {
             if(array_key_exists('sector', $data))
             {

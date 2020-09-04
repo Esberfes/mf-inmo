@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/{pagina}', 'UserController@home')->where('pagina', '[0-9]+');
 Route::get('/', 'UserController@home')->name('home');
-Route::post('/', 'UserController@home_search');
+Route::get('/buscar', 'UserController@home_search');
 
 Route::get('/directorio/{url}', 'UserController@directorio_local');
 
@@ -23,7 +23,7 @@ Route::post('/solicitud', 'UserController@solicitud');
 // Admin locales
 Route::get('/admin', 'AdminController@locales');
 Route::get('/admin/locales', 'AdminController@locales')->name('locales');
-Route::get('/admin/locales/buscar', 'AdminController@locales_search');
+Route::post('/admin/locales', 'AdminController@locales_search');
 Route::get('/admin/locales/{pagina}', 'AdminController@locales')->where('pagina', '[0-9]+');
 Route::get('/admin/locales/editar/{id}', 'AdminController@editar_local')->where('id', '[0-9]+')->name('locales.editar');
 Route::post('/admin/locales/editar/{id}', 'AdminController@editar_local_editar');
