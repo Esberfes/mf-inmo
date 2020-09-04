@@ -5,7 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="robots" content="index,follow" />
 
+    <!-- RRSS -->
+    <meta property="og:locale" content="es_ES" />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="1er Portal inmobiliario para franquicias. Con la garantía de mundoFranquicia." />
+	<meta property="og:description" content="1er Portal inmobiliario para franquicias. Con la garantía de mundoFranquicia." />
+	<meta property="og:url" content="{{ url(Request::url()) }}" />
+	<meta property="og:site_name" content="mfinmobiliaria" />
+	<meta property="og:image" content="{{asset('img/card-mf.jpg')}}" />
+	<meta property="og:image:secure_url" content="{{asset('img/card-mf.jpg')}}" />
+	<meta property="og:image:type" content="image/jpeg" />
+	<meta property="og:image:width" content="900" />
+	<meta property="og:image:height" content="324" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:description" content="1er Portal inmobiliario para franquicias. Con la garantía de mundoFranquicia." />
+	<meta name="twitter:title" content="1er Portal inmobiliario para franquicias. Con la garantía de mundoFranquicia." />
+	<meta name="twitter:image" content="{{asset('img/card-mf.jpg')}}" />
 	<link rel="canonical" href="{{ url(Request::url()) }}" />
+    <!-- RRSS -->
 
 	<meta name="csrf-token" content="{{ csrf_token() }}" >
 
