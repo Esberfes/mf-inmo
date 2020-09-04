@@ -16,8 +16,18 @@ body{font-family: 'Titillium Web', sans-serif !important;background: #F5F5F6; fo
 /* @HEADER SECTION */
 header {
     background-color: #ee1d23;
-    min-height: 50px;
+    padding: 0.5rem 0;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
 }
+header .header-wrapper {
+    padding: 0rem 1.25rem;
+}
+header  .header-wrapper .logo {
+    margin-left: 0.4rem;
+}
+
+
+
 /* #HEADER SECTION */
 
 aside img {
@@ -163,8 +173,11 @@ main section article.home-article-element .home-article-element-contact i {
 
 main section article.local-article {
     margin-top: 1.5rem;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
 }
-
+main section article.local-article .local-article-body {
+    padding: 1.25rem;
+}
 main section article.local-article .local-article-main-image {
     width: 100%;
 }
@@ -178,6 +191,9 @@ main section article.local-article h2 {
 }
 main section .form-solicitud {
     margin-top: 1.5rem;
+    padding: 1.25rem;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+    background-color: #FFF;
 }
 main section .form-solicitud h2 {
     text-align: center;
@@ -186,12 +202,7 @@ main section .form-solicitud h2 {
     margin-bottom: 2rem;
 }
 main section .form-solicitud button {
-    display: inline-block;
     width: 100%;
-    color: #FFFFFF;
-    background-color: #ec394e;
-    border: none;
-    padding: 0.5rem 0;
 }
 /* #MAIN SECTION */
 

@@ -22,12 +22,16 @@
 </head>
 <body>
 
-    <header class="d-flex justify-content-between">
-        <div class="d-flex align-items-center">
-            <a href="{{ url('/') }}"><img width="200px" src="{{asset('img/card-mf.jpg')}}" alt=""></a>
-        </div>
-        <div class="d-flex align-items-center">
-            <a href="{{ url('/admin') }}"><i style="font-size:30px; color:#FFFFFF;margin-right:10px;" class="fas fa-user-lock"></i></a>
+    <header>
+        <div class="container">
+            <div class="header-wrapper d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <a href="{{ url('/') }}"><img width="200px" class="logo" src="{{asset('img/card-mf.jpg')}}" alt=""></a>
+                </div>
+                <div class="d-flex align-items-center">
+                    <a href="{{ url('/admin') }}"><i style="font-size:30px; color:#FFFFFF;margin-right: 1.4rem;" class="fas fa-user-lock"></i></a>
+                </div>
+            </div>
         </div>
     </header>
 
