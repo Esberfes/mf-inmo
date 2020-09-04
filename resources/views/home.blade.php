@@ -25,7 +25,9 @@
 
                 <div class="col-lg-8 col-12 d-flex flex-column">
                     <div class="home-article-element-body">
-                        <img class="home-article-element-body-logo" src="{{asset('img/card-mf.jpg')}}" alt="">
+                        <div class="home-article-element-body-logo">
+                            <img src="{{asset('img/card-mf.jpg')}}" alt="">
+                        </div>
 
                         <div class="home-article-element-title">
                             {{ $local->titulo}}, {{ $local->poblacion->nombre}}
