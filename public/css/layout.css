@@ -140,7 +140,7 @@ main section article.home-article-element .home-article-element-body {
 }
 
 main section article.home-article-element  .home-article-element-footer {
-    border-top: 1px solid rgba(160,160,160,0.2);
+    border-top: 1px solid  rgba(0,0,0,.125);
     position: relative;
     padding: 1rem 1.25rem 1rem 1.25rem;
 }
@@ -192,7 +192,7 @@ main section article.local-article .local-article-main-image {
     width: 100%;
 }
 main section article.local-article  .local-article-titulo {
-    border-bottom: 1px solid rgba(160,160,160,0.3);
+    border-bottom: 1px solid  rgba(0,0,0,.125);
     padding: 1.25rem;
 }
 main section article.local-article  .local-article-titulo h1 {
@@ -224,35 +224,60 @@ main section article.local-article .local-article-descripcion {
 main section article.local-article .local-article-attrs {
     padding: 1.25rem;
 }
-main section article.local-article  .list-group {
-   /* box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);*/
-}
 
-main section article.local-article  .list-group .list-group-item.active {
+    aside article{
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+    }
+    aside article .list-group h2 {
+        font-size: 1.3rem;
+        font-weight: bold;
+    }
+    aside article .list-group-item.active {
+        display: flex;
+        align-items: center;
+    }
+    aside article .list-group-item.active i {
+        margin-right: 1rem;
+    }
+
+.list-group .list-group-item.active {
     background-color: #FFF;
     color: black;
     border: 1px solid rgba(0,0,0,.125);
 }
-main section article.local-article  .list-group .list-group-item.active h2 {
+  .list-group .list-group-item.active h2 {
     margin: 0;
 }
 main section .local-article-footer {
-    border-top: 1px solid rgba(160,160,160,0.2);
+    border-top: 1px solid rgba(0,0,0,.125);
     position: relative;
     padding: 1rem 1.25rem 1rem 1.25rem;
 }
 
 main section .form-solicitud {
     margin-top: 1.5rem;
-    padding: 1.25rem;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
     background-color: #FFF;
 }
-main section .form-solicitud h2 {
-    text-align: center;
-    font-size: 1.5rem;
+main section .form-solicitud-header {
+    border-bottom: 1px solid rgba(160,160,160,0.3);
+    padding: .75rem 1.25rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+main section .form-solicitud-header i {
+    margin-right: 1rem;
+}
+main section .form-solicitud-header h2 {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    font-size: 1.3rem;
     font-weight: bold;
-    margin-bottom: 2rem;
+}
+main section  .form-solicitud-body {
+    padding: 0.75rem 1.25rem;
 }
 main section .form-solicitud button {
     width: 100%;

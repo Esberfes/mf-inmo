@@ -23,48 +23,6 @@
                 <?= $local->descripcion ?>
             </div>
 
-            <div class="local-article-attrs mt-3">
-                <div class="row">
-                    <div class="col-lg-12 col-12 mt-3">
-                        @if(!empty($local->caracteristicas))
-                        <ul class="list-group">
-                            <li class="list-group-item active"><h2>Caracteristicas</h2></li>
-                            @foreach($local->caracteristicas as $caracteristica)
-                            <li class="list-group-item">{{ $caracteristica->valor }}</li>
-                            @endforeach
-                        </ul>
-                        @endif
-                    </div>
-                    <div class="col-lg-12 col-12 mt-3">
-                        @if(!empty($local->edificios))
-                        <div class="local-article-edifico mt-3">
-                            <ul class="list-group">
-                                <li class="list-group-item active"><h2>Edificio</h2></li>
-                                @foreach($local->edificios as $edificio)
-                                <li class="list-group-item">{{ $edificio->valor }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        @endif
-                    </div>
-
-                    <div class="col-lg-12 col-12">
-                        @if(!empty($local->equipamientos))
-                        <div class="local-article-edifico mt-3">
-                            <ul class="list-group">
-                                <li class="list-group-item active"><h2>Equipamiento</h2></li>
-                                @foreach($local->equipamientos as $equipamiento)
-                                <li class="list-group-item">{{ $equipamiento->valor }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        @endif
-
-                    </div>
-                </div>
-            </div>
-
-
         </div>
 
         <div class="local-article-footer mt-5">
@@ -117,56 +75,89 @@
 @section('sidebar')
 <section>
     <form class="form-solicitud" method="POST" action="{{ url('/solicitud') }}">
-        <h2>Pregunta al anunciante</h2>
-        <div class="row">
-            <div class="col-12">
-                <div class="form-group">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" name="nombre" value="{{ old('nombre') }}">
+        <div class="form-solicitud-header"><i class="far fa-id-card"></i><h2>Pregunta al anunciante</h2></div>
+        <div class="form-solicitud-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <input placeholder="Nombre" type="text" class="form-control" name="nombre" value="{{ old('nombre') }}">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <input placeholder="Email" type="email" class="form-control" name="email" value="{{ old('email') }}">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <input placeholder="Teléfono" type="tel" class="form-control" name="telefono" value="{{ old('telefono') }}">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <textarea placeholder="Comentario" class="form-control" rows="3" name="comentario">{{ old('comentario') }}</textarea>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                    <button class="btn btn-secondary">Conectar</button>
+                    </div>
                 </div>
             </div>
-            <div class="col-12">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" name="email" value="{{ old('email') }}">
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="form-group">
-                    <label for="telefono">Teléfono</label>
-                    <input type="tel" class="form-control" name="telefono" value="{{ old('telefono') }}">
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="form-group">
-                    <label for="comentario">Comentario</label>
-                    <textarea class="form-control" rows="3" name="comentario">{{ old('comentario') }}</textarea>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="form-group">
-                  <button class="btn btn-secondary">Conectar</button>
-                </div>
-            </div>
-        </div>
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-        <input type="hidden" name="id_local" value="{{ $local->id }}">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="id_local" value="{{ $local->id }}">
 
-        @if ($errors->any())
-        <div class="blanco mt-3">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
+            @if ($errors->any())
+            <div class="blanco mt-3">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
 
-        @if(session()->has('success'))
-        <div class="alert alert-success mt-3">
-            {{ session()->get('success') }}
+            @if(session()->has('success'))
+            <div class="alert alert-success mt-3">
+                {{ session()->get('success') }}
+            </div>
+            @endif
         </div>
-        @endif
+
     </form>
+
+    @if(!empty($local->caracteristicas))
+    <article class="mt-3">
+        <ul class="list-group">
+            <li class="list-group-item active"><i class="fas fa-list"></i> <h2>Caracteristicas</h2></li>
+            @foreach($local->caracteristicas as $caracteristica)
+            <li class="list-group-item">{{ $caracteristica->valor }}</li>
+            @endforeach
+        </ul>
+    </article>
+    @endif
+
+    @if(!empty($local->edificios))
+    <article class="mt-3">
+        <ul class="list-group">
+            <li class="list-group-item active"><i class="far fa-building"></i> <h2>Edificio</h2></li>
+            @foreach($local->edificios as $edificio)
+            <li class="list-group-item">{{ $edificio->valor }}</li>
+            @endforeach
+        </ul>
+    </article>
+    @endif
+
+    @if(!empty($local->equipamientos))
+    <article class="mt-3">
+        <ul class="list-group">
+            <li class="list-group-item active"><i class="fas fa-boxes"></i><h2>Equipamiento</h2></li>
+            @foreach($local->equipamientos as $equipamiento)
+            <li class="list-group-item">{{ $equipamiento->valor }}</li>
+            @endforeach
+        </ul>
+    </article>
+    @endif
+
 </section>
 @endsection
