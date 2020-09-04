@@ -20,7 +20,7 @@
 
             <div class="local-article-descripcion mt-3">
                 <h2>Comentario del anunciante</h2>
-                {{ $local->descripcion }}
+                <?= $local->descripcion ?>
             </div>
 
             <div class="local-article-attrs mt-3">
