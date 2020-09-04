@@ -10,53 +10,64 @@
         @endif
 
         <div class="local-article-body">
-            <h1>{{ urlencode($local->titulo) }}</h1>
+            <div class="local-article-sector">
+                 <h2>{{ $local->metros}} m² - {{ $local->sector->titulo}}</h2>
+            </div>
+            <div class="local-article-titulo">
+                <h1>{{ $local->titulo}}, {{ $local->poblacion->nombre}}</h1>
+                <h2>{{ $local->precio}}€</h2>
+            </div>
 
             <div class="local-article-descripcion mt-3">
                 <h2>Comentario del anunciante</h2>
                 {{ $local->descripcion }}
             </div>
 
-            <div class="row">
-                <div class="col-lg-6 col-12 mt-3">
-                    @if(!empty($local->caracteristicas))
-                    <div class="local-article-caracteristicas">
-                        <h2>Caracteristicas</h2>
-                        <ul>
-                        @foreach($local->caracteristicas as $caracteristica)
-                        <li>{{ $caracteristica->valor }}</li>
-                        @endforeach
+            <div class="local-article-attrs mt-3">
+                <div class="row">
+                    <div class="col-lg-12 col-12 mt-3">
+                        @if(!empty($local->caracteristicas))
+                        <ul class="list-group">
+                            <li class="list-group-item active"><h2>Caracteristicas</h2></li>
+                            @foreach($local->caracteristicas as $caracteristica)
+                            <li class="list-group-item">{{ $caracteristica->valor }}</li>
+                            @endforeach
                         </ul>
+                        @endif
                     </div>
-                    @endif
-                </div>
-                <div class="col-lg-6 col-12">
-                    @if(!empty($local->edificios))
-                    <div class="local-article-edifico mt-3">
-                        <h2>Edificio</h2>
-                        <ul>
-                        @foreach($local->edificios as $edificio)
-                        <li>{{ $edificio->valor }}</li>
-                        @endforeach
-                        </ul>
+                    <div class="col-lg-12 col-12 mt-3">
+                        @if(!empty($local->edificios))
+                        <div class="local-article-edifico mt-3">
+                            <ul class="list-group">
+                                <li class="list-group-item active"><h2>Edificio</h2></li>
+                                @foreach($local->edificios as $edificio)
+                                <li class="list-group-item">{{ $edificio->valor }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
                     </div>
-                    @endif
 
-                    @if(!empty($local->equipamientos))
-                    <div class="local-article-edifico mt-3">
-                        <h2>Equipamiento</h2>
-                        <ul>
-                        @foreach($local->equipamientos as $equipamiento)
-                        <li>{{ $equipamiento->valor }}</li>
-                        @endforeach
-                        </ul>
+                    <div class="col-lg-12 col-12">
+                        @if(!empty($local->equipamientos))
+                        <div class="local-article-edifico mt-3">
+                            <ul class="list-group">
+                                <li class="list-group-item active"><h2>Equipamiento</h2></li>
+                                @foreach($local->equipamientos as $equipamiento)
+                                <li class="list-group-item">{{ $equipamiento->valor }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
+
                     </div>
-                    @endif
                 </div>
             </div>
+
+
         </div>
 
-        <div class="local-article-footer">
+        <div class="local-article-footer mt-5">
             <!-- https://sharingbuttons.io/ -->
             <!-- Sharingbutton Facebook -->
             <a class="resp-sharing-button__link" href="https://facebook.com/sharer/sharer.php?u={{ urlencode(Request::url()) }}" target="_blank" rel="noopener" aria-label="">
