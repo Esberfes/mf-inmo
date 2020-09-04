@@ -553,4 +553,33 @@ class AdminController extends BaseController
 
         return redirect()->back()->with('success', 'Población eliminada con éxito');
     }
+
+    public function editar_local_relevante($id)
+    {
+        if(!LoginController::check())
+        {
+            return redirect()->route('login');
+        }
+
+        $data = request()->all();
+
+        $local = Local::find($id);
+
+
+        if($local == null)
+        {
+            return response([
+                'error'=>true,
+                'error-msg'=>"NOT_FOUND " .  $id
+            ], 404);
+        }
+
+        $local->relevante = $data['checked'] ? 1 : 0;
+        $local->save();
+
+        return response([
+            'error'=>false,
+            'error-msg'=>"NOT_CONTENT ".$data['checked']
+        ], 200);
+    }
 }

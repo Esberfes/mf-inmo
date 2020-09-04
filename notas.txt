@@ -1,25 +1,16 @@
 # -> FILTROS
     ## -> Añadir filtro de precio máximo (dropdown)
-        --Sin filtro--
-        1000
-        10000
-        20000
-        40000
-        80000
-        160000
-        500000
-        1000000
+
 
 # -> ORDEN (OK)
-
 
 
 # -> DISEÑO
     ## -> LISTADO OK
     ## -> FICHA
     ## -> ASIDE OK
-    ## -> FOOTER
-    ## -> HEADER
+    ## -> FOOTER http://fq10.es/ OK
+    ## -> HEADER OK
     ## -> FILTROS OK
     ## -> PAGINATION OK
 

@@ -88,6 +88,7 @@
                         <th scope="col">Población</th>
                         <th scope="col">Fecha creación</th>
                         <th scope="col">Fecha modificación</th>
+                        <th scope="col">Destacado</th>
                         <th scope="col">&nbsp;</th>
                     </tr>
                 </thead>
@@ -101,6 +102,11 @@
                         <td>{{ $local->poblacion->nombre}}</td>
                         <td>{{ \Carbon\Carbon::parse($local->creado_en)->format('d/m/Y H:i:s') }}</td>
                         <td>{{ \Carbon\Carbon::parse($local->actualizado_en)->format('d/m/Y H:i:s') }}</td>
+                        <td>
+                            <div class="d-flex justify-content-center align-items-center">
+                                 <input type="checkbox" data-id="{{ $local->id }}" data-toggle="toggle"  class="relevante-check" {{ $local->relevante ? 'checked' : '' }} >
+                            </div>
+                        </td>
                         <td>
                             <div class="admin-table-actions-col-wrapper">
                                 <a class="btn btn-sm btn-outline-primary"
@@ -142,4 +148,61 @@
 </section>
 @endif
 
+@endsection
+
+@section('scripts')
+    <script>
+
+$(".relevante-check").each(function(e){
+    var input = $(this);
+    var toggle = $( this ).bootstrapToggle();
+
+    input.change(function() {
+      var checked = $(this).prop('checked');
+      var id = $(this).attr('data-id');
+      console.log(id)
+
+      $.ajax({
+            dataType: "json",
+            type : 'post',
+            url: '/admin/locales/relevante/' + id,
+            data: {
+                checked: checked ? 1 : 0
+            },
+            success: function(data) {
+                console.log(data)
+            },
+            error: function(data) {
+                console.log(data)
+            },
+            beforeSend: function( xhr ) {
+                //$("#encontrar").prop("disabled",true);
+            }
+        });
+
+    });
+});
+            //.prop('checked', true);
+            /*
+            $(".relevante-check").each(function(e){
+
+                $( this ).bootstrapSwitch({
+                    'size': 'mini',
+                    'onSwitchChange': function(e, s){
+                        console.log(e);
+                         console.log(s)
+                    },
+                    'onInit': function(e, s){
+                        var input = $(e);
+                        var checked = input.prop('checked');
+                        $(this).state
+
+                        console.log($(this));
+                        // console.log(s)
+                    },
+                    'state': true
+                });
+            });
+            */
+    </script>
 @endsection
