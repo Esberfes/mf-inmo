@@ -206,14 +206,17 @@
                 <div class="col-12 col-lg-3">
                     <aside>
                         @section('sidebar')
+                        @if(!empty($banners))
                         <section>
-                            <article style="margin-top: 1.5rem">
-                                <img width="100%" src="http://lorempixel.com/300/700?1" alt="">
-                            </article>
-                            <article style="margin-top: 1.5rem">
-                                <img width="100%" src="http://lorempixel.com/300/700?2" alt="">
-                            </article>
-                        </section>
+                            @foreach($banners as $banner)
+                                <article style="margin-top: 1.5rem">
+                                    <a href="{{ url('/directorio/'.$banner->local->url_amigable) }}">
+                                        <img width="100%" alt="{{ $banner->local->titulo }}" src="{{ url($banner->ruta) }}">
+                                    </a>
+                                </article>
+                            @endforeach
+                            </section>
+                        @endif
                         @show
                     </aside>
                 </div>

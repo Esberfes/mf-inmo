@@ -17,6 +17,8 @@ class Local extends Model
         'precio',
         'metros',
         'extracto',
+        'relevante',
+        'banner_activo',
         'descripcion',
         'creado_en',
         'actualizado_en',

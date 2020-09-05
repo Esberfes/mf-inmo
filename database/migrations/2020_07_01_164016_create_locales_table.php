@@ -21,6 +21,7 @@ class CreateLocalesTable extends Migration
             $table->decimal('precio', 12, 2);
             $table->decimal('metros', 12, 2);
             $table->boolean('relevante')->default(0);
+            $table->boolean('banner_activo')->default(0);
             $table->mediumText('extracto');
             $table->mediumText('descripcion');
             $table->dateTime('creado_en', 0)->useCurrent();

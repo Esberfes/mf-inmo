@@ -28,6 +28,7 @@ Route::get('/admin/locales/{pagina}', 'AdminController@locales')->where('pagina'
 Route::get('/admin/locales/editar/{id}', 'AdminController@editar_local')->where('id', '[0-9]+')->name('locales.editar');
 Route::post('/admin/locales/editar/{id}', 'AdminController@editar_local_editar');
 Route::post('/admin/locales/relevante/{id}', 'AdminController@editar_local_relevante');
+Route::post('/admin/locales/banner/{id}', 'AdminController@editar_local_banner');
 
 Route::get('/admin/locales/crear', 'AdminController@locales_crear');
 Route::post('/admin/locales/crear', 'AdminController@locales_crear_nuevo');

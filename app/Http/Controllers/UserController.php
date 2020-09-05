@@ -84,7 +84,7 @@ class UserController extends BaseController
     {
         $filter = LocalesController::manage_filter_session(SessionConstants::USER_LOCALES_FILTER);
 
-        return view('home', LocalesController::get_filtered($filter, $pagina, $this->por_pagina));
+        return view('home',LocalesController::get_filtered($filter, $pagina, $this->por_pagina));
     }
 
     public function directorio_local($url)
@@ -108,11 +108,26 @@ class UserController extends BaseController
 
         $sectores = Sector::orderBy('titulo', 'asc')->get();
         $poblaciones = Poblacion::orderBy('nombre', 'asc')->get();
+        $locales_banner = Local::where('banner_activo', '=', '1')->inRandomOrder()->take(2)->get();
+
+        $banners = [];
+
+        foreach($locales_banner as $localb)
+        {
+            foreach($localb->medias as $media)
+            {
+                if($media->tipo == 'banner')
+                {
+                   $banners[] = $media;
+                }
+            }
+        }
 
 		return view('local' , [
 			"local" => $local[0],
             'sectores' => $sectores,
-            'poblaciones' => $poblaciones
+            'poblaciones' => $poblaciones,
+            'banners' => $banners
 		]);
     }
 

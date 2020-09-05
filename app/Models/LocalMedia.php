@@ -19,4 +19,9 @@ class LocalMedia extends Model
         'actualizado_en',
         'id_usuario_actualizacion'
     ];
+
+    public function local()
+    {
+        return $this->hasOne('App\Models\Local', 'id', 'id_local');
+    }
 }

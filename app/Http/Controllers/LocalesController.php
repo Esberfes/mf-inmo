@@ -130,6 +130,21 @@ class LocalesController extends BaseController
             }
         }
 
+        $locales_banner = Local::where('banner_activo', '=', '1')->inRandomOrder()->take(2)->get();
+
+        $banners = [];
+
+        foreach($locales_banner as $localb)
+        {
+            foreach($localb->medias as $media)
+            {
+                if($media->tipo == 'banner')
+                {
+                   $banners[] = $media;
+                }
+            }
+        }
+
         $sectores = Sector::orderBy('titulo', 'asc')->get();
         $poblaciones = Poblacion::orderBy('nombre', 'asc')->get();
 
@@ -137,7 +152,8 @@ class LocalesController extends BaseController
             'locales' => $locales,
             'sectores' => $sectores,
             'poblaciones' => $poblaciones,
-            'paginacion' => $paginacion
+            'paginacion' => $paginacion,
+            'banners' => $banners
         ];
     }
 
@@ -654,6 +670,45 @@ class LocalesController extends BaseController
         $local->id_usuario_actualizacion = $admin->id;
         $local->actualizado_en = $now;
         $local->save();
+
+        return $local;
+    }
+
+    public static function update_banner($id_local, $check)
+    {
+        $now = Carbon::now(new \DateTimeZone('Europe/Madrid'));
+        $local = Local::find($id_local);
+        $admin = Session::get(SessionConstants::ADMIN_USER);
+
+        if($local == null)
+            return null;
+
+        $banner = null;
+        foreach($local->medias as $media)
+        {
+            if($media->tipo == 'banner')
+            {
+                $banner = $media;
+                break;
+            }
+        }
+
+        if($banner == null) {
+            $local->banner_activo = 0;
+            $local->id_usuario_actualizacion = $admin->id;
+            $local->actualizado_en = $now;
+            $local->save();
+
+            return null;
+        }
+        else
+        {
+            $local->banner_activo = $check;
+            $local->id_usuario_actualizacion = $admin->id;
+            $local->actualizado_en = $now;
+            $local->save();
+
+        }
 
         return $local;
     }

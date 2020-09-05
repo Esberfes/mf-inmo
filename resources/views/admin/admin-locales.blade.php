@@ -102,6 +102,7 @@
                         <th scope="col">Población</th>
                         <th scope="col">Fecha creación</th>
                         <th scope="col">Fecha modificación</th>
+                        <th scope="col">Banner</th>
                         <th scope="col">Destacado</th>
                         <th scope="col">&nbsp;</th>
                     </tr>
@@ -116,6 +117,11 @@
                         <td>{{ $local->poblacion->nombre}}</td>
                         <td>{{ \Carbon\Carbon::parse($local->creado_en)->format('d/m/Y H:i:s') }}</td>
                         <td>{{ \Carbon\Carbon::parse($local->actualizado_en)->format('d/m/Y H:i:s') }}</td>
+                        <td>
+                            <div class="d-flex justify-content-center align-items-center">
+                                 <input type="checkbox" data-id="{{ $local->id }}" data-toggle="toggle"  class="banner-check" {{ $local->banner_activo == 1  ? 'checked' : '' }} {{ $local->banner == null ? 'disabled' : '' }} >
+                            </div>
+                        </td>
                         <td>
                             <div class="d-flex justify-content-center align-items-center">
                                  <input type="checkbox" data-id="{{ $local->id }}" data-toggle="toggle"  class="relevante-check" {{ $local->relevante ? 'checked' : '' }} >
@@ -174,7 +180,6 @@ $(".relevante-check").each(function(e){
     input.change(function() {
       var checked = $(this).prop('checked');
       var id = $(this).attr('data-id');
-      console.log(id)
 
       $.ajax({
             dataType: "json",
@@ -184,7 +189,36 @@ $(".relevante-check").each(function(e){
                 checked: checked ? 1 : 0
             },
             success: function(data) {
+                console.log(data)
+            },
+            error: function(data) {
+                console.log(data)
+            },
+            beforeSend: function( xhr ) {
+                //$("#encontrar").prop("disabled",true);
+            }
+        });
 
+    });
+});
+
+$(".banner-check").each(function(e){
+    var input = $(this);
+    var toggle = $( this ).bootstrapToggle();
+
+    input.change(function() {
+      var checked = $(this).prop('checked');
+      var id = $(this).attr('data-id');
+      console.log(id)
+      $.ajax({
+            dataType: "json",
+            type : 'post',
+            url: '/admin/locales/banner/' + id,
+            data: {
+                checked: checked ? 1 : 0
+            },
+            success: function(data) {
+                console.log(data)
             },
             error: function(data) {
                 console.log(data)
