@@ -37,25 +37,19 @@ self.addEventListener('notificationclose', function(e) {
   });
 
 
-  self.addEventListener('push', function(e) {
-    console.log('[Service Worker] Push Received.', e);
-    console.log('[Service Worker] Push had this data:' + e.data.text() );
-    var options = {
-      body: e.data.text(),
-      icon: '/images/icons/icon-32x32.png',
-      vibrate: [100, 50, 100],
-      data: {
-        dateOfArrival: Date.now(),
-        primaryKey: '2'
-      },
-      actions: [
-        {action: 'explore', title: 'Abrir',
-          icon: '/images/icons/icon-72x72.png'},
-        {action: 'close', title: 'Descartar',
-          icon: '/images/icons/icon-72x72.png'},
-      ]
-    };
-    e.waitUntil(
-      self.registration.showNotification('mfInmobiliaria', options)
-    );
-  });
+  self.addEventListener('push', function (e) {
+    if (!(self.Notification && self.Notification.permission === 'granted')) {
+        //notifications aren't supported or permission not granted!
+        return;
+    }
+
+    if (e.data) {
+        var msg = e.data.json();
+        console.log(msg)
+        e.waitUntil(self.registration.showNotification(msg.title, {
+            body: msg.body,
+            icon: msg.icon,
+            actions: msg.actions
+        }));
+    }
+});
