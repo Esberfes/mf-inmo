@@ -80,7 +80,7 @@ nav {
 
 /* @MAIN SECTION */
 main {
-
+    position: relative;
 }
 
 main section {
@@ -652,11 +652,14 @@ background-color: #FF6600
 @media (max-width:991px) {
     #form-search-wrapper-mask {
         display: block;
-        position: fixed;
-        width: 100vw;
-        height: 100vh;
+        position: absolute;
+        width: 100%;
+        height: 100%;
         bottom: 0;
         left: 0;
+    }
+    #form-search {
+        display: none;
     }
     .form-search .form-search-input-wrapper, .form-search .form-search-button-wrapper {
         margin-top: 1rem;
