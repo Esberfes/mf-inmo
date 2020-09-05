@@ -51,7 +51,7 @@
     <link rel="icon" type="image/png" sizes="96x96" href="{{asset('/img/favicon/icon-96x96.png')}}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('/img/favicon/icon-32x32.png')}}">
     <link rel="icon" type="image/png" sizes="512x512" href="{{asset('/img/favicon/icon-512x512.png')}}">
-    <link rel="manifest" href="/manifest.json?2">
+    <link rel="manifest" href="/manifest.json?3">
 
 	<meta name="csrf-token" content="{{ csrf_token() }}" >
     @section('pwa')
