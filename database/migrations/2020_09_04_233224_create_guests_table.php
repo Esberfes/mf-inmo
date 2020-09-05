@@ -18,7 +18,7 @@ class CreateGuestsTable extends Migration
             $table->collation = 'utf8_unicode_ci';
             $table->increments('id');
             $table->string('endpoint',255)->unique();
-            $table->string('ip',255);
+            $table->string('ip',255)->nullable();
             $table->foreignId('id_user')->nullable();
             $table->timestamps();
         });
