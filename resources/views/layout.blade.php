@@ -275,6 +275,7 @@
                 form.slideUp();
                 form.attr("data-is-collapsed", "true")
                 mask.hide();
+                unBindEvents();
                 bindEvents();
             } else{
                 form.slideDown();
