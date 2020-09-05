@@ -36,7 +36,7 @@ class Push extends Notification
             ->title($this->title." - ".$this->user)
             ->icon('/img/favicon/icon-192x192.png')
             ->body($this->message)
-            ->action('View App', 'notification_action');
+            ->action('Abrir App', 'notification_action');
     }
 
 }

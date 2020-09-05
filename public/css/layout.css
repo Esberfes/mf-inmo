@@ -243,6 +243,10 @@ main section article.local-article .local-article-attrs {
     background-color: #FFF;
     color: black;
     border: 1px solid rgba(0,0,0,.125);
+    position: sticky;
+    top: 0;
+    z-index: 90;
+    border-bottom-color: rgba(0,0,0,.225);
 }
   .list-group .list-group-item.active h2 {
     margin: 0;
@@ -264,6 +268,11 @@ main section .form-solicitud-header {
     margin-bottom: 1rem;
     display: flex;
     align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 90;
+    background-color: #FFF;
+    border-bottom-color: rgba(0,0,0,.225);
 }
 main section .form-solicitud-header i {
     margin-right: 1rem;
@@ -635,8 +644,20 @@ background-color: #FF6600
   border-color: #1DA851;
 }
 
-
+#form-search-wrapper-mask {
+    z-index: 95;
+    display: none;
+    background-color: rgba(0,0,0,0.5);
+}
 @media (max-width:991px) {
+    #form-search-wrapper-mask {
+        display: block;
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        bottom: 0;
+        left: 0;
+    }
     .form-search .form-search-input-wrapper, .form-search .form-search-button-wrapper {
         margin-top: 1rem;
     }
@@ -649,6 +670,23 @@ background-color: #FF6600
     }
     .form-order-by button i {
         display: none;
+    }
+    .form-search-wrapper {
+        width: 100%;
+        padding-right: 0;
+        padding-left: 0;
+        margin-right: 0;
+        margin-left: 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        max-width: none;
+    }
+
+
+    main section .local-article-footer {
+        display: flex;
+        justify-content: space-around;
     }
 
 
