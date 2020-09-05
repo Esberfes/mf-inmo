@@ -305,7 +305,7 @@
             return window.matchMedia("only screen and (max-width: 991px)").matches;
         }
 
-        $("#section-form-search-toggle i").click(function(event) {
+        $("#section-form-search-toggle a").click(function(event) {
             event.stopPropagation();
         });
 
