@@ -1,4 +1,8 @@
 @extends('layout')
+@section('meta_description')
+<meta name="description" content="<?= \Illuminate\Support\Str::limit(strip_tags( $local->extracto), $limit = 150, $end = '...');  ?>" />
+<title>{{ $local->titulo }}</title>
+@endsection
 
 @section('rrss')
 <!-- RRSS -->

@@ -26,7 +26,12 @@
     <!-- RRSS -->
     @show
 
-    <meta name="author" content="Proveedores Franquicias">
+    @section('meta_description')
+	<meta name="description" content="1er Portal inmobiliario para franquicias. Con la garantía de mundoFranquicia." />
+	<title>1er Portal inmobiliario para franquicias</title>
+	@show
+
+    <meta name="author" content="mundoFranquicia">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="{{asset('img/pwa/ms-icon-144x144.png')}}">
     <meta name="theme-color" content="#ffffff">
