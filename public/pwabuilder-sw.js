@@ -31,7 +31,7 @@ self.addEventListener('notificationclose', function(e) {
     if (action === 'close') {
       notification.close();
     } else {
-      //clients.openWindow('http://www.example.com');
+      clients.openWindow('/');
       notification.close();
     }
   });
