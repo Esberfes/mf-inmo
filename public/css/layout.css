@@ -57,6 +57,7 @@ nav {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    flex-wrap: wrap;
 }
 .form-order-by button i {
     margin-left: 5px;
@@ -185,9 +186,7 @@ main section article.local-article {
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
     background-color: #FFF;
 }
-main section article.local-article .local-article-body {
-    /*padding: 1.25rem;*/
-}
+
 main section article.local-article .local-article-main-image {
     width: 100%;
 }
@@ -634,4 +633,47 @@ background-color: #FF6600
 .resp-sharing-button--whatsapp:active {
   background-color: #1DA851;
   border-color: #1DA851;
+}
+
+
+@media (max-width:991px) {
+    .form-search .form-search-input-wrapper, .form-search .form-search-button-wrapper {
+        margin-top: 1rem;
+    }
+    .form-search button {
+        margin: 1.1rem 0;
+    }
+    .form-order-by-text {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .form-order-by button i {
+        display: none;
+    }
+
+
+    main section article.home-article-element figure {
+        min-height: 10rem;
+    }
+    main section article.home-article-element .home-article-element-title {
+        margin-top: 1.7rem;
+    }
+
+    footer .footer-links > span {
+        display: none;
+    }
+    footer .footer-links{
+        flex-wrap: wrap;
+        justify-content: center;;
+    }
+    footer .footer-links > div:first-child {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    footer .footer-links > div {
+        flex: 0 0 33.33%;
+        max-width: 33.33%;
+        text-align: center;
+    }
+
 }

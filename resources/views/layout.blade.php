@@ -85,10 +85,10 @@
             <form action="/buscar" method="GET">
                 <div class="form-search">
                     <div class="row no-gutters">
-                        <div class="col form-search-input-wrapper">
+                        <div class="col-lg col-12 form-search-input-wrapper">
                             <input name="busqueda" value="{{ $session != null ? $session->busqueda : '' }}" type="search" class="form-control" placeholder="Busqueda">
                         </div>
-                        <div class="col form-search-input-wrapper">
+                        <div class="col-lg col-12 form-search-input-wrapper">
                             <select name="sector" class="custom-select">
                                 <option value="none">Sector (sin filtro)</option>
                                 @if(!empty($sectores))
@@ -102,7 +102,7 @@
                                 @endif
                             </select>
                         </div>
-                        <div class="col form-search-input-wrapper">
+                        <div class="col-lg col-12 form-search-input-wrapper">
                             <select name="poblacion" class="custom-select">
                                 <option value="none">Población (sin filtro)</option>
                                 @if(!empty($poblaciones))
@@ -116,7 +116,7 @@
                                 @endif
                             </select>
                         </div>
-                        <div class="col form-search-input-wrapper">
+                        <div class="col-lg col-12 form-search-input-wrapper">
                             <select name="precio" class="custom-select">
                                 <?php
                                 $precios = [1000,10000,20000,40000,80000,160000, 500000,1000000];
@@ -139,7 +139,7 @@
                 </div>
 
                 <div class="form-order-by">
-                    <div class="mr-3">
+                    <div class="mr-3 form-order-by-text">
                         Ordenar:
                     </div>
                     <button class="btn btn-secondary {{ $session->order == 'relevancia' ? 'active-button' : ''}}" name="relevancia" value="{{ $session->order_direction == 'asc' && $session->order == 'relevancia'? 'desc' : 'asc' }}">

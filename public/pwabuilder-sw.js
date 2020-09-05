@@ -31,11 +31,10 @@ self.addEventListener('notificationclose', function(e) {
     if (action === 'close') {
       notification.close();
     } else {
-      clients.openWindow('http://www.example.com');
+      //clients.openWindow('http://www.example.com');
       notification.close();
     }
   });
-
 
   self.addEventListener('push', function (e) {
     if (!(self.Notification && self.Notification.permission === 'granted')) {
