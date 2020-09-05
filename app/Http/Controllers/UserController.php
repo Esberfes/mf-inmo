@@ -16,6 +16,10 @@ use App\Models\Sector;
 use App\Models\Poblacion;
 use App\Models\Solicitud;
 
+use App\Notifications\Push;
+use App\Guest;
+use Notification;
+
 use App\Jobs\SendEmail;
 
 use App\Helpers\Paginacion;
@@ -64,6 +68,14 @@ class UserController extends BaseController
             'email' => $data['email'],
             'local' => $local
         ]);
+
+
+        $guests = Guest::whereNotNull('id_user')->get();
+
+        foreach($guests as $guest)
+        {
+            Notification::send($guest,new Push("Solicitud de contacto", "Nueva solicitud para el local ".$local->titulo, $data['nombre']." - ".$data['email'] ));
+        }
 
         return redirect()->back()->with('success', 'Solicitud enviada con éxito');
     }
