@@ -80,3 +80,7 @@ Route::post('/admin/usuarios/eliminar/{id}', 'AdminController@eliminar_usuario')
 Route::get('/admin/login', 'LoginController@login_view')->name('login');
 Route::post('/admin/logout', 'LoginController@logout')->name('logout');
 Route::post('/admin/login', 'LoginController@login');
+
+
+Route::post('/push','PushController@store');
+Route::get('/push','PushController@push')->name('push');

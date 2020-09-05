@@ -99,7 +99,7 @@
 @section('sidebar')
 <section>
     <form class="form-solicitud" method="POST" action="{{ url('/solicitud') }}">
-        <div class="form-solicitud-header"><i class="far fa-id-card"></i><h2>Pregunta al anunciante</h2></div>
+        <div class="form-solicitud-header"><i class="far fa-id-card"></i><h2>Contactar</h2></div>
         <div class="form-solicitud-body">
             <div class="row">
                 <div class="col-12">
