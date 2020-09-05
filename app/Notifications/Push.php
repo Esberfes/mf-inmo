@@ -34,7 +34,7 @@ class Push extends Notification
     {
         return (new WebPushMessage)
             ->title($this->title." - ".$this->user)
-            ->icon('/img/favicon/icon-96x96.png')
+            ->icon('/img/favicon/icon-192x192.png')
             ->body($this->message)
             ->action('View App', 'notification_action');
     }
