@@ -272,34 +272,47 @@
                 form.slideUp();
                 form.attr("data-is-collapsed", "true")
                 mask.hide();
+                bindEvents();
             } else{
                 form.slideDown();
                 form.attr("data-is-collapsed", "false")
                 mask.show();
+                unBindEvents();
             }
         });
 
-        main.click(function(event){
-            event.stopPropagation();
-            form.slideUp();
-            form.attr("data-is-collapsed", "true")
-            mask.hide();
-        });
+        if(isMobile()) {
+           bindEvents();
+        }
 
-        buttonToggle.click(function(event){
-            event.stopPropagation();
-            var isCollapsed = form.attr("data-is-collapsed");
-
-            if(isCollapsed == 'true') {
-                form.slideDown();
-                form.attr("data-is-collapsed", "false")
-                mask.show(500);
-            } else {
+        function bindEvents() {
+            main.click(function(event){
+                event.stopPropagation();
                 form.slideUp();
                 form.attr("data-is-collapsed", "true")
                 mask.hide();
-            }
-        });
+            });
+
+            buttonToggle.click(function(event){
+                event.stopPropagation();
+                var isCollapsed = form.attr("data-is-collapsed");
+
+                if(isCollapsed == 'true') {
+                    form.slideDown();
+                    form.attr("data-is-collapsed", "false")
+                    mask.show(500);
+                } else {
+                    form.slideUp();
+                    form.attr("data-is-collapsed", "true")
+                    mask.hide();
+                }
+            });
+        }
+
+        function unBindEvents() {
+            main.unbind();
+            buttonToggle.unbind();
+        }
 
         function isMobile() {
             return window.matchMedia("only screen and (max-width: 991px)").matches;

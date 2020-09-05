@@ -85,7 +85,7 @@
         </div>
     </nav>
     @show
-    <main class="container-fluid" id="app">
+    <main class="container-fluid admin-area" id="app">
     @yield('content')
     </main>
 
