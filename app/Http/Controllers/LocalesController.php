@@ -24,6 +24,10 @@ use App\Models\LocalMedia;
 
 use App\Constants\SessionConstants;
 
+use App\Notifications\Push;
+use App\Guest;
+use Notification;
+
 use App\Jobs\SendEmail;
 
 use App\Helpers\Paginacion;
@@ -262,6 +266,13 @@ class LocalesController extends BaseController
         $local->actualizado_en = $now;
         $local->id_usuario_actualizacion = $admin->id;
         $local->save();
+
+        $guests = Guest::whereNotNull('id_user')->get();
+
+        foreach($guests as $guests)
+        {
+            Notification::send($guest,new Push());
+        }
 
         return $local;
     }
