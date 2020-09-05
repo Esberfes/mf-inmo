@@ -33,7 +33,7 @@ class Push extends Notification
     public function toWebPush($notifiable, $notification)
     {
         return (new WebPushMessage)
-            ->title($this->title." - "-$this->user)
+            ->title($this->title." - ".$this->user)
             ->icon('/img/card-mf.jpg')
             ->body($this->message)
             ->action('View App', 'notification_action');
