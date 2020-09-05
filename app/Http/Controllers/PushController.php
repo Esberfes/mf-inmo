@@ -28,29 +28,30 @@ class PushController extends BaseController
        * @return \Illuminate\Http\JsonResponse
        */
       public function store(){
-
         $data = request()->validate([
               'endpoint'    => 'required',
-              'keys.auth'   => 'required',
-              'keys.p256dh' => 'required'
+              'authToken'   => 'required',
+              'publicKey' => 'required',
+              'contentEncoding' => 'required'
               ]);
 
           $endpoint = $data['endpoint'];
-          $token = $data['keys']['auth'];
-          $key = $data['keys']['p256dh'];
+          $token = $data['authToken'];
+          $key = $data['publicKey'];
+            $contentEncoding =  $data['contentEncoding'];
 
           $user = Guest::firstOrCreate([
             'endpoint' => $endpoint
             ]);
 
-          $user->updatePushSubscription($endpoint, $key, $token, null);
+          $user->updatePushSubscription($endpoint, $key, $token, $contentEncoding);
 
           return response()->json(['success' => true],200);
       }
 
       public function push(){
           $guest = Guest::all();
-        Notification::send( $guest,new Push());
+         Notification::send($guest,new Push());
 
         return redirect()->back();
     }

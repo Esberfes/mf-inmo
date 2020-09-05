@@ -1,13 +1,14 @@
 
+
 self.addEventListener('push', function (e) {
     if (!(self.Notification && self.Notification.permission === 'granted')) {
-        //notifications aren't supported or permission not granted!
+        console.log("not suported")
         return;
     }
 
     if (e.data) {
         var msg = e.data.json();
-        console.log("Notiii" + msg)
+        console.log(msg)
         e.waitUntil(self.registration.showNotification(msg.title, {
             body: msg.body,
             icon: msg.icon,

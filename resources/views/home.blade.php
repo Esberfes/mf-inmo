@@ -1,8 +1,8 @@
 @extends('layout')
 
 @section('pwa')
-<script src="{{ asset('./enable-push.js') }}" defer></script>
-<script type="module" src="{{ asset('./pwabuilder-sw-register.js') }}"></script>
+<script src="{{ asset('js/enable-push.js') }}"></script>
+<!-- <script type="module" src="{{ asset('./pwabuilder-sw-register.js') }}"></script> -->
 @endsection
 
 @section('nosidebar')
@@ -11,8 +11,6 @@
 
 @section('content')
 <section>
-<a href="{{route('push')}}" class="btn btn-outline-primary btn-block">Make a Push Notification!</a>
-
 @if(!empty($locales))
     @foreach($locales as $local)
     <article class="home-article-element">
