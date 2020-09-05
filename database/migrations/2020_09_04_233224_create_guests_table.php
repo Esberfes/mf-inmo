@@ -19,7 +19,7 @@ class CreateGuestsTable extends Migration
             $table->increments('id');
             $table->string('endpoint',255)->unique();
             $table->string('ip',255);
-            $table->foreignId('id_user');
+            $table->foreignId('id_user')->nullable();
             $table->timestamps();
         });
     }
