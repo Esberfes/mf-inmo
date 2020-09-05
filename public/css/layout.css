@@ -725,4 +725,12 @@ background-color: #FF6600
     #section-form-search-toggle a {
         color: black;
     }
+    #section-form-search-toggle i {
+        border-radius: 0.25rem;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        padding: 0.55rem;
+    }
+    .section-form-search {
+        padding: 1rem 1.25rem;
+    }
 }
