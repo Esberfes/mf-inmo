@@ -33,25 +33,25 @@
 
     <meta name="author" content="mundoFranquicia">
     <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="{{asset('img/pwa/ms-icon-144x144.png')}}">
+    <meta name="msapplication-TileImage" content="{{asset('/img/favicon/ms-icon-144x144.png')}}">
     <meta name="theme-color" content="#ffffff">
     <meta name="application-name" content="ProveedoresFranquicias"/>
-    <link rel="apple-touch-icon" sizes="57x57" href="{{asset('img/pwa/icon-57x57.png')}}">
+    <link rel="apple-touch-icon" sizes="57x57" href="{{asset('/img/favicon/icon-57x57.png')}}">
 
-    <link rel="apple-touch-icon" sizes="60x60" href="{{asset('img/pwa/icon-60x60.png')}}">
-    <link rel="apple-touch-icon" sizes="72x72" href="{{asset('img/pwa/icon-72x72.png')}}">
-    <link rel="apple-touch-icon" sizes="76x76" href="{{asset('img/pwa/icon-76x76.png')}}">
-    <link rel="apple-touch-icon" sizes="114x114" href="{{asset('img/pwa/icon-114x114.png')}}">
-    <link rel="apple-touch-icon" sizes="120x120" href="{{asset('img/pwa/icon-120x120.png')}}">
-    <link rel="apple-touch-icon" sizes="144x144" href="{{asset('img/pwa/icon-144x144.png')}}">
-    <link rel="apple-touch-icon" sizes="152x152" href="{{asset('img/pwa/icon-152x152.png')}}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{asset('img/pwa/icon-180x180.png')}}">
-    <link rel="icon" type="image/png" sizes="192x192"  href="{{asset('img/pwa/icon-192x192.png')}}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('img/pwa/icon-32x32.png')}}">
-    <link rel="icon" type="image/png" sizes="96x96" href="{{asset('img/pwa/icon-96x96.png')}}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('img/pwa/icon-16x16.png')}}">
-    <link rel="icon" type="image/png" sizes="512x512" href="{{asset('img/pwa/icon-512x512.png')}}">
-    <link rel="manifest" href="/manifest.json?1">
+    <link rel="apple-touch-icon" sizes="60x60" href="{{asset('/img/favicon/icon-60x60.png')}}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{asset('/img/favicon/icon-72x72.png')}}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{asset('/img/favicon/icon-76x76.png')}}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{asset('/img/favicon/icon-114x114.png')}}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{asset('/img/favicon/icon-120x120.png')}}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{{asset('/img/favicon/icon-144x144.png')}}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{asset('/img/favicon/icon-152x152.png')}}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{asset('/img/favicon/icon-180x180.png')}}">
+    <link rel="icon" type="image/png" sizes="192x192"  href="{{asset('/img/favicon/icon-192x192.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('/img/favicon/icon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{asset('/img/favicon/icon-96x96.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('/img/favicon/icon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="512x512" href="{{asset('/img/favicon/icon-512x512.png')}}">
+    <link rel="manifest" href="/manifest.json?2">
 
 	<meta name="csrf-token" content="{{ csrf_token() }}" >
     @section('pwa')
