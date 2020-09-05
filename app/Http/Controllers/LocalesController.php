@@ -22,6 +22,8 @@ use App\Models\LocalEdificio;
 use App\Models\LocalEquipamiento;
 use App\Models\LocalMedia;
 
+use App\Constants\SessionConstants;
+
 use App\Jobs\SendEmail;
 
 use App\Helpers\Paginacion;
@@ -111,6 +113,10 @@ class LocalesController extends BaseController
                 if($media->tipo == 'principal')
                 {
                     $local->imagen_principal = $media;
+                }
+                elseif($media->tipo == 'banner')
+                {
+                    $local->banner = $media;
                 }
             }
         }
@@ -210,6 +216,7 @@ class LocalesController extends BaseController
     {
         $local = Local::find($id);
         $now = Carbon::now(new \DateTimeZone('Europe/Madrid'));
+        $admin = Session::get(SessionConstants::ADMIN_USER);
 
         if(empty($local))
 		{
@@ -253,7 +260,7 @@ class LocalesController extends BaseController
         $local->extracto = $data['extracto'];
         $local->descripcion = $data['descripcion'];
         $local->actualizado_en = $now;
-
+        $local->id_usuario_actualizacion = $admin->id;
         $local->save();
 
         return $local;
@@ -261,6 +268,8 @@ class LocalesController extends BaseController
 
     public static function create($request)
     {
+        $admin = Session::get(SessionConstants::ADMIN_USER);
+
         $data = $request->validate([
             'titulo' => 'required|unique:locales,titulo',
             'telefono' => 'required',
@@ -299,7 +308,8 @@ class LocalesController extends BaseController
             'extracto' => $data['extracto'],
             'descripcion' => $data['descripcion'],
             'id_sector' => $data['sector'],
-            'id_poblacion' => $data['poblacion']
+            'id_poblacion' => $data['poblacion'],
+            'id_usuario_actualizacion' => $admin->id,
         ]);
 
         return $local;
@@ -320,6 +330,7 @@ class LocalesController extends BaseController
     public static function create_caracteristica($id_local, $request)
     {
         $local = Local::find($id_local);
+        $admin = Session::get(SessionConstants::ADMIN_USER);
 
         if(empty($local))
 		{
@@ -335,7 +346,8 @@ class LocalesController extends BaseController
         $caracteristica = LocalCaracteristica::create([
             'id_local'=> $id_local,
             'valor' => $data['caracteristica'],
-            'orden' => 0
+            'orden' => 0,
+            'id_usuario_actualizacion' => $admin->id,
         ]);
 
         return $caracteristica;
@@ -345,6 +357,7 @@ class LocalesController extends BaseController
     {
         $local = Local::find($id_local);
         $now = Carbon::now(new \DateTimeZone('Europe/Madrid'));
+        $admin = Session::get(SessionConstants::ADMIN_USER);
 
         if(empty($local))
 		{
@@ -375,6 +388,7 @@ class LocalesController extends BaseController
 
         $caracteristica->valor = $data['caracteristica'];
         $caracteristica->actualizado_en = $now;
+        $caracteristica->id_usuario_actualizacion = $admin->id;
         $caracteristica->save();
 
         return $caracteristica;
@@ -383,6 +397,7 @@ class LocalesController extends BaseController
     public static function create_edificio($id_local, $request)
     {
         $local = Local::find($id_local);
+        $admin = Session::get(SessionConstants::ADMIN_USER);
 
         if(empty($local))
 		{
@@ -398,7 +413,8 @@ class LocalesController extends BaseController
         $edificio = LocalEdificio::create([
             'id_local'=> $id_local,
             'valor' => $data['edificio'],
-            'orden' => 0
+            'orden' => 0,
+            'id_usuario_actualizacion' => $admin->id,
         ]);
 
         return $edificio;
@@ -408,6 +424,7 @@ class LocalesController extends BaseController
     {
         $local = Local::find($id_local);
         $now = Carbon::now(new \DateTimeZone('Europe/Madrid'));
+        $admin = Session::get(SessionConstants::ADMIN_USER);
 
         if(empty($local))
 		{
@@ -438,6 +455,7 @@ class LocalesController extends BaseController
 
         $edificio->valor = $data['edificio'];
         $edificio->actualizado_en = $now;
+        $edificio->id_usuario_actualizacion = $admin->id;
         $edificio->save();
 
         return $edificio;
@@ -446,6 +464,8 @@ class LocalesController extends BaseController
     public static function create_equipamiento($id_local, $request)
     {
         $local = Local::find($id_local);
+        $now = Carbon::now(new \DateTimeZone('Europe/Madrid'));
+        $admin = Session::get(SessionConstants::ADMIN_USER);
 
         if(empty($local))
 		{
@@ -461,7 +481,8 @@ class LocalesController extends BaseController
         $equipamiento = LocalEquipamiento::create([
             'id_local'=> $id_local,
             'valor' => $data['equipamiento'],
-            'orden' => 0
+            'orden' => 0,
+            'id_usuario_actualizacion' => $admin->id,
         ]);
 
         return $equipamiento;
@@ -471,6 +492,7 @@ class LocalesController extends BaseController
     {
         $local = Local::find($id_local);
         $now = Carbon::now(new \DateTimeZone('Europe/Madrid'));
+        $admin = Session::get(SessionConstants::ADMIN_USER);
 
         if(empty($local))
 		{
@@ -501,6 +523,7 @@ class LocalesController extends BaseController
 
         $equipamiento->valor = $data['equipamiento'];
         $equipamiento->actualizado_en = $now;
+        $equipamiento->id_usuario_actualizacion = $admin->id;
 
         $equipamiento->save();
 
@@ -511,6 +534,7 @@ class LocalesController extends BaseController
     {
         $local = Local::find($id_local);
         $now = Carbon::now(new \DateTimeZone('Europe/Madrid'));
+        $admin = Session::get(SessionConstants::ADMIN_USER);
 
         if(empty($local))
 		{
@@ -532,6 +556,7 @@ class LocalesController extends BaseController
             {
                 $media->ruta = $path;
                 $media->actualizado_en = $now;
+                $media->id_usuario_actualizacion = $admin->id;
                 $media->save();
                 $found = true;
                 break;
@@ -544,8 +569,71 @@ class LocalesController extends BaseController
                 'id_local'=> $local->id,
                 'ruta' => $path,
                 'tipo' => 'principal',
+                'id_usuario_actualizacion' => $admin->id,
                 'orden' => 1
             ]);
         }
+    }
+
+    public static function update_imagen_banner($id_local, $request)
+    {
+        $local = Local::find($id_local);
+        $now = Carbon::now(new \DateTimeZone('Europe/Madrid'));
+        $admin = Session::get(SessionConstants::ADMIN_USER);
+
+        if(empty($local))
+		{
+			return view('404');
+        }
+
+        $data = $request->validate([
+            'banner' => 'required'
+		],[
+			'banner' => 'La imagen es obligatoria.'
+        ]);
+
+        $found = false;
+        $path = ImageController::local_banner(request()->file('banner'));
+
+        foreach($local->medias as $media)
+        {
+            if($media->tipo == 'banner')
+            {
+                $media->ruta = $path;
+                $media->actualizado_en = $now;
+                $media->id_usuario_actualizacion = $admin->id;
+                $media->save();
+                $found = true;
+                break;
+            }
+        }
+
+        if(!$found)
+        {
+            $media = LocalMedia::create([
+                'id_local'=> $local->id,
+                'ruta' => $path,
+                'tipo' => 'banner',
+                'id_usuario_actualizacion' => $admin->id,
+                'orden' => 1
+            ]);
+        }
+    }
+
+    public static function update_relevante($id_local, $check)
+    {
+        $now = Carbon::now(new \DateTimeZone('Europe/Madrid'));
+        $local = Local::find($id_local);
+        $admin = Session::get(SessionConstants::ADMIN_USER);
+
+        if($local == null)
+            return null;
+
+        $local->relevante = $check;
+        $local->id_usuario_actualizacion = $admin->id;
+        $local->actualizado_en = $now;
+        $local->save();
+
+        return $local;
     }
 }

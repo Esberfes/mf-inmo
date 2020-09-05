@@ -23,5 +23,19 @@ class ImageController extends BaseController
 		})->save($path_destacada);
 
 		return $path_destacada = explode("app/", str_replace("public" , "storage" , $path_destacada))[1];
+    }
+
+    public static function local_banner($file)
+	{
+		$name_destacada = md5_file($file);
+		$storage_path = storage_path('app/public/img/locales/banner');
+		$path_destacada = $storage_path.'/'.$name_destacada.'.'.$file->getClientOriginalExtension();;
+
+		$img = Image::make($file->getRealPath());
+        $img->resize(300, null, function ($constraint) {
+		    $constraint->aspectRatio();
+		})->save($path_destacada);
+
+		return $path_destacada = explode("app/", str_replace("public" , "storage" , $path_destacada))[1];
 	}
 }

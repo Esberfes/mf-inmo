@@ -39,6 +39,7 @@ Route::post('/admin/locales/editar/{id_local}/edificio/{id_edificio}', 'AdminCon
 Route::post('/admin/locales/editar/{id_local}/equipamiento', 'AdminController@editar_local_crear_equipamiento');
 Route::post('/admin/locales/editar/{id_local}/equipamiento/{id_equipamiento}', 'AdminController@editar_local_editar_equipamiento');
 Route::post('/admin/locales/editar/{id_local}/media/principal', 'AdminController@editar_local_imagen_principal');
+Route::post('/admin/locales/editar/{id_local}/media/banner', 'AdminController@editar_local_imagen_banner');
 Route::post('/admin/locales/eliminar/{id}', 'AdminController@eliminar_local');
 
 // Admin sectores

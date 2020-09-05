@@ -21,7 +21,7 @@
 <meta name="twitter:title" content="1er Portal inmobiliario para franquicias. Con la garantía de mundoFranquicia." />
 <link rel="canonical" href="{{ url(Request::url()) }}" />
 @if($local->imagen_principal != null)
-<meta property="og:image" content="{{ url($local->imagen_principal->ruta) }}" />
+<meta property="og:image" itemprop="image"  content="{{ url($local->imagen_principal->ruta) }}" />
 <meta property="og:image:secure_url" content="{{ url($local->imagen_principal->ruta) }}" />
 <meta name="twitter:image" content="{{ url($local->imagen_principal->ruta) }}" />
 @endif

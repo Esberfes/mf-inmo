@@ -114,7 +114,10 @@ class AdminController extends BaseController
             if($media->tipo == 'principal')
             {
                 $local->imagen_principal = $media;
-                break;
+            }
+            elseif($media->tipo == 'banner')
+            {
+                $local->banner = $media;
             }
         }
 
@@ -219,6 +222,18 @@ class AdminController extends BaseController
         LocalesController::update_imagen_principal($id, request());
 
         return redirect()->back()->with('success', 'Imagen principal añadida con éxito');
+    }
+
+    function editar_local_imagen_banner($id)
+    {
+        if(!LoginController::check())
+        {
+            return redirect()->route('login');
+        }
+
+        LocalesController::update_imagen_banner($id, request());
+
+        return redirect()->back()->with('success', 'Imagen banner añadida con éxito');
     }
 
     public function sectores($pagina = null)
@@ -563,10 +578,9 @@ class AdminController extends BaseController
 
         $data = request()->all();
 
-        $local = Local::find($id);
+        $result = LocalesController::update_relevante($id, $data['checked'] ? 1 : 0);
 
-
-        if($local == null)
+        if($result == null)
         {
             return response([
                 'error'=>true,
@@ -574,11 +588,8 @@ class AdminController extends BaseController
             ], 404);
         }
 
-        $local->relevante = $data['checked'] ? 1 : 0;
-        $local->save();
-
         return response([
-            'error'=>false,
+            'error'=> false,
             'error-msg'=>"NOT_CONTENT ".$data['checked']
         ], 204);
     }

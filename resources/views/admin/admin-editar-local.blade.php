@@ -139,6 +139,27 @@
                 </div>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
             </form>
+            <form class="mt-5" action="{{ url('/admin/locales/editar/' . $local->id . '/media/banner/') }}" method="POST" enctype="multipart/form-data">
+                <div class="file-uploader">
+                    <label for="file-upload" class="file-upload">
+                        <i class="fas fa-cloud-upload-alt"></i> Banner
+                    </label>
+
+                    <input name="banner" class="file-uploader-input" type="file" accept="image/*">
+                    <div class="file-uploader-name"></div>
+
+                    <div class="file-uploader-preview">
+                        @if($local->banner)
+                        <img style="max-width: 100%" src="{{ url($local->banner->ruta) }}" alt="">
+                        @endif
+                    </div>
+                </div>
+
+                <div class="form-group mb-0">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            </form>
         </div>
     </div>
 

@@ -11,6 +11,10 @@ use App\Notifications\Push;
 use App\Guest;
 use Notification;
 
+use App\Constants\SessionConstants;
+use App\Models\Usuario;
+use Illuminate\Support\Facades\Session;
+
 class PushController extends BaseController
 
 {
@@ -30,24 +34,30 @@ class PushController extends BaseController
       public function store(){
 
         $data = request()->validate([
-              'endpoint'    => 'required',
-              'auth'   => 'required',
-              'key' => 'required',
-              'encoding' => 'required'
-              ]);
+            'endpoint'    => 'required',
+            'auth'   => 'required',
+            'key' => 'required',
+            'encoding' => 'required'
+        ]);
 
-          $endpoint = $data['endpoint'];
-          $token = $data['auth'];
-          $key = $data['key'];
-          $contentEncoding =  $data['encoding'];
+        $endpoint = $data['endpoint'];
+        $token = $data['auth'];
+        $key = $data['key'];
+        $contentEncoding =  $data['encoding'];
 
-          $user = Guest::firstOrCreate([
+        $user = Guest::firstOrCreate([
             'endpoint' => $endpoint
-            ]);
+        ]);
 
-          $user->updatePushSubscription($endpoint, $key, $token, $contentEncoding);
+        $user->updatePushSubscription($endpoint, $key, $token, $contentEncoding);
+        $admin = Session::get(SessionConstants::ADMIN_USER);
+        if($admin != null)
+            $user->id_user = $admin->id;
 
-          return response()->json(['success' => true],200);
+        $user->ip = request()->ip();
+        $user->save();
+
+        return response()->json(['success' => true],200);
       }
 
       public function push(){

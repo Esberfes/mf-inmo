@@ -13,7 +13,7 @@ class Guest extends Model
     HasPushSubscriptions;
 
     protected $fillable = [
-        'endpoint',
+        'endpoint', "ip", "id_user"
     ];
 
     public function pushSubscriptionBelongsToUser($subscription){
