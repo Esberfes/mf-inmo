@@ -672,7 +672,7 @@ background-color: #FF6600
         max-width: 100%;
     }
     .form-order-by button i {
-        display: none;
+
     }
     .form-search-wrapper {
         width: 100%;
@@ -716,5 +716,10 @@ background-color: #FF6600
         max-width: 33.33%;
         text-align: center;
     }
-
+    .form-order-by button {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
 }
