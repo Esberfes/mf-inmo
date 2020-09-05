@@ -261,7 +261,6 @@
     <script>
         var form = $("#form-search");
         var buttonToggle = $("#section-form-search-toggle");
-        var main = $("main");
         var mask = $("#form-search-wrapper-mask");
 
         if(isMobile()) {
@@ -290,7 +289,7 @@
         }
 
         function bindEvents() {
-            main.click(function(event){
+            mask.click(function(event){
                 event.stopPropagation();
                 form.slideUp();
                 form.attr("data-is-collapsed", "true")
@@ -314,7 +313,7 @@
         }
 
         function unBindEvents() {
-            main.unbind();
+            mask.unbind();
             buttonToggle.unbind();
         }
 
