@@ -51,8 +51,8 @@ class PushController extends BaseController
       }
 
       public function push(){
-          $guest = Guest::all();
-         Notification::send($guest,new Push());
+        $guest = Guest::all();
+        Notification::send($guest,new Push());
 
         return redirect()->back();
     }

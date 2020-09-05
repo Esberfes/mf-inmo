@@ -36,23 +36,26 @@ self.addEventListener('notificationclose', function(e) {
     }
   });
 
+
   self.addEventListener('push', function(e) {
+    console.log('[Service Worker] Push Received.', e);
+    console.log('[Service Worker] Push had this data:' + e.data.text() );
     var options = {
-      body: 'This notification was generated from a push!',
-      icon: 'images/example.png',
+      body: e.data.text(),
+      icon: '/images/icons/icon-32x32.png',
       vibrate: [100, 50, 100],
       data: {
         dateOfArrival: Date.now(),
         primaryKey: '2'
       },
       actions: [
-        {action: 'explore', title: 'Explore this new world',
-          icon: 'images/checkmark.png'},
-        {action: 'close', title: 'Close',
-          icon: 'images/xmark.png'},
+        {action: 'explore', title: 'Abrir',
+          icon: '/images/icons/icon-72x72.png'},
+        {action: 'close', title: 'Descartar',
+          icon: '/images/icons/icon-72x72.png'},
       ]
     };
     e.waitUntil(
-      self.registration.showNotification('Hello world!', options)
+      self.registration.showNotification('mfInmobiliaria', options)
     );
   });
