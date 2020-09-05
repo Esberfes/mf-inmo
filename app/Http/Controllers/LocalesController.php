@@ -269,7 +269,7 @@ class LocalesController extends BaseController
 
         $guests = Guest::whereNotNull('id_user')->get();
 
-        foreach($guests as $guests)
+        foreach($guests as $guest)
         {
             Notification::send($guest,new Push());
         }
