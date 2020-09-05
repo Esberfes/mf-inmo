@@ -1,8 +1,7 @@
 @extends('layout')
 
 @section('pwa')
-<script src="{{ asset('js/enable-push.js') }}"></script>
-<!-- <script type="module" src="{{ asset('./pwabuilder-sw-register.js') }}"></script> -->
+<script type="module" src="{{ asset('/pwabuilder-sw-register.js') }}"></script>
 @endsection
 
 @section('nosidebar')

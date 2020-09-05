@@ -2,12 +2,19 @@
 
 namespace App\Notifications;
 
+use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\WebPush\WebPushMessage;
 use NotificationChannels\WebPush\WebPushChannel;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\MailMessage;
 
 class Push extends Notification
 {
+
+    use Queueable;
+
+
 
     public function via($notifiable)
     {
@@ -17,19 +24,10 @@ class Push extends Notification
     public function toWebPush($notifiable, $notification)
     {
         return (new WebPushMessage)
-            ->title('Approved!')
-            ->icon('/approved-icon.png')
-            ->body('Your account was approved!')
-            ->action('View account', 'view_account')
-            ->options(['TTL' => 1000]);
-            // ->data(['id' => $notification->id])
-            // ->badge()
-            // ->dir()
-            // ->image()
-            // ->lang()
-            // ->renotify()
-            // ->requireInteraction()
-            // ->tag()
-            // ->vibrate()
+            ->title('I\'m Notification Title')
+            ->icon('/notification-icon.png')
+            ->body('Great, Push Notifications work!')
+            ->action('View App', 'notification_action');
     }
+
 }
