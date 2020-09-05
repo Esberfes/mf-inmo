@@ -62,7 +62,7 @@ class PushController extends BaseController
 
       public function push(){
         $guest = Guest::all();
-        Notification::send($guest,new Push());
+        Notification::send($guest, new Push("Test push", "Prueba de notificación push", $guest->ip));
 
         return redirect()->back();
     }

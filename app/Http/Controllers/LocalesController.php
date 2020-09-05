@@ -271,7 +271,7 @@ class LocalesController extends BaseController
 
         foreach($guests as $guest)
         {
-            Notification::send($guest,new Push());
+            Notification::send($guest,new Push("Local modificado", "El local ".$local->titulo." ha sido modificado", $admin->nombre ));
         }
 
         return $local;
