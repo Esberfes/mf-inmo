@@ -65,6 +65,20 @@
                         @endif
                     </select>
                 </div>
+                <div class="admin-table-wrapper-filters-group ">
+                    <label for="busqueda">Destacados</label>
+                    <select name="relevante" class="custom-select mr-3">
+                        <option
+                            {{ Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_FILTER)->relevante == -1 ? 'selected' : '' }}
+                            value="-1">Todo</option>
+                        <option
+                            {{ Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_FILTER)->relevante == 0 ? 'selected' : ''}}
+                            value="0">No destacado</option>
+                        <option
+                            {{ Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_FILTER)->relevante  == 1 ? 'selected' : ''}}
+                            value="1">Destacados</option>
+                    </select>
+                </div>
                 <div class="admin-table-wrapper-filters-group">
                     <label for="busqueda">Busqueda global</label>
                     <input name="busqueda"
@@ -75,7 +89,7 @@
                     <button class="btn btn-sm btn-outline-primary">Buscar</button>
                 </div>
 
-                <input name="action" value="search" type="hidden">
+                <input name="actionSearch" value="search" type="hidden">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
             </form>
             <table class="admin-table">
@@ -182,27 +196,5 @@ $(".relevante-check").each(function(e){
 
     });
 });
-            //.prop('checked', true);
-            /*
-            $(".relevante-check").each(function(e){
-
-                $( this ).bootstrapSwitch({
-                    'size': 'mini',
-                    'onSwitchChange': function(e, s){
-                        console.log(e);
-                         console.log(s)
-                    },
-                    'onInit': function(e, s){
-                        var input = $(e);
-                        var checked = input.prop('checked');
-                        $(this).state
-
-                        console.log($(this));
-                        // console.log(s)
-                    },
-                    'state': true
-                });
-            });
-            */
     </script>
 @endsection

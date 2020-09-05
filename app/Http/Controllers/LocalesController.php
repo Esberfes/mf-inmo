@@ -74,6 +74,11 @@ class LocalesController extends BaseController
             $query_locales->where("precio", '<=', $filter->precio);
         }
 
+        if($filter->relevante != null && $filter->relevante != -1)
+        {
+            $query_locales->where("relevante", '=', $filter->relevante);
+        }
+
         if($filter->busqueda)
         {
             $search = $filter->busqueda;
@@ -209,6 +214,11 @@ class LocalesController extends BaseController
                 {
                     $filter->precio = null;
                 }
+            }
+
+            if(array_key_exists('relevante', $data))
+            {
+                $filter->relevante = $data['relevante'];
             }
         }
 
