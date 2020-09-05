@@ -722,4 +722,7 @@ background-color: #FF6600
         align-items: center;
         justify-content: space-around;
     }
+    #section-form-search-toggle a {
+        color: black;
+    }
 }

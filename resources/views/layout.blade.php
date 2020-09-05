@@ -91,7 +91,10 @@
         <div id="form-search-wrapper-mask"></div>
         <div class="container form-search-wrapper">
             <section class="section-form-search">
-                <div id="section-form-search-toggle" class="d-lg-none"><i class="fas fa-bars"></i></div>
+                <div id="section-form-search-toggle" class="d-lg-none d-flex justify-content-between align-items-center">
+                    <i class="fas fa-bars"></i>
+                    <a href="{{ url('/') }}"><i class="fas fa-home"></i></a>
+                </div>
                 <form id="form-search" data-is-collapsed="false" action="/buscar" method="GET">
                     <div class="form-search">
                         <div class="row no-gutters">
