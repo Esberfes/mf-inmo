@@ -27,7 +27,7 @@ class LoginController extends BaseController
             'pass.required' => 'El campo consraseña es obligatorio.'
         ]);
 
-        $usuario = Usuario::where("email", "=", $data['email'])->where("pass", "=", md5(env('APP_ENV').$data['pass']))->first();
+        $usuario = Usuario::where("email", "=", $data['email'])->where("pass", "=", md5(env('APP_KEY').$data['pass']))->first();
 
         if(empty($usuario))
         {

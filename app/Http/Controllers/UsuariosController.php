@@ -117,7 +117,7 @@ class UsuariosController extends BaseController
             'nombre' => $data['nombre'],
             'email' => $data['email'],
             'telefono' => $data['telefono'],
-            'pass' =>  md5(env('APP_ENV').$data['pass']),
+            'pass' =>  md5(env('APP_KEY').$data['pass']),
             'rol' => 'administrador'
         ]);
 
@@ -149,7 +149,7 @@ class UsuariosController extends BaseController
         $usuario->telefono = $data['telefono'];
         if(array_key_exists('pass', $data) && !empty($data['pass']))
         {
-            $usuario->pass = md5(env('APP_ENV').$data['pass']);
+            $usuario->pass = md5(env('APP_KEY').$data['pass']);
         }
         $usuario->actualizado_en = $now;
 

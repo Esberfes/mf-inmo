@@ -6,7 +6,7 @@ self.addEventListener("message", event => {
     }
 });
 
-var urlsToCache = ["/"];
+var urlsToCache = ["/*"];
 
 var currentCache = "MFCacheV1";
 
