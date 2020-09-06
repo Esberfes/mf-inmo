@@ -34,6 +34,7 @@
     <article class="local-article">
 
         @if($local->imagen_principal != null)
+        <div></div>
         <img class="local-article-main-image" src="{{ url($local->imagen_principal->ruta) }}">
         @endif
 
@@ -108,22 +109,27 @@
             <div class="row">
                 <div class="col-12">
                     <div class="form-group">
-                        <input placeholder="Nombre" type="text" class="form-control" name="nombre" value="{{ old('nombre') }}">
+                        <input required placeholder="Nombre" type="text" class="form-control" name="nombre" value="{{ old('nombre') }}">
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="form-group">
-                        <input placeholder="Email" type="email" class="form-control" name="email" value="{{ old('email') }}">
+                        <input required placeholder="Email" type="email" class="form-control" name="email" value="{{ old('email') }}">
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="form-group">
-                        <input placeholder="Teléfono" type="tel" class="form-control" name="telefono" value="{{ old('telefono') }}">
+                        <input required placeholder="Teléfono" type="tel" class="form-control" name="telefono" value="{{ old('telefono') }}">
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="form-group">
                         <textarea placeholder="Comentario" class="form-control" rows="3" name="comentario">{{ old('comentario') }}</textarea>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group d-flex align-items-center">
+                        <input required type="checkbox" aria-label="Política de privacidad"> <small class="ml-2">He leido y acepto la <a href="https://www.mundofranquicia.com/aviso-legal/">política de privacidad</a> </small>
                     </div>
                 </div>
                 <div class="col-12">

@@ -24,9 +24,9 @@
 </head>
 <body>
     @section('nonav')
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5 sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5 sticky-top justify-content-lg-between justify-content-start">
 
-        <form style="position: absolute;right: 15px;" action="{{ url('/admin/logout') }}" method="post">
+        <form style="position: absolute;right: 15px;top: 15px;" action="{{ url('/admin/logout') }}" method="post">
             <button style="background:transparent;border:none;"><i style="color:#FFFFFF;" class="fas fa-power-off"></i></button>
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
         </form>

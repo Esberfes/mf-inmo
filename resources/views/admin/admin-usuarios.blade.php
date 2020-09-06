@@ -47,7 +47,7 @@
                 <input name="action" value="search" type="hidden">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
             </form>
-            <table class="admin-table">
+            <table class="admin-table table-responsive">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
