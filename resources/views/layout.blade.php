@@ -86,113 +86,113 @@
         </div>
     </header>
 
+    <nav class="container form-search-wrapper">
+        <section class="section-form-search">
+            <div id="section-form-search-toggle" class="d-lg-none d-flex justify-content-between align-items-center">
+                <i class="fas fa-bars"></i>
+                <a href="{{ url('/') }}"><i class="fas fa-home"></i></a>
+            </div>
+            <form id="form-search" data-is-collapsed="false" action="/buscar" method="GET">
+                <div class="form-search">
+                    <div class="row no-gutters">
+                        <div class="col-lg col-12 form-search-input-wrapper">
+                            <input name="busqueda" value="{{ $session != null ? $session->busqueda : '' }}" type="search" class="form-control" placeholder="Busqueda">
+                        </div>
+                        <div class="col-lg col-12 form-search-input-wrapper">
+                            <select name="sector" class="custom-select">
+                                <option value="none">Sector (sin filtro)</option>
+                                @if(!empty($sectores))
+                                    @foreach($sectores as $sector)
+                                        @if($session->sector == $sector->id)
+                                        <option selected value="{{ $sector->id }}">{{ $sector->titulo }}</option>
+                                        @else
+                                        <option value="{{ $sector->id }}">{{ $sector->titulo }}</option>
+                                        @endif
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <div class="col-lg col-12 form-search-input-wrapper">
+                            <select name="poblacion" class="custom-select">
+                                <option value="none">Población (sin filtro)</option>
+                                @if(!empty($poblaciones))
+                                    @foreach($poblaciones as $poblacion)
+                                    @if($session->poblacion == $poblacion->id)
+                                        <option selected value="{{ $poblacion->id }}">{{ $poblacion->nombre }}</option>
+                                        @else
+                                        <option value="{{ $poblacion->id }}">{{ $poblacion->nombre }}</option>
+                                        @endif
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <div class="col-lg col-12 form-search-input-wrapper">
+                            <select name="precio" class="custom-select">
+                                <?php
+                                $precios = [1000,10000,20000,40000,80000,160000, 500000,1000000];
+                                ?>
+                                <option value="none">Precio máximo (sin filtro)</option>
+                                @foreach($precios as $precio)
+                                @if($session->precio == $precio)
+                                        <option selected value="{{ $precio }}">{{ $precio }} €</option>
+                                        @else
+                                        <option value="{{ $precio }}">{{ $precio }} €</option>
+                                @endif
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col form-search-button-wrapper">
+                            <button class="btn btn-secondary" >Encontrar</button>
+                        </div>
+                        <input name="actionSearch" type="hidden">
+                    </div>
+                </div>
+
+                <div class="form-order-by">
+                    <div class="mr-3 form-order-by-text">
+                        Ordenar:
+                    </div>
+                    <button class="btn btn-secondary {{ $session->order == 'relevancia' ? 'active-button' : ''}}" name="relevancia" value="{{ $session->order_direction == 'asc' && $session->order == 'relevancia'? 'desc' : 'asc' }}">
+                        Relevancia
+                        @if($session->order == 'relevancia')
+                            @if($session->order_direction == 'asc')
+                            <i class="fas fa-arrow-up"></i>
+                            @else
+                            <i class="fas fa-arrow-down"></i>
+                            @endif
+                        @endif
+                    </button>
+                    <button class="btn btn-secondary {{ $session->order == 'precio' ? 'active-button' : ''}}"  name="precioOrder" value="{{ $session->order_direction == 'asc' && $session->order == 'precio' ? 'desc' : 'asc' }}">
+                        Precio
+                        @if($session->order == 'precio')
+                            @if($session->order_direction == 'asc')
+                            <i class="fas fa-arrow-up"></i>
+                            @else
+                            <i class="fas fa-arrow-down"></i>
+                            @endif
+                        @endif
+                    </button>
+                    <button class="btn btn-secondary {{ $session->order == 'superficie' ? 'active-button' : ''}}"  name="superficie" value="{{ $session->order_direction == 'asc' && $session->order == 'superficie' ? 'desc' : 'asc' }}">
+                        Superficie
+                        @if($session->order == 'superficie')
+                            @if($session->order_direction == 'asc')
+                            <i class="fas fa-arrow-up"></i>
+                            @else
+                            <i class="fas fa-arrow-down"></i>
+                            @endif
+                        @endif
+                    </button>
+                    <input name="actionOrder" type="hidden">
+
+                </div>
+
+
+            </form>
+        </section>
+    </nav>
 
     <main>
         <div id="form-search-wrapper-mask"></div>
-        <div class="container form-search-wrapper">
-            <section class="section-form-search">
-                <div id="section-form-search-toggle" class="d-lg-none d-flex justify-content-between align-items-center">
-                    <i class="fas fa-bars"></i>
-                    <a href="{{ url('/') }}"><i class="fas fa-home"></i></a>
-                </div>
-                <form id="form-search" data-is-collapsed="false" action="/buscar" method="GET">
-                    <div class="form-search">
-                        <div class="row no-gutters">
-                            <div class="col-lg col-12 form-search-input-wrapper">
-                                <input name="busqueda" value="{{ $session != null ? $session->busqueda : '' }}" type="search" class="form-control" placeholder="Busqueda">
-                            </div>
-                            <div class="col-lg col-12 form-search-input-wrapper">
-                                <select name="sector" class="custom-select">
-                                    <option value="none">Sector (sin filtro)</option>
-                                    @if(!empty($sectores))
-                                        @foreach($sectores as $sector)
-                                            @if($session->sector == $sector->id)
-                                            <option selected value="{{ $sector->id }}">{{ $sector->titulo }}</option>
-                                            @else
-                                            <option value="{{ $sector->id }}">{{ $sector->titulo }}</option>
-                                            @endif
-                                        @endforeach
-                                    @endif
-                                </select>
-                            </div>
-                            <div class="col-lg col-12 form-search-input-wrapper">
-                                <select name="poblacion" class="custom-select">
-                                    <option value="none">Población (sin filtro)</option>
-                                    @if(!empty($poblaciones))
-                                        @foreach($poblaciones as $poblacion)
-                                        @if($session->poblacion == $poblacion->id)
-                                            <option selected value="{{ $poblacion->id }}">{{ $poblacion->nombre }}</option>
-                                            @else
-                                            <option value="{{ $poblacion->id }}">{{ $poblacion->nombre }}</option>
-                                            @endif
-                                        @endforeach
-                                    @endif
-                                </select>
-                            </div>
-                            <div class="col-lg col-12 form-search-input-wrapper">
-                                <select name="precio" class="custom-select">
-                                    <?php
-                                    $precios = [1000,10000,20000,40000,80000,160000, 500000,1000000];
-                                    ?>
-                                    <option value="none">Precio máximo (sin filtro)</option>
-                                    @foreach($precios as $precio)
-                                    @if($session->precio == $precio)
-                                            <option selected value="{{ $precio }}">{{ $precio }} €</option>
-                                            @else
-                                            <option value="{{ $precio }}">{{ $precio }} €</option>
-                                    @endif
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col form-search-button-wrapper">
-                                <button class="btn btn-secondary" >Encontrar</button>
-                            </div>
-                            <input name="actionSearch" type="hidden">
-                        </div>
-                    </div>
-
-                    <div class="form-order-by">
-                        <div class="mr-3 form-order-by-text">
-                            Ordenar:
-                        </div>
-                        <button class="btn btn-secondary {{ $session->order == 'relevancia' ? 'active-button' : ''}}" name="relevancia" value="{{ $session->order_direction == 'asc' && $session->order == 'relevancia'? 'desc' : 'asc' }}">
-                            Relevancia
-                            @if($session->order == 'relevancia')
-                                @if($session->order_direction == 'asc')
-                                <i class="fas fa-arrow-up"></i>
-                                @else
-                                <i class="fas fa-arrow-down"></i>
-                                @endif
-                            @endif
-                        </button>
-                        <button class="btn btn-secondary {{ $session->order == 'precio' ? 'active-button' : ''}}"  name="precioOrder" value="{{ $session->order_direction == 'asc' && $session->order == 'precio' ? 'desc' : 'asc' }}">
-                            Precio
-                            @if($session->order == 'precio')
-                                @if($session->order_direction == 'asc')
-                                <i class="fas fa-arrow-up"></i>
-                                @else
-                                <i class="fas fa-arrow-down"></i>
-                                @endif
-                            @endif
-                        </button>
-                        <button class="btn btn-secondary {{ $session->order == 'superficie' ? 'active-button' : ''}}"  name="superficie" value="{{ $session->order_direction == 'asc' && $session->order == 'superficie' ? 'desc' : 'asc' }}">
-                            Superficie
-                            @if($session->order == 'superficie')
-                                @if($session->order_direction == 'asc')
-                                <i class="fas fa-arrow-up"></i>
-                                @else
-                                <i class="fas fa-arrow-down"></i>
-                                @endif
-                            @endif
-                        </button>
-                        <input name="actionOrder" type="hidden">
-
-                    </div>
-
-
-                </form>
-            </section>
-        </div>
         <div class="container">
             @section('nosidebar')
             @show
@@ -271,15 +271,13 @@
 
         $(window).resize(function() {
             if(isMobile()) {
-                form.slideUp();
-                form.attr("data-is-collapsed", "true")
-                mask.hide();
                 unBindEvents();
                 bindEvents();
+
             } else{
                 form.slideDown();
                 form.attr("data-is-collapsed", "false")
-                mask.show();
+                mask.hide();
                 unBindEvents();
             }
         });

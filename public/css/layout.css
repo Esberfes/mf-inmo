@@ -687,6 +687,8 @@ background-color: #FF6600
         top: 0;
         z-index: 100;
         max-width: none;
+        max-height: calc(100vh - 7rem);
+        overflow-y: auto;
     }
 
 
