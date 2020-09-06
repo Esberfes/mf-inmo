@@ -337,6 +337,9 @@ footer .footer-logos img {
 .admin-table-section {
 
 }
+.table-responsive {
+    display: table;
+}
 .admin-table-wrapper {
     position: relative;
     display: -ms-flexbox;
@@ -746,5 +749,8 @@ background-color: #FF6600
     }
     .admin-table-wrapper-filters-group {
         flex: 1 1 100%;
+    }
+    .table-responsive {
+        display: block;
     }
 }

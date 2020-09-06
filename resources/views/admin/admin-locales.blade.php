@@ -79,6 +79,20 @@
                             value="1">Destacados</option>
                     </select>
                 </div>
+                <div class="admin-table-wrapper-filters-group ">
+                    <label for="busqueda">Activos</label>
+                    <select name="activo" class="custom-select mr-3">
+                        <option
+                            {{ Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_FILTER)->activo == -1 ? 'selected' : '' }}
+                            value="-1">Todo</option>
+                        <option
+                            {{ Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_FILTER)->activo == 0 ? 'selected' : ''}}
+                            value="0">No activos</option>
+                         <option
+                            {{ Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_FILTER)->activo  == 1 ? 'selected' : ''}}
+                            value="1">Activos</option>
+                    </select>
+                </div>
                 <div class="admin-table-wrapper-filters-group">
                     <label for="busqueda">Busqueda global</label>
                     <input name="busqueda"
@@ -97,13 +111,13 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Titulo</th>
-                        <th scope="col">Destacado</th>
                         <th scope="col">Sector</th>
                         <th scope="col">Población</th>
                         <th scope="col">Fecha creación</th>
                         <th scope="col">Fecha modificación</th>
                         <th scope="col">Banner</th>
                         <th scope="col">Destacado</th>
+                        <th scope="col">Activo</th>
                         <th scope="col">&nbsp;</th>
                     </tr>
                 </thead>
@@ -112,7 +126,6 @@
                     <tr>
                         <td scope="row">{{ $local->id }}</th>
                         <td>{{ $local->titulo }}</td>
-                        <td>{{ $local->destacado ? 'Si' : 'No'}}</td>
                         <td>{{ $local->sector->titulo}}</td>
                         <td>{{ $local->poblacion->nombre}}</td>
                         <td>{{ \Carbon\Carbon::parse($local->creado_en)->format('d/m/Y H:i:s') }}</td>
@@ -125,6 +138,11 @@
                         <td>
                             <div class="d-flex justify-content-center align-items-center">
                                  <input type="checkbox" data-id="{{ $local->id }}" data-toggle="toggle"  class="relevante-check" {{ $local->relevante ? 'checked' : '' }} >
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex justify-content-center align-items-center">
+                                 <input type="checkbox" data-id="{{ $local->id }}" data-toggle="toggle"  class="activo-check" {{ $local->activo ? 'checked' : '' }} >
                             </div>
                         </td>
                         <td>
@@ -214,6 +232,35 @@ $(".banner-check").each(function(e){
             dataType: "json",
             type : 'post',
             url: '/admin/locales/banner/' + id,
+            data: {
+                checked: checked ? 1 : 0
+            },
+            success: function(data) {
+                console.log(data)
+            },
+            error: function(data) {
+                console.log(data)
+            },
+            beforeSend: function( xhr ) {
+                //$("#encontrar").prop("disabled",true);
+            }
+        });
+
+    });
+});
+
+$(".activo-check").each(function(e){
+    var input = $(this);
+    var toggle = $( this ).bootstrapToggle();
+
+    input.change(function() {
+      var checked = $(this).prop('checked');
+      var id = $(this).attr('data-id');
+      console.log(id)
+      $.ajax({
+            dataType: "json",
+            type : 'post',
+            url: '/admin/locales/activo/' + id,
             data: {
                 checked: checked ? 1 : 0
             },

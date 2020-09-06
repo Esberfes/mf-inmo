@@ -18,6 +18,7 @@ class Local extends Model
         'metros',
         'extracto',
         'relevante',
+        'activo',
         'banner_activo',
         'descripcion',
         'creado_en',

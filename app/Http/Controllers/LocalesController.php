@@ -79,6 +79,15 @@ class LocalesController extends BaseController
             $query_locales->where("relevante", '=', $filter->relevante);
         }
 
+        if($filter->activo == null)
+        {
+            $query_locales->where("activo", '=', '1');
+        }
+        elseif($filter->activo != -1)
+        {
+            $query_locales->where("activo", '=', $filter->activo);
+        }
+
         if($filter->busqueda)
         {
             $search = $filter->busqueda;
@@ -130,7 +139,7 @@ class LocalesController extends BaseController
             }
         }
 
-        $locales_banner = Local::where('banner_activo', '=', '1')->inRandomOrder()->take(2)->get();
+        $locales_banner = Local::where('banner_activo', '=', '1')->where("activo", '=', '1')->inRandomOrder()->take(2)->get();
 
         $banners = [];
 
@@ -235,6 +244,11 @@ class LocalesController extends BaseController
             if(array_key_exists('relevante', $data))
             {
                 $filter->relevante = $data['relevante'];
+            }
+
+            if(array_key_exists('activo', $data))
+            {
+                $filter->activo = $data['activo'];
             }
         }
 
@@ -709,6 +723,23 @@ class LocalesController extends BaseController
             $local->save();
 
         }
+
+        return $local;
+    }
+
+    public static function update_activo($id_local, $check)
+    {
+        $now = Carbon::now(new \DateTimeZone('Europe/Madrid'));
+        $local = Local::find($id_local);
+        $admin = Session::get(SessionConstants::ADMIN_USER);
+
+        if($local == null)
+            return null;
+
+        $local->activo = $check;
+        $local->id_usuario_actualizacion = $admin->id;
+        $local->actualizado_en = $now;
+        $local->save();
 
         return $local;
     }

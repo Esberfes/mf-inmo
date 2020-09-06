@@ -618,4 +618,29 @@ class AdminController extends BaseController
             'error-msg'=>"NOT_CONTENT ".$data['checked']
         ], 204);
     }
+
+    public function editar_local_activo($id)
+    {
+        if(!LoginController::check())
+        {
+            return redirect()->route('login');
+        }
+
+        $data = request()->all();
+
+        $result = LocalesController::update_activo($id, $data['checked'] ? 1 : 0);
+
+        if($result == null)
+        {
+            return response([
+                'error'=>true,
+                'error-msg'=>"NOT_FOUND " .  $id
+            ], 404);
+        }
+
+        return response([
+            'error'=> false,
+            'error-msg'=>"NOT_CONTENT ".$data['checked']
+        ], 204);
+    }
 }

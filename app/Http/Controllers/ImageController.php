@@ -32,13 +32,6 @@ class ImageController extends BaseController
 		$path_destacada = $storage_path.'/'.$name_destacada;
         $file->move($storage_path, $name_destacada);
 
-        /*
-		$img = Image::make($file->getRealPath());
-        $img->resize(300, null, function ($constraint) {
-		    $constraint->aspectRatio();
-		})->save($path_destacada);
-        */
-
 		return $path_destacada = explode("app/", str_replace("public" , "storage" , $path_destacada))[1];
 	}
 }

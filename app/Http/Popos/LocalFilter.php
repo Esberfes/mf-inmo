@@ -12,6 +12,7 @@ class LocalFilter
     public $busqueda;
     public $precio;
     public $relevante;
+    public $activo;
 
     public function __construct($id, $poblacion, $sector, $order, $order_direction, $busqueda, $precio)
     {
@@ -23,5 +24,6 @@ class LocalFilter
         $this->busqueda = $busqueda;
         $this->precio = $precio;
         $this->relevante = -1;
+        $this->activo = 1;
     }
 }
