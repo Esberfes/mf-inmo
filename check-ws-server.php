@@ -13,7 +13,7 @@ curl_close($ch);
 
 if($httpcode != 200)
 {
-    echo exec('nohup php artisan websockets:serve  &');
+    echo shell_exec('nohup php artisan websockets:serve  &');
 }
 else
 {

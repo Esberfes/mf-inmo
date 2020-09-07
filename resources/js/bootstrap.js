@@ -29,6 +29,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
     wsPort: 6001,
     forceTLS: false,
     disableStats: false,
+    encrypted: false,
     auth: {
         headers: {
           'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')

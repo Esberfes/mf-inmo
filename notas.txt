@@ -1,18 +1,4 @@
-# -> FILTROS
-    ## -> Añadir filtro de precio máximo (dropdown)
+if[ curl -LI http://localhost/push/ping_server -o . -w '%{http_code}\n' -s != 200] then
 
-
-# -> ORDEN (OK)
-
-
-# -> DISEÑO
-    ## -> LISTADO OK
-    ## -> FICHA
-    ## -> ASIDE OK
-    ## -> FOOTER http://fq10.es/ OK
-    ## -> HEADER OK
-    ## -> FILTROS OK
-    ## -> PAGINATION OK
-
-# -> AREA PRIVADA
-    ## -> Poder destacar local !!!!!!!!!!!!!!!!!!!!!!!
+	nohup php www/inmobiliaria/artisan websockets:serve  &
+fi
