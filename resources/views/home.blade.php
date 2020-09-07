@@ -1,8 +1,5 @@
 @extends('layout')
 
-@section('pwa')
-<script type="module" src="{{ asset('/pwabuilder-sw-register.js') }}"></script>
-@endsection
 
 @section('nosidebar')
 

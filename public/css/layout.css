@@ -26,8 +26,20 @@ header  .header-wrapper .logo {
     margin-left: 0.4rem;
 }
 
-
-
+.toast {
+    position: fixed;
+    top: 5px;
+    right: 5px;
+    z-index: 110;
+}
+.toast button {
+    position: absolute;
+    top: 0px;
+    right: 5px;
+}
+.toast-header {
+    padding: 0.8rem 1.5rem;
+}
 /* #HEADER SECTION */
 
 aside img {

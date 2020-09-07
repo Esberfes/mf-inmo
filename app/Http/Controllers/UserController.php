@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller as BaseController;
 
 use App\Constants\SessionConstants;
 use App\Http\Popos\LocalFilter;
+use App\Http\Popos\UserSession;
 
 use App\Models\Usuario;
 use App\Models\Local;
@@ -24,6 +25,7 @@ use App\Jobs\SendEmail;
 
 use App\Helpers\Paginacion;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Carbon;
 
 class UserController extends BaseController
 {
@@ -83,8 +85,34 @@ class UserController extends BaseController
     public function home($pagina = null)
     {
         $filter = LocalesController::manage_filter_session(SessionConstants::USER_LOCALES_FILTER);
+        $user_session = UserController::manage_user_session(request());
 
         return view('home',LocalesController::get_filtered($filter, $pagina, $this->por_pagina));
+    }
+
+    public static function manage_user_session($request)
+    {
+        $user_session = null;
+        $key = "USER_SESSION";
+
+        if (!Session::exists($key)) {
+            $user_session = new UserSession(Session::getId(), $request->ip(), Carbon::now(new \DateTimeZone('Europe/Madrid')));
+            UserController::save_user_session($user_session);
+        }
+        else
+        {
+            $user_session = Session::get($key);
+        }
+
+        return $user_session;
+    }
+
+    public static function save_user_session($user_session)
+    {
+        $key = "USER_SESSION";
+
+        Session::put($key, $user_session);
+        Session::save();
     }
 
     public function directorio_local($url)

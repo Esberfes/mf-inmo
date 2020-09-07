@@ -15,6 +15,12 @@ use App\Constants\SessionConstants;
 use App\Models\Usuario;
 use Illuminate\Support\Facades\Session;
 
+use App\Events\ActivityEvent;
+use App\Events\ActivityEventAdmin;
+use App\Http\Popos\UserSession;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\LoginController;
+
 class PushController extends BaseController
 
 {
@@ -60,10 +66,34 @@ class PushController extends BaseController
         return response()->json(['success' => true],200);
       }
 
-      public function push(){
-        $guest = Guest::all();
-        Notification::send($guest, new Push("Test push", "Prueba de notificación push", $guest->ip));
+      /**
+       * Websocket
+       */
+      public function ping_on_activity_channel()
+      {
 
-        return redirect()->back();
-    }
+            if(!LoginController::check())
+            {
+                return response()->json([],403);
+            }
+
+            event(new ActivityEvent('ping'));
+
+            return response()->json(['message' => 'ping'],200);
+      }
+
+      /**
+       * Websocket
+       */
+      public function discover_on_activity_channel()
+      {
+            $data = request()->all();
+            $user_session = UserController::manage_user_session(request());
+            $user_session->url = $data['url'];
+            $user_session->ip = request()->ip();
+            UserController::save_user_session($user_session);
+            event(new ActivityEventAdmin(["discover_user" => $user_session]));
+
+            return response()->json(['user' => $user_session],200);
+      }
 }

@@ -444,6 +444,16 @@ class AdminController extends BaseController
         return view('admin.admin-usuarios', UsuariosController::get_filtered($filter, $pagina, $this->por_pagina));
     }
 
+    public function wsusers()
+    {
+        if(!LoginController::check())
+        {
+            return redirect()->route('login');
+        }
+
+        return view('admin.admin-ws-users');
+    }
+
     public function usuarios_search()
     {
         if(!LoginController::check())

@@ -21,6 +21,8 @@
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
 
     <link rel="stylesheet" href="{{asset('css/font-awesome.css')}}">
+
+    <script type="module" src="{{ asset('/pwabuilder-sw-register.js') }}"></script>
 </head>
 <body>
     @section('nonav')
@@ -81,6 +83,14 @@
                         <a class="dropdown-item" href="{{ url('/admin/usuarios/crear') }}">Crear</a>
                     </div>
                 </div>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownWsUsers" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    WS Usuarios
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownWsUsers">
+                        <a class="dropdown-item" href="{{ url('/admin/wsusers') }}">Listar</a>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -103,7 +113,7 @@
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-
+    <script src="{{ mix('js/app.js') }}"></script>
 
     <script src="{{ asset('js/bootstrap4-toggle.min.js') }}"></script>
 
