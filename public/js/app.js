@@ -25389,6 +25389,7 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   forceTLS: false,
   disableStats: false,
   encrypted: false,
+  enabledTransports: ["ws", "wss"],
   auth: {
     headers: {
       'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
