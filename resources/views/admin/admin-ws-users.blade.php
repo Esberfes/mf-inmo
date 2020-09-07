@@ -91,7 +91,6 @@ $(document).ready(function() {
 
     var users = [];
     var conn = window.Echo.channel('activities-admins').listen('ActivityEventAdmin', (data) => {
-
         if (data && data.message && data.message.discover_user) {
             var user = data.message.discover_user;
 

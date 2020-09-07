@@ -14,12 +14,13 @@ use Notification;
 use App\Constants\SessionConstants;
 use App\Models\Usuario;
 use Illuminate\Support\Facades\Session;
-
+use App\Events\ServerCheckEvent;
 use App\Events\ActivityEvent;
 use App\Events\ActivityEventAdmin;
 use App\Http\Popos\UserSession;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
+use \Illuminate\Broadcasting\BroadcastException;
 
 class PushController extends BaseController
 
@@ -71,7 +72,7 @@ class PushController extends BaseController
        */
       public function ping_on_activity_channel()
       {
-
+        try  {
             if(!LoginController::check())
             {
                 return response()->json([],403);
@@ -80,6 +81,26 @@ class PushController extends BaseController
             event(new ActivityEvent('ping'));
 
             return response()->json(['message' => 'ping'],200);
+
+        } catch (BroadcastException $e) {
+            return response()->json([
+                'error' => 'Service Unavailable'
+            ],503);
+        }
+      }
+
+      public function ping_server()
+      {
+        try  {
+            event(new ServerCheckEvent());
+
+            return response()->json(['message' => 'ping'],200);
+
+        } catch (BroadcastException $e) {
+            return response()->json([
+                'error' => 'Service Unavailable'
+            ],503);
+        }
       }
 
       /**

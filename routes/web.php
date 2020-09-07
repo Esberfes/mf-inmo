@@ -90,5 +90,6 @@ Route::post('/admin/login', 'LoginController@login');
 
 Route::post('/push','PushController@store');
 
+Route::get('/push/ping_server','PushController@ping_server');
 Route::get('/push/ping_on_activity_channel','PushController@ping_on_activity_channel');
 Route::post('/push/discover_on_activity_channel','PushController@discover_on_activity_channel');
