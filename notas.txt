@@ -1,4 +1,1 @@
-if[ curl -LI http://localhost/push/ping_server -o . -w '%{http_code}\n' -s != 200] then
-
-	nohup php www/inmobiliaria/artisan websockets:serve  &
-fi
+php -d memory_limit=-1 C:/ProgramData/ComposerSetup/bin/composer.phar require beyondcode/laravel-websockets

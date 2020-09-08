@@ -14,7 +14,7 @@
             <div class="row no-gutters">
                 <div class="col-lg-4 col-12">
                     @if($local->imagen_principal != null)
-                    <figure class="position-relative" style=" background-image: url({{ url($local->imagen_principal->ruta) }});">
+                    <figure class="position-relative lozad" data-background-image="{{ url($local->imagen_principal->ruta) }} ">
                             @if($local->relevante)
                             <i class="fas fa-medal home-article-element-relevante"></i>
                             @endif
@@ -25,7 +25,7 @@
                 <div class="col-lg-8 col-12 d-flex flex-column">
                     <div class="home-article-element-body">
                         <div class="home-article-element-body-logo">
-                            <img src="{{asset('img/card-mf.jpg')}}" alt="">
+                            <img alt="{{ $local->titulo }}" src="{{asset('img/card-mf.jpg')}}" alt="">
                         </div>
 
                         <div class="home-article-element-title">

@@ -3,7 +3,8 @@
 namespace App\Observers;
 
 use App\Models\Local;
-use App\Events\LocalActualizado;
+use App\Events\LocalActualizadoEvent;
+use App\Events\LocalCreadoEvent;
 use App\Notifications\Push;
 use App\Guest;
 use Notification;
@@ -20,7 +21,19 @@ class LocalObserver
      */
     public function created(Local $local)
     {
-        //
+        $guests = Guest::whereNotNull('id_user')->get();
+
+        // Se obtiene el administrador actual para saber quien ha relizado la operacion
+        $admin = Session::get(SessionConstants::ADMIN_USER);
+
+        // Se notifica via Service Worker
+        foreach($guests as $guest)
+        {
+            Notification::send($guest,new Push("Nuevo local", "Se ha creado el local ".$local->titulo, $admin->nombre ));
+        }
+
+        // Se notifica via WebSocket
+       event(new LocalCreadoEvent($local));
     }
 
     /**
@@ -31,16 +44,20 @@ class LocalObserver
      */
     public function updated(Local $local)
     {
-
+        // Se obtienen solo usuarios registrados
         $guests = Guest::whereNotNull('id_user')->get();
+
+        // Se obtiene el administrador actual para saber quien ha relizado la operacion
         $admin = Session::get(SessionConstants::ADMIN_USER);
 
+        // Se notifica via Service Worker
         foreach($guests as $guest)
         {
             Notification::send($guest,new Push("Local modificado", "El local ".$local->titulo." ha sido modificado", $admin->nombre ));
         }
 
-       event(new LocalActualizado($local));
+        // Se notifica via WebSocket
+       event(new LocalActualizadoEvent($local));
     }
 
     /**

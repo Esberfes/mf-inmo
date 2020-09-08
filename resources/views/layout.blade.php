@@ -69,15 +69,19 @@
     <script type="module" src="{{ asset('/pwabuilder-sw-register.js') }}"></script>
     @show
 
-    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
-
     <!-- Base css layout -->
     <link rel="stylesheet" href="{{asset('css/layout.css')}}">
 
-    <!-- Font -->
-    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{asset('css/font-awesome.css')}}">
+    <link rel="preload"  href="{{asset('css/bootstrap.min.css')}}"  as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet"  href="{{asset('css/bootstrap.min.css')}}" ></noscript>
+
+    <!-- Font -->
+    <link rel="preload"  href="https://fonts.googleapis.com/css?family=Titillium+Web"  as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet"  href="https://fonts.googleapis.com/css?family=Titillium+Web" ></noscript>
+
+    <link rel="preload"  href="{{asset('css/font-awesome.css')}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet"  href="{{asset('css/font-awesome.css')}}"></noscript>
 </head>
 
 <body>
@@ -89,7 +93,7 @@
             <div class="header-wrapper d-flex justify-content-lg-between justify-content-center align-items-center">
                 <div class="d-flex align-items-center">
                     <a href="{{ url('/') }}"><img width="200px" class="logo" src="{{asset('img/card-mf.jpg')}}"
-                            alt=""></a>
+                            alt="logo-inmobiliaria"></a>
                 </div>
                 <div class=" align-items-center d-lg-flex d-none">
                     <a href="{{ url('/admin') }}"><i style="font-size:25px; color:#FFFFFF;margin-right: 1.4rem;"
@@ -231,7 +235,7 @@
                             @foreach($banners as $banner)
                             <article style="margin-top: 1.5rem">
                                 <a href="{{ url('/directorio/'.$banner->local->url_amigable) }}">
-                                    <img width="100%" alt="{{ $banner->local->titulo }}" src="{{ url($banner->ruta) }}">
+                                    <img class="lozad" width="100%" alt="{{ $banner->local->titulo }}" data-src="{{ url($banner->ruta) }}">
                                 </a>
                             </article>
                             @endforeach
@@ -260,87 +264,22 @@
                 <div> <a target="_blank" href="https://www.mundofranquicia.com/aviso-legal/">Política de Cookies</a>
                 </div>
             </div>
-
             <div class="footer-logos row">
                 <div class="col-lg-2 footer-logo">
-                    <img src="{{asset('img/footer/logo20anyos.png')}}" alt="">
+                    <img alt="logo-20-anos-mundofranquicia" class="lozad" data-src="{{asset('img/footer/logo20anyos.png')}}" alt="">
                 </div>
                 <div class="col-lg-4 footer-logo">
-                    <img src="{{asset('img/footer/logo-mundofranquicia-negativo.png')}}" alt="">
+                    <img alr="logo-mundofranquicia" class="lozad" data-src="{{asset('img/footer/logo-mundofranquicia-negativo.png')}}" alt="">
                 </div>
                 <div class="col-lg-6 footer-logo">
-                    <img src="{{asset('img/footer/logos-footer-membersof-mf.png')}}" alt="">
+                    <img alt="logo-miembro-de-aef-aemme-gnf" class="lozad" data-src="{{asset('img/footer/logos-footer-membersof-mf.png')}}" alt="">
                 </div>
             </div>
         </div>
     </footer>
 
     <!-- Bootstrap -->
-    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
-    <script src="{{ asset('js/popper.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/menu.js') }}"></script>
-    <script src="{{ mix('js/app.js') }}"></script>
-    <script>
-    $(document).ready(function() {
-        window.Echo.channel('local-actualizado').listen('LocalActualizado', (data) => {
-            var toast = $(`<div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
-                    <div class="toast-header">
-                        <div class="d-flex flex-column">
-                            <small class="text-muted">Actualización</small>
-                            <div><strong class="mr-auto">${data.local.titulo}</strong></div>
-                        </div>
-                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="toast-body">
-                        <a href='/directorio/${data.local.url_amigable}'>Ver actualización</a>
-                    </div>
-                </div>`);
-
-            console.log("Actualizado", data)
-
-            $("body").append(toast);
-            toast.toast();
-            toast.toast('show');
-            setTimeout(() => {
-                toast.remove();
-            }, 10000);
-        });
-
-        window.Echo.channel('activities-users').listen('ActivityEvent', (data) => {
-            if (data) {
-                if (data.message == 'ping') {
-                    console.log("Discovering on activity channel");
-
-                    axios.post('/push/discover_on_activity_channel', {
-                            url: window.location.href
-                        })
-                        .then(response => {
-                            console.log(response)
-                        })
-                        .catch(e => {
-                            console.log(e);
-                        })
-                }
-            }
-        });
-
-        window.Echo.connector.pusher.connection.bind('connected', () => {
-            axios.post('/push/discover_on_activity_channel', {
-                    url: window.location.href
-                })
-                .then(response => {
-                    console.log(response)
-                })
-                .catch(e => {
-                    console.log(e);
-                })
-
-        });
-    })
-    </script>
+    <script async src="{{ mix('js/app.js') }}"></script>
 </body>
 
 </html>

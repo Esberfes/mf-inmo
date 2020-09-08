@@ -41,11 +41,11 @@ header  .header-wrapper .logo {
     padding: 0.8rem 1.5rem;
 }
 /* #HEADER SECTION */
-
+/*
 aside img {
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
 }
-
+*/
 /* @NAV SECTION */
 nav {
 
@@ -236,20 +236,20 @@ main section article.local-article .local-article-attrs {
     padding: 1.25rem;
 }
 
-    aside article{
-        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
-    }
-    aside article .list-group h2 {
-        font-size: 1.3rem;
-        font-weight: bold;
-    }
-    aside article .list-group-item.active {
-        display: flex;
-        align-items: center;
-    }
-    aside article .list-group-item.active i {
-        margin-right: 1rem;
-    }
+aside .aside-local article{
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+}
+aside article .list-group h2 {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+aside article .list-group-item.active {
+    display: flex;
+    align-items: center;
+}
+aside article .list-group-item.active i {
+    margin-right: 1rem;
+}
 
 .list-group .list-group-item.active {
     background-color: #FFF;
@@ -346,9 +346,6 @@ footer .footer-logos img {
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
 }
 
-.admin-table-section {
-
-}
 .table-responsive {
     display: table;
 }
@@ -660,6 +657,20 @@ background-color: #FF6600
 .resp-sharing-button--whatsapp:active {
   background-color: #1DA851;
   border-color: #1DA851;
+}
+.lozad {
+    visibility: hidden;
+    overflow: hidden;
+    opacity: 0;
+    transition: all 1s;
+}
+.lozad.loaded {
+    opacity: 1;
+    visibility: visible;
+}
+
+aside img.lozad.loaded {
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
 }
 
 #form-search-wrapper-mask {
