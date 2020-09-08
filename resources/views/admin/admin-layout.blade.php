@@ -84,12 +84,10 @@
                     </div>
                 </div>
                 <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownWsUsers" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    WS Usuarios
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownWsUsers">
-                        <a class="dropdown-item" href="{{ url('/admin/wsusers') }}">Listar</a>
-                    </div>
+                    <a class="btn btn-primary" href="{{ url('/admin/wsusers') }}"> WS Usuarios</a>
+                </div>
+                <div class="dropdown">
+                    <a class="btn btn-primary" href="{{ url('/admin/configuracion') }}">Configuración</a>
                 </div>
             </div>
         </div>

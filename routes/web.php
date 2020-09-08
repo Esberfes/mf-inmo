@@ -83,6 +83,9 @@ Route::post('/admin/usuarios/eliminar/{id}', 'AdminController@eliminar_usuario')
 // Admin WS Users
 Route::get('/admin/wsusers', 'AdminController@wsusers');
 
+// Admin configuration
+Route::get('/admin/configuracion', 'AdminController@configuracion');
+
 Route::get('/admin/login', 'LoginController@login_view')->name('login');
 Route::post('/admin/logout', 'LoginController@logout')->name('logout');
 Route::post('/admin/login', 'LoginController@login');

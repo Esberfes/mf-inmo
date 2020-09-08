@@ -6,34 +6,17 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-
 use App\Constants\SessionConstants;
-use App\Http\Popos\LocalFilter;
-
-use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LocalesController;
 use App\Http\Controllers\SectoresController;
 use App\Http\Controllers\PoblacionesController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UsuariosController;
-
 use App\Models\Usuario;
 use App\Models\Local;
 use App\Models\Sector;
 use App\Models\Poblacion;
-use App\Models\Solicitud;
-use App\Models\LocalCaracteristica;
-use App\Models\LocalEdificio;
-use App\Models\LocalEquipamiento;
-use App\Models\LocalMedia;
 
-use App\Jobs\SendEmail;
-
-use App\Helpers\Paginacion;
-use Illuminate\Support\Facades\Session;
-
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
 
 class AdminController extends BaseController
 {
@@ -43,8 +26,7 @@ class AdminController extends BaseController
 
     public function locales($pagina = null)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -55,8 +37,7 @@ class AdminController extends BaseController
 
     public function locales_search()
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -69,8 +50,7 @@ class AdminController extends BaseController
 
     public function locales_crear()
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -85,8 +65,7 @@ class AdminController extends BaseController
 
     public function locales_crear_nuevo()
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -97,26 +76,20 @@ class AdminController extends BaseController
 
     public function editar_local($id)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
         $local = Local::find($id);
 
-        if(empty($local))
-		{
-			return view('404');
+        if (empty($local)) {
+            return view('404');
         }
 
-        foreach($local->medias as $media)
-        {
-            if($media->tipo == 'principal')
-            {
+        foreach ($local->medias as $media) {
+            if ($media->tipo == 'principal') {
                 $local->imagen_principal = $media;
-            }
-            elseif($media->tipo == 'banner')
-            {
+            } elseif ($media->tipo == 'banner') {
                 $local->banner = $media;
             }
         }
@@ -130,8 +103,7 @@ class AdminController extends BaseController
 
     public function editar_local_editar($id)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -142,8 +114,7 @@ class AdminController extends BaseController
 
     public function editar_local_crear_caracteristica($id)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -154,8 +125,7 @@ class AdminController extends BaseController
 
     public function editar_local_editar_caracteristica($id, $id_caracteristica)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -166,8 +136,7 @@ class AdminController extends BaseController
 
     public function editar_local_crear_edificio($id)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -178,8 +147,7 @@ class AdminController extends BaseController
 
     public function editar_local_editar_edificio($id, $id_edificio)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -190,8 +158,7 @@ class AdminController extends BaseController
 
     public function editar_local_crear_equipamiento($id)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -202,8 +169,7 @@ class AdminController extends BaseController
 
     public function editar_local_editar_equipamiento($id, $id_equipamiento)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -214,8 +180,7 @@ class AdminController extends BaseController
 
     function editar_local_imagen_principal($id)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -226,8 +191,7 @@ class AdminController extends BaseController
 
     function editar_local_imagen_banner($id)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -238,8 +202,7 @@ class AdminController extends BaseController
 
     public function sectores($pagina = null)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -250,8 +213,7 @@ class AdminController extends BaseController
 
     public function sectores_search()
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -264,16 +226,14 @@ class AdminController extends BaseController
 
     public function editar_sector($id)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
         $sector = Sector::find($id);
 
-        if(empty($sector))
-		{
-			return view('404');
+        if (empty($sector)) {
+            return view('404');
         }
 
         return view('admin.admin-editar-sector', [
@@ -283,8 +243,7 @@ class AdminController extends BaseController
 
     public function editar_sector_editar($id)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -295,8 +254,7 @@ class AdminController extends BaseController
 
     public function sectores_crear()
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -305,8 +263,7 @@ class AdminController extends BaseController
 
     public function sectores_crear_nuevo()
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -317,8 +274,7 @@ class AdminController extends BaseController
 
     public function poblaciones($pagina = null)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -329,8 +285,7 @@ class AdminController extends BaseController
 
     public function poblaciones_search()
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -343,16 +298,14 @@ class AdminController extends BaseController
 
     public function editar_poblacion($id)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
         $poblacion = Poblacion::find($id);
 
-        if(empty($poblacion))
-		{
-			return view('404');
+        if (empty($poblacion)) {
+            return view('404');
         }
 
         return view('admin.admin-editar-poblacion', [
@@ -362,8 +315,7 @@ class AdminController extends BaseController
 
     public function editar_poblacion_editar($id)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -374,8 +326,7 @@ class AdminController extends BaseController
 
     public function poblaciones_crear()
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -384,8 +335,7 @@ class AdminController extends BaseController
 
     public function poblaciones_crear_nuevo()
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -396,8 +346,7 @@ class AdminController extends BaseController
 
     public function solicitudes($pagina = null)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -408,8 +357,7 @@ class AdminController extends BaseController
 
     public function solicitudes_search()
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -422,8 +370,7 @@ class AdminController extends BaseController
 
     public function solicitudes_atender($id_solicitud)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -434,8 +381,7 @@ class AdminController extends BaseController
 
     public function usuarios($pagina = null)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -446,18 +392,25 @@ class AdminController extends BaseController
 
     public function wsusers()
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
         return view('admin.admin-ws-users');
     }
 
+    public function configuracion()
+    {
+        if (!LoginController::check()) {
+            return redirect()->route('login');
+        }
+
+        return view('admin.admin-configuracion');
+    }
+
     public function usuarios_search()
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -470,16 +423,14 @@ class AdminController extends BaseController
 
     public function editar_usuario($id)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
         $usuario = Usuario::find($id);
 
-        if(empty($usuario))
-		{
-			return view('404');
+        if (empty($usuario)) {
+            return view('404');
         }
 
         return view('admin.admin-editar-usuario', [
@@ -489,8 +440,7 @@ class AdminController extends BaseController
 
     public function editar_usuario_editar($id)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -501,8 +451,7 @@ class AdminController extends BaseController
 
     public function usuarios_crear()
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -511,8 +460,7 @@ class AdminController extends BaseController
 
     public function usuarios_crear_nuevo()
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -523,8 +471,7 @@ class AdminController extends BaseController
 
     public function eliminar_usuario($id)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -535,8 +482,7 @@ class AdminController extends BaseController
 
     public function eliminar_local($id)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -547,15 +493,13 @@ class AdminController extends BaseController
 
     public function eliminar_sector($id)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
         $result = SectoresController::delete($id);
 
-        if($result != null)
-        {
+        if ($result != null) {
             return $result;
         }
 
@@ -564,15 +508,13 @@ class AdminController extends BaseController
 
     public function eliminar_poblacion($id)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
         $result = PoblacionesController::delete($id);
 
-        if($result != null)
-        {
+        if ($result != null) {
             return $result;
         }
 
@@ -581,8 +523,7 @@ class AdminController extends BaseController
 
     public function editar_local_relevante($id)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -590,24 +531,22 @@ class AdminController extends BaseController
 
         $result = LocalesController::update_relevante($id, $data['checked'] ? 1 : 0);
 
-        if($result == null)
-        {
+        if ($result == null) {
             return response([
-                'error'=>true,
-                'error-msg'=>"NOT_FOUND " .  $id
+                'error' => true,
+                'error-msg' => "NOT_FOUND " .  $id
             ], 404);
         }
 
         return response([
-            'error'=> false,
-            'error-msg'=>"NOT_CONTENT ".$data['checked']
+            'error' => false,
+            'error-msg' => "NOT_CONTENT " . $data['checked']
         ], 204);
     }
 
     public function editar_local_banner($id)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -615,24 +554,22 @@ class AdminController extends BaseController
 
         $result = LocalesController::update_banner($id, $data['checked'] ? 1 : 0);
 
-        if($result == null)
-        {
+        if ($result == null) {
             return response([
-                'error'=>true,
-                'error-msg'=>"NOT_FOUND " .  $id
+                'error' => true,
+                'error-msg' => "NOT_FOUND " .  $id
             ], 404);
         }
 
         return response([
-            'error'=> false,
-            'error-msg'=>"NOT_CONTENT ".$data['checked']
+            'error' => false,
+            'error-msg' => "NOT_CONTENT " . $data['checked']
         ], 204);
     }
 
     public function editar_local_activo($id)
     {
-        if(!LoginController::check())
-        {
+        if (!LoginController::check()) {
             return redirect()->route('login');
         }
 
@@ -640,17 +577,16 @@ class AdminController extends BaseController
 
         $result = LocalesController::update_activo($id, $data['checked'] ? 1 : 0);
 
-        if($result == null)
-        {
+        if ($result == null) {
             return response([
-                'error'=>true,
-                'error-msg'=>"NOT_FOUND " .  $id
+                'error' => true,
+                'error-msg' => "NOT_FOUND " .  $id
             ], 404);
         }
 
         return response([
-            'error'=> false,
-            'error-msg'=>"NOT_CONTENT ".$data['checked']
+            'error' => false,
+            'error-msg' => "NOT_CONTENT " . $data['checked']
         ], 204);
     }
 }

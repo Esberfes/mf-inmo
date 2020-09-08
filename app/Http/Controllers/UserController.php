@@ -6,24 +6,12 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-
 use App\Constants\SessionConstants;
-use App\Http\Popos\LocalFilter;
 use App\Http\Popos\UserSession;
-
-use App\Models\Usuario;
 use App\Models\Local;
 use App\Models\Sector;
 use App\Models\Poblacion;
 use App\Models\Solicitud;
-
-use App\Notifications\Push;
-use App\Guest;
-use Notification;
-
-use App\Jobs\SendEmail;
-
-use App\Helpers\Paginacion;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Carbon;
 
@@ -38,46 +26,31 @@ class UserController extends BaseController
     public function solicitud()
     {
         $data = request()->validate([
-			'nombre' => 'required',
-			'email' => ['required' , 'email'],
-			'telefono' => 'required',
-			'comentario' => '',
-			'id_local' => 'required'
-		],[
-			'nombre.required' => 'El nombre de usuario es obligatorio.',
-			'email.required' => 'El email es obligatorio.',
-			'email.email' => 'El email tiene un formato incorrecto.',
-			'telefono.required' => 'El telefono es un campo obligatorio'
+            'nombre' => 'required',
+            'email' => ['required', 'email'],
+            'telefono' => 'required',
+            'comentario' => '',
+            'id_local' => 'required'
+        ], [
+            'nombre.required' => 'El nombre de usuario es obligatorio.',
+            'email.required' => 'El email es obligatorio.',
+            'email.email' => 'El email tiene un formato incorrecto.',
+            'telefono.required' => 'El telefono es un campo obligatorio'
         ]);
 
         $local = Local::find($data['id_local']);
 
-		if(empty($local))
-		{
-			return view('404');
+        if (empty($local)) {
+            return view('404');
         }
 
         Solicitud::create([
-			'id_local' => $data['id_local'],
-			'nombre' => $data['nombre'],
-			'email' => $data['email'],
-			'telefono' => $data['telefono'],
-			'comentario' => $data['comentario']
-        ]);
-
-        SendEmail::dispatch([
+            'id_local' => $data['id_local'],
             'nombre' => $data['nombre'],
             'email' => $data['email'],
-            'local' => $local
+            'telefono' => $data['telefono'],
+            'comentario' => $data['comentario']
         ]);
-
-
-        $guests = Guest::whereNotNull('id_user')->get();
-
-        foreach($guests as $guest)
-        {
-            Notification::send($guest,new Push("Solicitud de contacto", "Nueva solicitud para el local ".$local->titulo, $data['nombre']." - ".$data['email'] ));
-        }
 
         return redirect()->back()->with('success', 'Solicitud enviada con éxito');
     }
@@ -87,7 +60,7 @@ class UserController extends BaseController
         $filter = LocalesController::manage_filter_session(SessionConstants::USER_LOCALES_FILTER);
         $user_session = UserController::manage_user_session(request());
 
-        return view('home',LocalesController::get_filtered($filter, $pagina, $this->por_pagina));
+        return view('home', LocalesController::get_filtered($filter, $pagina, $this->por_pagina));
     }
 
     public static function manage_user_session($request)
@@ -98,9 +71,7 @@ class UserController extends BaseController
         if (!Session::exists($key)) {
             $user_session = new UserSession(Session::getId(), $request->ip(), Carbon::now(new \DateTimeZone('Europe/Madrid')));
             UserController::save_user_session($user_session);
-        }
-        else
-        {
+        } else {
             $user_session = Session::get($key);
         }
 
@@ -117,19 +88,17 @@ class UserController extends BaseController
 
     public function directorio_local($url)
     {
-        $local = Local::where('url_amigable' , '=' , $url)->get();
+        $local = Local::where('url_amigable', '=', $url)->get();
         LocalesController::manage_filter_session(SessionConstants::USER_LOCALES_FILTER);
 
-		if(empty($local[0]))
-		{
-			return view('404');
+        if (empty($local[0])) {
+            return view('404');
         }
 
         $imagen_principal = null;
 
-        foreach($local[0]->medias as $media)
-        {
-            if($media->tipo == 'principal') {
+        foreach ($local[0]->medias as $media) {
+            if ($media->tipo == 'principal') {
                 $local[0]->imagen_principal = $media;
             }
         }
@@ -140,23 +109,20 @@ class UserController extends BaseController
 
         $banners = [];
 
-        foreach($locales_banner as $localb)
-        {
-            foreach($localb->medias as $media)
-            {
-                if($media->tipo == 'banner')
-                {
-                   $banners[] = $media;
+        foreach ($locales_banner as $localb) {
+            foreach ($localb->medias as $media) {
+                if ($media->tipo == 'banner') {
+                    $banners[] = $media;
                 }
             }
         }
 
-		return view('local' , [
-			"local" => $local[0],
+        return view('local', [
+            "local" => $local[0],
             'sectores' => $sectores,
             'poblaciones' => $poblaciones,
             'banners' => $banners
-		]);
+        ]);
     }
 
     public function home_search()

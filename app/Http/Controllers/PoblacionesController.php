@@ -2,33 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-
-use App\Http\Popos\User;
 use App\Http\Popos\PoblacionFilter;
-
-use App\Http\Controllers\ImageController;
-
-use App\Models\Usuario;
-use App\Models\Local;
-use App\Models\Sector;
 use App\Models\Poblacion;
-use App\Models\Solicitud;
-use App\Models\LocalCaracteristica;
-use App\Models\LocalEdificio;
-use App\Models\LocalEquipamiento;
-use App\Models\LocalMedia;
-
-use App\Jobs\SendEmail;
-
 use App\Helpers\Paginacion;
 use Illuminate\Support\Facades\Session;
-
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
 
 class PoblacionesController extends BaseController
 {

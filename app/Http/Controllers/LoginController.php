@@ -2,35 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
+
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Carbon;
-
 use App\Constants\SessionConstants;
-
 use App\Models\Usuario;
 
 class LoginController extends BaseController
 {
 
     public function login()
-	{
+    {
         $data = request()->validate([
             'email' => 'required',
             'pass' => 'required',
-		],[
+        ], [
             'email.required' => 'El campo email es obligatorio.',
             'pass.required' => 'El campo consraseña es obligatorio.'
         ]);
 
-        $usuario = Usuario::where("email", "=", $data['email'])->where("pass", "=", md5(env('APP_KEY').$data['pass']))->first();
+        $usuario = Usuario::where("email", "=", $data['email'])->where("pass", "=", md5(env('APP_KEY') . $data['pass']))->first();
 
-        if(empty($usuario))
-        {
+        if (empty($usuario)) {
             return redirect()->back()->withErrors('Email o constraseña invalidos')->withInput();
         }
 
@@ -44,13 +38,13 @@ class LoginController extends BaseController
         return redirect()->route('locales');
     }
 
-	public function login_view()
-	{
+    public function login_view()
+    {
         return view('admin.admin-login');
     }
 
     public function logout()
-	{
+    {
         Session::forget(SessionConstants::ADMIN_USER);
         return redirect()->route('home');
     }
