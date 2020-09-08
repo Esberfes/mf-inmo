@@ -23,7 +23,7 @@ $(document).ready(function() {
             toast.toast("show");
             setTimeout(() => {
                 toast.remove();
-            }, 100000);
+            }, 10000);
         })
         .listen("LocalCreadoEvent", data => {
             var toast = $(`<div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
