@@ -92,6 +92,7 @@ Route::post('/admin/login', 'LoginController@login');
 
 
 Route::post('/push','PushController@store');
+Route::delete('/push','PushController@delete');
 
 Route::get('/push/ping_server','PushController@ping_server');
 Route::get('/push/ping_on_activity_channel','PushController@ping_on_activity_channel');

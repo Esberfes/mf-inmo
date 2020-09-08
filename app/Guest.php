@@ -19,4 +19,9 @@ class Guest extends Model
     public function pushSubscriptionBelongsToUser($subscription){
         return (int) $subscription->subscribable_id === (int) $this->id;
     }
+
+    public function suscriptions()
+	{
+		return $this->hasMany('App\PushSubscriptions', 'subscribable_id', 'id_user');
+    }
 }

@@ -62,6 +62,27 @@ class PushController extends BaseController
         return response()->json(['success' => true], 200);
     }
 
+    public function delete()
+    {
+        $admin = Session::get(SessionConstants::ADMIN_USER);
+        $guests = Guest::where("id_user", "=", $admin->id)->get();
+
+        if(empty($guests))
+            return response()->json(['NOT FOUND' => true], 404);
+
+        foreach($guests as $guest) {
+            $subscritions = $guest->suscriptions;
+            if(!empty($subscritions)) {
+                foreach($subscritions as $subscrition) {
+                    $subscrition->delete();
+                }
+            }
+            $guest->delete();
+        }
+
+        return response()->json(['success' => true], 200);
+    }
+
     /**
      * Websocket
      */

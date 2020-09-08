@@ -22,7 +22,7 @@
     <div class="card-header mb-3">Configuración</div>
     <div class="card-body">
         <button class="btn btn-primary" id="accept-push">Activar notificaciones</button>
-        <button class="btn btn-primary" id="accept-push">Desactivar notificaciones</button>
+        <button class="btn btn-primary" id="disable-push">Desactivar notificaciones</button>
     </div>
 </div>
 
@@ -32,7 +32,41 @@
 @section('scripts')
 <script>
     $("#accept-push").click(function() {
+        alert("Suscripción solicitada");
         askPermission();
+    });
+
+    $("#disable-push").click(function() {
+        if (confirm("Seguro que desea cancela la suscripción?")) {
+            navigator.serviceWorker.ready.then(function(reg) {
+                reg.pushManager.getSubscription().then(function(subscription) {
+                    subscription.unsubscribe().then(function(successful) {
+
+                    }).catch(function(e) {
+                        //Unsubscription failed
+                    })
+                })
+                alert("Suscripción eliminada");
+                fetch("/push", {
+                        method: "DELETE",
+                        headers: {
+                            Accept: "application/json",
+                            "Content-Type": "application/json",
+                            "X-CSRF-Token": document.querySelector("meta[name=csrf-token]").getAttribute("content")
+                        }
+                    })
+                    .then(res => {
+                        return res.json();
+                    })
+                    .then(res => {
+                        console.log(res);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            });
+        }
+
     })
 
     function askPermission() {
