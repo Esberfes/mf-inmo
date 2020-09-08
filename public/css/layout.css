@@ -700,15 +700,12 @@ aside img.lozad.loaded {
         flex: 0 0 100%;
         max-width: 100%;
     }
-    .form-order-by button i {
-
-    }
     .form-search-wrapper {
         width: 100%;
-        padding-right: 0;
-        padding-left: 0;
-        margin-right: 0;
-        margin-left: 0;
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+        margin-right: 0 !important;
+        margin-left: 0 !important;
         position: sticky;
         top: 0;
         z-index: 100;
