@@ -88,7 +88,7 @@ class UserController extends BaseController
 
     public function directorio_local($url)
     {
-        $local = Local::where('url_amigable', '=', $url)->get();
+        $local = Local::where('url_amigable', '=', $url)->where('activo', '=', "1")->get();
         LocalesController::manage_filter_session(SessionConstants::USER_LOCALES_FILTER);
 
         if (empty($local[0])) {
