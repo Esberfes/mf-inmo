@@ -71,7 +71,7 @@ class AdminController extends BaseController
 
         $local = LocalesController::create(request());
 
-        return redirect()->route('locales.editar', ['id' => $local->id])->with('success', 'Local creado con éxito, puede continuar editando.');
+        return redirect()->route('locales.editar', ['id' => $local->id])->with('success', 'Local creado con éxito, puede continuar editando. Recuerde activar la ficha cuando termine.');
     }
 
     public function editar_local($id)

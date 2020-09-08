@@ -284,6 +284,7 @@ class LocalesController extends BaseController
             'precio' => $data['precio'],
             'metros' => $data['metros'],
             'relevante' => 0,
+            'activo' => 0,
             'extracto' => $data['extracto'],
             'descripcion' => $data['descripcion'],
             'id_sector' => $data['sector'],

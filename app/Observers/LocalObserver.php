@@ -31,9 +31,6 @@ class LocalObserver
         foreach ($guests as $guest) {
             Notification::send($guest, new Push("Nuevo local", "Se ha creado el local " . $local->titulo, $admin->nombre));
         }
-
-        // Se notifica via WebSocket
-        event(new LocalCreadoEvent($local));
     }
 
     /**
@@ -50,13 +47,35 @@ class LocalObserver
         // Se obtiene el administrador actual para saber quien ha relizado la operacion
         $admin = Session::get(SessionConstants::ADMIN_USER);
 
-        // Se notifica via Service Worker a los administradores
-        foreach ($guests as $guest) {
-            Notification::send($guest, new Push("Local modificado", "El local " . $local->titulo . " ha sido modificado", $admin->nombre));
-        }
 
-        // Se notifica via WebSocket
-        event(new LocalActualizadoEvent($local));
+        if($local->getOriginal('activo') == 0 && $local->activo == 1) { // Activado
+
+            // Se notifica via WebSocket a todos los clientes de que se ha activado un nuevo local
+            event(new LocalCreadoEvent($local));
+
+            foreach ($guests as $guest) {
+                Notification::send($guest, new Push("Local modificado", "El local " . $local->titulo . " ha sido activado", $admin->nombre));
+            }
+        } elseif($local->getOriginal('activo') == 1 && $local->activo == 0) { // Desactivado
+
+            // Se notifica via Service Worker a los administradores
+            foreach ($guests as $guest) {
+                Notification::send($guest, new Push("Local modificado", "El local " . $local->titulo . " ha sido desactovado", $admin->nombre));
+            }
+        } elseif($local->activo == 1) {
+            // Se notifica via Service Worker a los administradores
+            foreach ($guests as $guest) {
+                Notification::send($guest, new Push("Local modificado", "El local " . $local->titulo . " ha sido modificado", $admin->nombre));
+            }
+
+            // Se notifica via WebSocket a todos los clientes de que un local ha sido modificado
+            event(new LocalActualizadoEvent($local));
+        } else {
+             // Se notifica via Service Worker a los administradores
+             foreach ($guests as $guest) {
+                Notification::send($guest, new Push("Local modificado", "El local " . $local->titulo . " ha sido modificado", $admin->nombre));
+            }
+        }
     }
 
     /**
@@ -67,7 +86,14 @@ class LocalObserver
      */
     public function deleted(Local $local)
     {
-        //
+         // Se obtiene el administrador actual para saber quien ha relizado la operacion
+         $admin = Session::get(SessionConstants::ADMIN_USER);
+
+        // Se obtienen solo usuarios registrados
+        $guests = Guest::whereNotNull('id_user')->get();
+        foreach ($guests as $guest) {
+            Notification::send($guest, new Push("Local eliminado", "El local " . $local->titulo . " ha sido eliminado", $admin->nombre));
+        }
     }
 
     /**
