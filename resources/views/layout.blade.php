@@ -72,9 +72,7 @@
     <!-- Base css layout -->
     <link rel="stylesheet" href="{{asset('css/layout.css')}}">
 
-
-    <link rel="preload"  href="{{asset('css/bootstrap.min.css')}}"  as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet"  href="{{asset('css/bootstrap.min.css')}}" ></noscript>
+    <link rel="stylesheet"  href="{{asset('css/bootstrap.min.css')}}" >
 
     <!-- Font -->
     <link rel="preload"  href="https://fonts.googleapis.com/css?family=Titillium+Web"  as="style" onload="this.onload=null;this.rel='stylesheet'">
