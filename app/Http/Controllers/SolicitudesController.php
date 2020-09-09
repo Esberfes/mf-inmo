@@ -66,7 +66,7 @@ class SolicitudesController extends BaseController
             return view('404');
         }
 
-        $solicitudes = $query_solicitudes->skip($paginacion['offset'])->take($max_per_page)->get();
+        $solicitudes = $query_solicitudes->skip($paginacion['offset'])->orderBy('creado_en', 'desc')->take($max_per_page)->get();
 
         $sectores = Sector::orderBy('titulo', 'asc')->get();
 

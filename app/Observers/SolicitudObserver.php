@@ -2,10 +2,12 @@
 
 namespace App\Observers;
 
+use App\Models\Usuario;
 use App\Models\Solicitud;
 use Notification;
 use App\Guest;
 use App\Jobs\SendEmail;
+use App\Jobs\SendEmailSolicitudAdmins;
 use App\Notifications\Push;
 
 class SolicitudObserver
@@ -28,6 +30,15 @@ class SolicitudObserver
         // TODO notificar por websockets a los administradores
 
         // TODO email a los administradores
+
+        $admins = Usuario::all();
+
+        foreach ($admins as $admin) {
+            SendEmailSolicitudAdmins::dispatch([
+                'solicitud' => $solicitud,
+                'admin' => $admin
+            ]);
+        }
 
         // Se envia email al interesado
         SendEmail::dispatch([
