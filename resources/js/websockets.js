@@ -31,8 +31,6 @@ $(document).ready(() => {
         if (popups.length <= 2) {
             toastContainer.append(popup);
             popup.toast();
-            popup.toast("show");
-            popups.push(popup);
 
             popup.on("hidden.bs.toast", function() {
                 removePopup(popups, popup);
@@ -41,6 +39,9 @@ $(document).ready(() => {
             popup.on("hide.bs.toast", function() {
                 removePopup(popups, popup);
             });
+
+            popups.push(popup);
+            popup.toast("show");
         } else {
             setTimeout(
                 () => tryToDisplayPopup(popups, popup, toastContainer),
@@ -52,10 +53,8 @@ $(document).ready(() => {
     const removePopup = (popups, popup) => {
         popups.forEach((e, i) => {
             if (e === popup) {
-                e.fadeOut(500, function() {
-                    popups.splice(i, 1);
-                    e.remove();
-                });
+                e.remove();
+                popups.splice(i, 1);
             }
         });
     };

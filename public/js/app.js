@@ -43467,26 +43467,28 @@ $(document).ready(function () {
   $("body").append(toastContainer);
   var popups = [];
   window.Echo.channel("locales").listen("LocalActualizadoEvent", function (data) {
-    var toast = createToast('Actualización', data.local.titulo, "/directorio/".concat(data.local.url_amigable), 'Ver actualización', popupLifeTiem);
+    var toast = createToast("Actualización", data.local.titulo, "/directorio/".concat(data.local.url_amigable), "Ver actualización", popupLifeTiem);
     tryToDisplayPopup(popups, toast, toastContainer);
   }).listen("LocalCreadoEvent", function (data) {
-    var toast = createToast('Nuevo local', data.local.titulo, "/directorio/".concat(data.local.url_amigable), 'Ver nuevo local', popupLifeTiem);
+    var toast = createToast("Nuevo local", data.local.titulo, "/directorio/".concat(data.local.url_amigable), "Ver nuevo local", popupLifeTiem);
     console.log("Creado", data);
     tryToDisplayPopup(popups, toast, toastContainer);
   });
 
   var tryToDisplayPopup = function tryToDisplayPopup(popups, popup, toastContainer) {
+    console.log(popups);
+
     if (popups.length <= 2) {
       toastContainer.append(popup);
       popup.toast();
-      popup.toast("show");
+      popup.on("hidden.bs.toast", function () {
+        removePopup(popups, popup);
+      });
+      popup.on("hide.bs.toast", function () {
+        removePopup(popups, popup);
+      });
       popups.push(popup);
-      popup.on('hidden.bs.toast', function () {
-        removePopup(popups, popup);
-      });
-      popup.on('hide.bs.toast', function () {
-        removePopup(popups, popup);
-      });
+      popup.toast("show");
     } else {
       setTimeout(function () {
         return tryToDisplayPopup(popups, popup, toastContainer);
@@ -43496,11 +43498,11 @@ $(document).ready(function () {
 
   var removePopup = function removePopup(popups, popup) {
     popups.forEach(function (e, i) {
+      console.log("is==", e === popup);
+
       if (e === popup) {
-        e.fadeOut(500, function () {
-          popups.splice(i, 1);
-          e.remove();
-        });
+        e.remove();
+        popups.splice(i, 1);
       }
     });
   };
