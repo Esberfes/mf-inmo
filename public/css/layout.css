@@ -680,7 +680,7 @@ aside img.lozad.loaded {
 }
 @media (max-width:991px) {
     #form-search-wrapper-mask {
-        display: block;
+        display: none;
         position: absolute;
         width: 100%;
         height: 100%;
