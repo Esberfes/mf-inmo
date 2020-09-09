@@ -11,15 +11,17 @@ class SolicitudMailAdmin extends Mailable
     use Queueable, SerializesModels;
 
     public $solicitud;
+    public $admin;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($solicitud)
+    public function __construct($admin, $solicitud)
     {
         $this->solicitud = $solicitud;
+        $this->admin = $admin;
     }
 
     /**

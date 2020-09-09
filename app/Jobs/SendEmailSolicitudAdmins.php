@@ -33,7 +33,7 @@ class SendEmailSolicitudAdmins implements ShouldQueue
      */
     public function handle()
     {
-        $email = new SolicitudMailAdmin($this->details['solicitud']);
+        $email = new SolicitudMailAdmin($this->details['admin'], $this->details['solicitud']);
         Mail::to($this->details['admin']->email)->send($email);
     }
 }
