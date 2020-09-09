@@ -43310,6 +43310,8 @@ __webpack_require__(/*! ./menu */ "./resources/js/menu.js");
 
 __webpack_require__(/*! ./websockets */ "./resources/js/websockets.js");
 
+__webpack_require__(/*! ./websockets-admin */ "./resources/js/websockets-admin.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -43441,6 +43443,17 @@ $("#section-form-search-toggle a").click(function (event) {
 
 /***/ }),
 
+/***/ "./resources/js/websockets-admin.js":
+/*!******************************************!*\
+  !*** ./resources/js/websockets-admin.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
 /***/ "./resources/js/websockets.js":
 /*!************************************!*\
   !*** ./resources/js/websockets.js ***!
@@ -43449,25 +43462,53 @@ $("#section-form-search-toggle a").click(function (event) {
 /***/ (function(module, exports) {
 
 $(document).ready(function () {
+  var popupLifeTiem = 5000;
+  var toastContainer = $("<div class=\"toast-container\"></div>");
+  $("body").append(toastContainer);
+  var popups = [];
   window.Echo.channel("locales").listen("LocalActualizadoEvent", function (data) {
-    var toast = $("<div class=\"toast\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\" data-autohide=\"false\">\n                <div class=\"toast-header\">\n                    <div class=\"d-flex flex-column\">\n                        <small class=\"text-muted\">Actualizaci\xF3n</small>\n                        <div><strong class=\"mr-auto\">".concat(data.local.titulo, "</strong></div>\n                    </div>\n                    <button type=\"button\" class=\"ml-2 mb-1 close\" data-dismiss=\"toast\" aria-label=\"Close\">\n                        <span aria-hidden=\"true\">&times;</span>\n                    </button>\n                </div>\n                <div class=\"toast-body\">\n                    <a href='/directorio/").concat(data.local.url_amigable, "'>Ver actualizaci\xF3n</a>\n                </div>\n            </div>"));
-    console.log("Actualizado", data);
-    $("body").append(toast);
-    toast.toast();
-    toast.toast("show");
-    setTimeout(function () {
-      toast.remove();
-    }, 10000);
+    var toast = createToast('Actualización', data.local.titulo, "/directorio/".concat(data.local.url_amigable), 'Ver actualización', popupLifeTiem);
+    tryToDisplayPopup(popups, toast, toastContainer);
   }).listen("LocalCreadoEvent", function (data) {
-    var toast = $("<div class=\"toast\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\" data-autohide=\"false\">\n                <div class=\"toast-header\">\n                    <div class=\"d-flex flex-column\">\n                        <small class=\"text-muted\">Nuevo local</small>\n                        <div><strong class=\"mr-auto\">".concat(data.local.titulo, "</strong></div>\n                    </div>\n                    <button type=\"button\" class=\"ml-2 mb-1 close\" data-dismiss=\"toast\" aria-label=\"Close\">\n                        <span aria-hidden=\"true\">&times;</span>\n                    </button>\n                </div>\n                <div class=\"toast-body\">\n                    <a href='/directorio/").concat(data.local.url_amigable, "'>Ver nuevo local</a>\n                </div>\n            </div>"));
+    var toast = createToast('Nuevo local', data.local.titulo, "/directorio/".concat(data.local.url_amigable), 'Ver nuevo local', popupLifeTiem);
     console.log("Creado", data);
-    $("body").append(toast);
-    toast.toast();
-    toast.toast("show");
-    setTimeout(function () {
-      toast.remove();
-    }, 10000);
+    tryToDisplayPopup(popups, toast, toastContainer);
   });
+
+  var tryToDisplayPopup = function tryToDisplayPopup(popups, popup, toastContainer) {
+    if (popups.length <= 2) {
+      toastContainer.append(popup);
+      popup.toast();
+      popup.toast("show");
+      popups.push(popup);
+      popup.on('hidden.bs.toast', function () {
+        removePopup(popups, popup);
+      });
+      popup.on('hide.bs.toast', function () {
+        removePopup(popups, popup);
+      });
+    } else {
+      setTimeout(function () {
+        return tryToDisplayPopup(popups, popup, toastContainer);
+      }, 1000);
+    }
+  };
+
+  var removePopup = function removePopup(popups, popup) {
+    popups.forEach(function (e, i) {
+      if (e === popup) {
+        e.fadeOut(500, function () {
+          popups.splice(i, 1);
+          e.remove();
+        });
+      }
+    });
+  };
+
+  var createToast = function createToast(title, subTitle, url, urlText, delay) {
+    return $("<div class=\"toast\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\" data-delay=\"".concat(delay, "\">\n            <div class=\"toast-header\">\n                <div class=\"d-flex flex-column\">\n                    <small class=\"text-muted\">").concat(title, "</small>\n                    <div><strong class=\"mr-auto\">").concat(subTitle, "</strong></div>\n                </div>\n                <button type=\"button\" class=\"ml-2 mb-1 close\" data-dismiss=\"toast\" aria-label=\"Close\">\n                    <span aria-hidden=\"true\">&times;</span>\n                </button>\n            </div>\n            <div class=\"toast-body\">\n                <a class=\"btn btn-sm btn-outline-info\" href='").concat(url, "'>").concat(urlText, "</a>\n            </div>\n        </div>"));
+  };
+
   window.Echo.channel("activities-users").listen("ActivityEvent", function (data) {
     if (data) {
       if (data.message == "ping") {

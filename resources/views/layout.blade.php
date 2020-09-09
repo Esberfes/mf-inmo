@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
     <meta name="robots" content="index,follow" />
 
     @section('rrss')
@@ -277,7 +277,6 @@
             </div>
         </div>
     </footer>
-
     <!-- Bootstrap -->
     <script async src="{{ mix('js/app.js') }}"></script>
 </body>

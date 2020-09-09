@@ -25,12 +25,17 @@ header .header-wrapper {
 header  .header-wrapper .logo {
     margin-left: 0.4rem;
 }
-
-.toast {
+.toast-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     position: fixed;
     top: 5px;
     right: 5px;
-    z-index: 110;
+    z-index: 1025;
+}
+.toast {
+    width: 12rem;
 }
 .toast button {
     position: absolute;
