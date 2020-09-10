@@ -43362,7 +43362,7 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   disableStats: true,
   forceTLS: false,
   encrypted: false,
-  enabledTransports: ["ws", "wss"],
+  enabledTransports: ["ws"],
   auth: {
     headers: {
       "X-CSRF-TOKEN": token
