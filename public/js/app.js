@@ -43361,6 +43361,9 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   wsPort: 6001,
   disableStats: true,
   forceTLS: false,
+  useTLS: false,
+  enabledTransports: ['ws'],
+  // <- added this param
   auth: {
     headers: {
       "X-CSRF-TOKEN": token
