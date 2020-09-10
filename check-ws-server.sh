@@ -1,6 +1,6 @@
 #!/bin/bash
 
-URL="http://inmobiliariafranquicias.hl805.dinaserver.com/push/ping_server"
+URL="https://www.inmobiliariafranquicias.es/push/ping_server"
 NOW=$(date)
 
 echo $NOW - Checking connection...
