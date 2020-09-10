@@ -84,9 +84,6 @@
                     </div>
                 </div>
                 <div class="dropdown">
-                    <a class="btn btn-primary" href="{{ url('/admin/wsusers') }}"> WS Usuarios</a>
-                </div>
-                <div class="dropdown">
                     <a class="btn btn-primary" href="{{ url('/admin/configuracion') }}">Configuración</a>
                 </div>
             </div>

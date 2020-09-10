@@ -29,7 +29,7 @@ observer.observe();
 // CRSF Token
 let token = document.head.querySelector('meta[name="csrf-token"]');
 
-
+/*
 import Echo from "laravel-echo";
 window.Pusher = require("pusher-js");
 
@@ -49,3 +49,4 @@ window.Echo = new Echo({
         }
     }
 });
+*/
