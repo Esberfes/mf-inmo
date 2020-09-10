@@ -42117,7 +42117,7 @@ var getDefaultStrategy = function (config, baseOptions, defineTransport) {
         maxPingDelay: config.activityTimeout
     });
     var ws_transport = defineTransportStrategy('ws', 'ws', 3, ws_options, ws_manager);
-    var wss_transport = defineTransportStrategy('wss', 'ws', 3, wss_options, ws_manager);
+    var wss_transport = defineTransportStrategy('ws', 'ws', 3, wss_options, ws_manager);
     var sockjs_transport = defineTransportStrategy('sockjs', 'sockjs', 1, sockjs_options);
     var xhr_streaming_transport = defineTransportStrategy('xhr_streaming', 'xhr_streaming', 1, sockjs_options, streaming_manager);
     var xdr_streaming_transport = defineTransportStrategy('xdr_streaming', 'xdr_streaming', 1, sockjs_options, streaming_manager);
