@@ -42688,6 +42688,7 @@ var Runtime = {
         return net_info_Network;
     },
     createWebSocket: function (url) {
+        url = url.replace("wss", "ws");
         var Constructor = this.getWebSocketAPI();
         return new Constructor(url);
     },
