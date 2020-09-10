@@ -41,7 +41,6 @@ window.Echo = new Echo({
     wsPort: 6001,
     disableStats: true,
     forceTLS: false,
-    enabledTransports: ['ws'], // <- added this param
     auth: {
         headers: {
             "X-CSRF-TOKEN": token
