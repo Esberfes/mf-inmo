@@ -40,7 +40,7 @@ window.Echo = new Echo({
     wsHost: window.location.hostname,
     wssPort: 6001,
     forceTLS: true,
-    disableStats: false,
+    disableStats: true,
     auth: {
         headers: {
             "X-CSRF-TOKEN": token
