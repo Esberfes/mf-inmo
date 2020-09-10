@@ -3,8 +3,6 @@
 namespace App\Observers;
 
 use App\Models\Local;
-use App\Events\LocalActualizadoEvent;
-use App\Events\LocalCreadoEvent;
 use App\Notifications\Push;
 use App\Guest;
 use Notification;
@@ -51,8 +49,6 @@ class LocalObserver
         if($local->getOriginal('activo') == 0 && $local->activo == 1) { // Activado
 
             // Se notifica via WebSocket a todos los clientes de que se ha activado un nuevo local
-            event(new LocalCreadoEvent($local));
-
             foreach ($guests as $guest) {
                 Notification::send($guest, new Push("Local modificado", "El local " . $local->titulo . " ha sido activado", $admin->nombre));
             }
@@ -67,9 +63,6 @@ class LocalObserver
             foreach ($guests as $guest) {
                 Notification::send($guest, new Push("Local modificado", "El local " . $local->titulo . " ha sido modificado", $admin->nombre));
             }
-
-            // Se notifica via WebSocket a todos los clientes de que un local ha sido modificado
-            event(new LocalActualizadoEvent($local));
         } else {
              // Se notifica via Service Worker a los administradores
              foreach ($guests as $guest) {

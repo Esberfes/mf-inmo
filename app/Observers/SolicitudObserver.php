@@ -27,10 +27,7 @@ class SolicitudObserver
             Notification::send($guest, new Push("Solicitud de contacto", "Nueva solicitud para el local " . $solicitud->local->titulo, $solicitud->nombre . " - " . $solicitud->email));
         }
 
-        // TODO notificar por websockets a los administradores
-
-        // TODO email a los administradores
-
+        // email a los administradores
         $admins = Usuario::all();
 
         foreach ($admins as $admin) {

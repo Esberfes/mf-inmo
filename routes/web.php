@@ -80,8 +80,6 @@ Route::get('/admin/usuarios/crear', 'AdminController@usuarios_crear');
 Route::post('/admin/usuarios/crear', 'AdminController@usuarios_crear_nuevo');
 Route::post('/admin/usuarios/eliminar/{id}', 'AdminController@eliminar_usuario');
 
-// Admin WS Users
-Route::get('/admin/wsusers', 'AdminController@wsusers');
 
 // Admin configuration
 Route::get('/admin/configuracion', 'AdminController@configuracion');
@@ -90,10 +88,6 @@ Route::get('/admin/login', 'LoginController@login_view')->name('login');
 Route::post('/admin/logout', 'LoginController@logout')->name('logout');
 Route::post('/admin/login', 'LoginController@login');
 
-
+// Service worker
 Route::post('/push','PushController@store');
 Route::delete('/push','PushController@delete');
-
-Route::get('/push/ping_server','PushController@ping_server');
-Route::get('/push/ping_on_activity_channel','PushController@ping_on_activity_channel');
-Route::post('/push/discover_on_activity_channel','PushController@discover_on_activity_channel');
