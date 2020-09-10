@@ -43358,10 +43358,11 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   key: "11bb5e6777078a63d124",
   cluster: "eu",
   wsHost: window.location.hostname,
-  disableStats: true,
   wsPort: 6001,
-  wssPort: 6001,
-  encrypted: true,
+  disableStats: true,
+  forceTLS: false,
+  encrypted: false,
+  enabledTransports: ["ws", "wss"],
   auth: {
     headers: {
       "X-CSRF-TOKEN": token
