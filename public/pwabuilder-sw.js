@@ -8,13 +8,6 @@ self.addEventListener("message", event => {
 
 var urlsToCache = [
     "/",
-    "/js/app.js",
-    "/css/layout.css",
-    "/css/bootstrap.min.css",
-    "/css/font-awesome.css",
-    "https://fonts.googleapis.com/css?family=Titillium+Web",
-    "/webfonts/fa-regular-400.woff2",
-    "/webfonts/fa-solid-900.woff2"
 ];
 
 var currentCache = "MFCacheV1";
