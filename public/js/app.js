@@ -42817,7 +42817,7 @@ var transport_strategy_TransportStrategy = (function () {
     }
     TransportStrategy.prototype.isSupported = function () {
         return this.transport.isSupported({
-            useTLS: this.options.useTLS
+            useTLS: false
         });
     };
     TransportStrategy.prototype.connect = function (minPriority, callback) {
