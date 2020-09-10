@@ -37,7 +37,7 @@ window.Echo = new Echo({
     broadcaster: "pusher",
     key: process.env.MIX_PUSHER_APP_KEY,
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-    wsHost: window.location.hostname.replace("www", ""),
+    wsHost: window.location.hostname.replace("www.", ""),
     forceTLS: true,
     disableStats: true,
     wsPort: 6001,
