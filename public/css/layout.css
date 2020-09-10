@@ -109,10 +109,10 @@ main section article {
 }
 
 .pagination .page-link {
-    color: #818387;
+    color: #818387 !important;
 }
 .page-item.active .page-link {
-    background-color: #646465;
+    background-color: #646465 !important;
 }
 /* @MAIN SECTION - HOME ARTICLE */
 .section-form-search {
