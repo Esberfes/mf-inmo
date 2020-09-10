@@ -38,10 +38,9 @@ window.Echo = new Echo({
     key: process.env.MIX_PUSHER_APP_KEY,
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
     wsHost: window.location.hostname,
-    disableStats: true,
     wsPort: 6001,
-    wssPort: 6001,
-    encrypted: true,
+    disableStats: true,
+    forceTLS: true,
     auth: {
         headers: {
             "X-CSRF-TOKEN": token
