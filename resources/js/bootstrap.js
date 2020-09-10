@@ -37,13 +37,11 @@ window.Echo = new Echo({
     broadcaster: "pusher",
     key: process.env.MIX_PUSHER_APP_KEY,
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-    wsHost: window.location.hostname.replace("www.", ""),
-    forceTLS: true,
+    wsHost: window.location.hostname,
     disableStats: true,
     wsPort: 6001,
     wssPort: 6001,
-    disableStats: true,
-    enabledTransports: ['ws', 'wss'],
+    encrypted: true,
     auth: {
         headers: {
             "X-CSRF-TOKEN": token
