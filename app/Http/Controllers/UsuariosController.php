@@ -2,33 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-
-use App\Http\Popos\User;
 use App\Http\Popos\UsuarioFilter;
-
-use App\Http\Controllers\ImageController;
-
 use App\Models\Usuario;
-use App\Models\Local;
-use App\Models\Sector;
-use App\Models\Poblacion;
-use App\Models\Solicitud;
-use App\Models\LocalCaracteristica;
-use App\Models\LocalEdificio;
-use App\Models\LocalEquipamiento;
-use App\Models\LocalMedia;
-
-use App\Jobs\SendEmail;
-
 use App\Helpers\Paginacion;
 use Illuminate\Support\Facades\Session;
-
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
+
 
 class UsuariosController extends BaseController
 {
@@ -40,9 +20,7 @@ class UsuariosController extends BaseController
             $filter = new UsuarioFilter(Session::getId(), null);
             Session::put($key, $filter);
             Session::save();
-        }
-        else
-        {
+        } else {
             $filter = Session::get($key);
         }
 
@@ -53,21 +31,19 @@ class UsuariosController extends BaseController
     {
         $query_usuarios = Usuario::take($max_per_page);
 
-        if($filter->busqueda)
-        {
+        if ($filter->busqueda) {
             $search = $filter->busqueda;
-            $query_usuarios->where(function($query)  use ($search){
-                $query->where('nombre','LIKE',"%{$search}%")
-                    ->orWhere('email', 'LIKE',"%{$search}%")
-                    ->orWhere('telefono', 'LIKE',"%{$search}%");
-			});
+            $query_usuarios->where(function ($query)  use ($search) {
+                $query->where('nombre', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%")
+                    ->orWhere('telefono', 'LIKE', "%{$search}%");
+            });
         }
 
         $paginacion = Paginacion::get($query_usuarios->count(), $page != null ? $page : 1, $max_per_page);
 
-		if(!$paginacion)
-		{
-			return view('404');
+        if (!$paginacion) {
+            return view('404');
         }
 
         $usuarios = $query_usuarios->skip($paginacion['offset'])->take($max_per_page)->get();
@@ -82,14 +58,10 @@ class UsuariosController extends BaseController
     {
         $filter = self::manage_filter_session($session_key);
 
-        if(array_key_exists('busqueda', $data))
-        {
-            if(trim($data['busqueda']) && trim($data['busqueda']) != '')
-            {
+        if (array_key_exists('busqueda', $data)) {
+            if (trim($data['busqueda']) && trim($data['busqueda']) != '') {
                 $filter->busqueda = trim($data['busqueda']);
-            }
-            else
-            {
+            } else {
                 $filter->busqueda = null;
             }
         }
@@ -105,7 +77,7 @@ class UsuariosController extends BaseController
             'email' => 'required|unique:usuarios,email',
             'telefono' => 'required',
             'pass' => 'required',
-		],[
+        ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
             'email.unique' => 'El valor email ya existe en la base de datos.',
             'email.required' => 'El campo email es obligatorio.',
@@ -117,7 +89,7 @@ class UsuariosController extends BaseController
             'nombre' => $data['nombre'],
             'email' => $data['email'],
             'telefono' => $data['telefono'],
-            'pass' =>  md5(env('APP_KEY').$data['pass']),
+            'pass' =>  md5(env('APP_KEY') . $data['pass']),
             'rol' => 'administrador'
         ]);
 
@@ -129,17 +101,16 @@ class UsuariosController extends BaseController
         $usuario = Usuario::find($id_usuario);
         $now = Carbon::now(new \DateTimeZone('Europe/Madrid'));
 
-        if(empty($usuario))
-		{
-			return view('404');
+        if (empty($usuario)) {
+            return view('404');
         }
 
         $data = $request->validate([
             'nombre' => 'required',
-            'email' => 'required|unique:usuarios,email,'.$usuario->id,
+            'email' => 'required|unique:usuarios,email,' . $usuario->id,
             'telefono' => 'required',
             'pass' => '',
-		],[
+        ], [
             'nombre.required' => 'El campo titulo es obligatorio.',
             'email.unique' => 'El valor email ya existe en la base de datos.'
         ]);
@@ -147,9 +118,8 @@ class UsuariosController extends BaseController
         $usuario->nombre = $data['nombre'];
         $usuario->email = $data['email'];
         $usuario->telefono = $data['telefono'];
-        if(array_key_exists('pass', $data) && !empty($data['pass']))
-        {
-            $usuario->pass = md5(env('APP_KEY').$data['pass']);
+        if (array_key_exists('pass', $data) && !empty($data['pass'])) {
+            $usuario->pass = md5(env('APP_KEY') . $data['pass']);
         }
         $usuario->actualizado_en = $now;
 
@@ -162,9 +132,8 @@ class UsuariosController extends BaseController
     {
         $usuario = Usuario::find($id_usuario);
 
-        if(empty($usuario))
-		{
-			return view('404');
+        if (empty($usuario)) {
+            return view('404');
         }
 
         $usuario->delete();

@@ -80,10 +80,14 @@ Route::get('/admin/usuarios/crear', 'AdminController@usuarios_crear');
 Route::post('/admin/usuarios/crear', 'AdminController@usuarios_crear_nuevo');
 Route::post('/admin/usuarios/eliminar/{id}', 'AdminController@eliminar_usuario');
 
+
+// Admin configuration
+Route::get('/admin/configuracion', 'AdminController@configuracion');
+
 Route::get('/admin/login', 'LoginController@login_view')->name('login');
 Route::post('/admin/logout', 'LoginController@logout')->name('logout');
 Route::post('/admin/login', 'LoginController@login');
 
-
+// Service worker
 Route::post('/push','PushController@store');
-Route::get('/push','PushController@push')->name('push');
+Route::delete('/push','PushController@delete');

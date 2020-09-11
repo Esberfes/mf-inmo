@@ -6,7 +6,9 @@ self.addEventListener("message", event => {
     }
 });
 
-var urlsToCache = ["/"];
+var urlsToCache = [
+    "/",
+];
 
 var currentCache = "MFCacheV1";
 
@@ -38,9 +40,9 @@ self.addEventListener("install", function(event) {
 });
 
 const readableBytes = (bytes, i) => {
-    const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-    return (bytes / Math.pow(1024, i)).toFixed(2) * 1 + ' ' + sizes[i];
-}
+    const sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+    return (bytes / Math.pow(1024, i)).toFixed(2) * 1 + " " + sizes[i];
+};
 
 self.addEventListener("fetch", function(event) {
     event.respondWith(

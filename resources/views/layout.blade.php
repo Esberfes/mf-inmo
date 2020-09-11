@@ -1,41 +1,45 @@
 <!doctype html>
 <html lang="es" prefix="og: http://ogp.me/ns#">
+
 <head>
-	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="robots" content="index,follow" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
+    <meta name="robots" content="index,follow" />
 
     @section('rrss')
     <!-- RRSS -->
     <meta property="og:locale" content="es_ES" />
-	<meta property="og:type" content="website" />
-	<meta property="og:title" content="1er Portal inmobiliario para franquicias. Con la garantía de mundoFranquicia." />
-	<meta property="og:description" content="1er Portal inmobiliario para franquicias. Con la garantía de mundoFranquicia." />
-	<meta property="og:url" content="{{ url(Request::url()) }}" />
-	<meta property="og:site_name" content="mfinmobiliaria" />
-	<meta property="og:image" content="{{asset('img/card-mf.jpg')}}" />
-	<meta property="og:image:secure_url" content="{{asset('img/card-mf.jpg')}}" />
-	<meta property="og:image:type" content="image/jpeg" />
-	<meta property="og:image:width" content="900" />
-	<meta property="og:image:height" content="324" />
-	<meta name="twitter:card" content="summary" />
-	<meta name="twitter:description" content="1er Portal inmobiliario para franquicias. Con la garantía de mundoFranquicia." />
-	<meta name="twitter:title" content="1er Portal inmobiliario para franquicias. Con la garantía de mundoFranquicia." />
-	<meta name="twitter:image" content="{{asset('img/card-mf.jpg')}}" />
-	<link rel="canonical" href="{{ url(Request::url()) }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="1er Portal inmobiliario para franquicias. Con la garantía de mundoFranquicia." />
+    <meta property="og:description"
+        content="1er Portal inmobiliario para franquicias. Con la garantía de mundoFranquicia." />
+    <meta property="og:url" content="{{ url(Request::url()) }}" />
+    <meta property="og:site_name" content="mfinmobiliaria" />
+    <meta property="og:image" content="{{asset('img/card-mf.jpg')}}" />
+    <meta property="og:image:secure_url" content="{{asset('img/card-mf.jpg')}}" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="900" />
+    <meta property="og:image:height" content="324" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:description"
+        content="1er Portal inmobiliario para franquicias. Con la garantía de mundoFranquicia." />
+    <meta name="twitter:title"
+        content="1er Portal inmobiliario para franquicias. Con la garantía de mundoFranquicia." />
+    <meta name="twitter:image" content="{{asset('img/card-mf.jpg')}}" />
+    <link rel="canonical" href="{{ url(Request::url()) }}" />
     <!-- RRSS -->
     @show
 
     @section('meta_description')
-	<meta name="description" content="1er Portal inmobiliario para franquicias. Con la garantía de mundoFranquicia." />
-	<title>1er Portal inmobiliario para franquicias</title>
-	@show
+    <meta name="description" content="1er Portal inmobiliario para franquicias. Con la garantía de mundoFranquicia." />
+    <title>1er Portal inmobiliario para franquicias</title>
+    @show
 
     <meta name="author" content="mundoFranquicia">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="{{asset('/img/favicon/ms-icon-144x144.png')}}">
     <meta name="theme-color" content="#ffffff">
-    <meta name="application-name" content="ProveedoresFranquicias"/>
+    <meta name="application-name" content="ProveedoresFranquicias" />
     <link rel="apple-touch-icon" sizes="57x57" href="{{asset('/img/favicon/icon-57x57.png')}}">
 
     <link rel="apple-touch-icon" sizes="60x60" href="{{asset('/img/favicon/icon-60x60.png')}}">
@@ -48,27 +52,36 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{{asset('/img/favicon/icon-180x180.png')}}">
 
 
-    <link rel="icon" type="image/png" sizes="192x192"  href="{{asset('/img/pwa/android-icon-192x192-dunplab-manifest-15105.png')}}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('/img/pwa/favicon-32x32-dunplab-manifest-15105.png')}}">
-    <link rel="icon" type="image/png" sizes="96x96" href="{{asset('/img/pwa/favicon-96x96-dunplab-manifest-15105.png')}}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('/img/pwa/favicon-16x16-dunplab-manifest-15105.png')}}">
-    <link rel="icon" type="image/png" sizes="512x512" href="{{asset('/img/pwa/android-icon-512x512-dunplab-manifest-15105.png')}}">
+    <link rel="icon" type="image/png" sizes="192x192"
+        href="{{asset('/img/pwa/android-icon-192x192-dunplab-manifest-15105.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32"
+        href="{{asset('/img/pwa/favicon-32x32-dunplab-manifest-15105.png')}}">
+    <link rel="icon" type="image/png" sizes="96x96"
+        href="{{asset('/img/pwa/favicon-96x96-dunplab-manifest-15105.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16"
+        href="{{asset('/img/pwa/favicon-16x16-dunplab-manifest-15105.png')}}">
+    <link rel="icon" type="image/png" sizes="512x512"
+        href="{{asset('/img/pwa/android-icon-512x512-dunplab-manifest-15105.png')}}">
     <link rel="manifest" href="/manifest.json?3">
 
-	<meta name="csrf-token" content="{{ csrf_token() }}" >
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @section('pwa')
+    <script type="module" src="{{ asset('/pwabuilder-sw-register.js') }}"></script>
     @show
-
-    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
 
     <!-- Base css layout -->
     <link rel="stylesheet" href="{{asset('css/layout.css')}}">
 
-    <!-- Font -->
-    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+    <link rel="stylesheet"  href="{{asset('css/bootstrap.min.css')}}" >
 
-    <link rel="stylesheet" href="{{asset('css/font-awesome.css')}}">
+    <!-- Font -->
+    <link rel="preload"  href="https://fonts.googleapis.com/css?family=Titillium+Web"  as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet"  href="https://fonts.googleapis.com/css?family=Titillium+Web" ></noscript>
+
+    <link rel="preload"  href="{{asset('css/font-awesome.css')}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet"  href="{{asset('css/font-awesome.css')}}"></noscript>
 </head>
+
 <body>
     <?php
     $session = Session::get(\App\Constants\SessionConstants::USER_LOCALES_FILTER);
@@ -77,10 +90,12 @@
         <div class="container">
             <div class="header-wrapper d-flex justify-content-lg-between justify-content-center align-items-center">
                 <div class="d-flex align-items-center">
-                    <a href="{{ url('/') }}"><img width="200px" class="logo" src="{{asset('img/card-mf.jpg')}}" alt=""></a>
+                    <a href="{{ url('/') }}"><img width="200px" class="logo" src="{{asset('img/card-mf.jpg')}}"
+                            alt="logo-inmobiliaria"></a>
                 </div>
                 <div class=" align-items-center d-lg-flex d-none">
-                    <a href="{{ url('/admin') }}"><i style="font-size:25px; color:#FFFFFF;margin-right: 1.4rem;" class="fas fa-user-lock"></i></a>
+                    <a href="{{ url('/admin') }}"><i style="font-size:25px; color:#FFFFFF;margin-right: 1.4rem;"
+                            class="fas fa-user-lock"></i></a>
                 </div>
             </div>
         </div>
@@ -96,19 +111,20 @@
                 <div class="form-search">
                     <div class="row no-gutters">
                         <div class="col-lg col-12 form-search-input-wrapper">
-                            <input name="busqueda" value="{{ $session != null ? $session->busqueda : '' }}" type="search" class="form-control" placeholder="Busqueda">
+                            <input name="busqueda" value="{{ $session != null ? $session->busqueda : '' }}"
+                                type="search" class="form-control" placeholder="Busqueda">
                         </div>
                         <div class="col-lg col-12 form-search-input-wrapper">
                             <select name="sector" class="custom-select">
                                 <option value="none">Sector (sin filtro)</option>
                                 @if(!empty($sectores))
-                                    @foreach($sectores as $sector)
-                                        @if($session->sector == $sector->id)
-                                        <option selected value="{{ $sector->id }}">{{ $sector->titulo }}</option>
-                                        @else
-                                        <option value="{{ $sector->id }}">{{ $sector->titulo }}</option>
-                                        @endif
-                                    @endforeach
+                                @foreach($sectores as $sector)
+                                @if($session->sector == $sector->id)
+                                <option selected value="{{ $sector->id }}">{{ $sector->titulo }}</option>
+                                @else
+                                <option value="{{ $sector->id }}">{{ $sector->titulo }}</option>
+                                @endif
+                                @endforeach
                                 @endif
                             </select>
                         </div>
@@ -116,13 +132,13 @@
                             <select name="poblacion" class="custom-select">
                                 <option value="none">Población (sin filtro)</option>
                                 @if(!empty($poblaciones))
-                                    @foreach($poblaciones as $poblacion)
-                                    @if($session->poblacion == $poblacion->id)
-                                        <option selected value="{{ $poblacion->id }}">{{ $poblacion->nombre }}</option>
-                                        @else
-                                        <option value="{{ $poblacion->id }}">{{ $poblacion->nombre }}</option>
-                                        @endif
-                                    @endforeach
+                                @foreach($poblaciones as $poblacion)
+                                @if($session->poblacion == $poblacion->id)
+                                <option selected value="{{ $poblacion->id }}">{{ $poblacion->nombre }}</option>
+                                @else
+                                <option value="{{ $poblacion->id }}">{{ $poblacion->nombre }}</option>
+                                @endif
+                                @endforeach
                                 @endif
                             </select>
                         </div>
@@ -134,15 +150,15 @@
                                 <option value="none">Precio máximo (sin filtro)</option>
                                 @foreach($precios as $precio)
                                 @if($session->precio == $precio)
-                                        <option selected value="{{ $precio }}">{{ $precio }} €</option>
-                                        @else
-                                        <option value="{{ $precio }}">{{ $precio }} €</option>
+                                <option selected value="{{ $precio }}">{{ $precio }} €</option>
+                                @else
+                                <option value="{{ $precio }}">{{ $precio }} €</option>
                                 @endif
                                 @endforeach
                             </select>
                         </div>
                         <div class="col form-search-button-wrapper">
-                            <button class="btn btn-secondary" >Encontrar</button>
+                            <button class="btn btn-secondary">Encontrar</button>
                         </div>
                         <input name="actionSearch" type="hidden">
                     </div>
@@ -152,34 +168,40 @@
                     <div class="mr-3 form-order-by-text">
                         Ordenar:
                     </div>
-                    <button class="btn btn-secondary {{ $session->order == 'relevancia' ? 'active-button' : ''}}" name="relevancia" value="{{ $session->order_direction == 'asc' && $session->order == 'relevancia'? 'desc' : 'asc' }}">
+                    <button class="btn btn-secondary {{ $session->order == 'relevancia' ? 'active-button' : ''}}"
+                        name="relevancia"
+                        value="{{ $session->order_direction == 'asc' && $session->order == 'relevancia'? 'desc' : 'asc' }}">
                         Relevancia
                         @if($session->order == 'relevancia')
-                            @if($session->order_direction == 'asc')
-                            <i class="fas fa-arrow-up"></i>
-                            @else
-                            <i class="fas fa-arrow-down"></i>
-                            @endif
+                        @if($session->order_direction == 'asc')
+                        <i class="fas fa-arrow-up"></i>
+                        @else
+                        <i class="fas fa-arrow-down"></i>
+                        @endif
                         @endif
                     </button>
-                    <button class="btn btn-secondary {{ $session->order == 'precio' ? 'active-button' : ''}}"  name="precioOrder" value="{{ $session->order_direction == 'asc' && $session->order == 'precio' ? 'desc' : 'asc' }}">
+                    <button class="btn btn-secondary {{ $session->order == 'precio' ? 'active-button' : ''}}"
+                        name="precioOrder"
+                        value="{{ $session->order_direction == 'asc' && $session->order == 'precio' ? 'desc' : 'asc' }}">
                         Precio
                         @if($session->order == 'precio')
-                            @if($session->order_direction == 'asc')
-                            <i class="fas fa-arrow-up"></i>
-                            @else
-                            <i class="fas fa-arrow-down"></i>
-                            @endif
+                        @if($session->order_direction == 'asc')
+                        <i class="fas fa-arrow-up"></i>
+                        @else
+                        <i class="fas fa-arrow-down"></i>
+                        @endif
                         @endif
                     </button>
-                    <button class="btn btn-secondary {{ $session->order == 'superficie' ? 'active-button' : ''}}"  name="superficie" value="{{ $session->order_direction == 'asc' && $session->order == 'superficie' ? 'desc' : 'asc' }}">
+                    <button class="btn btn-secondary {{ $session->order == 'superficie' ? 'active-button' : ''}}"
+                        name="superficie"
+                        value="{{ $session->order_direction == 'asc' && $session->order == 'superficie' ? 'desc' : 'asc' }}">
                         Superficie
                         @if($session->order == 'superficie')
-                            @if($session->order_direction == 'asc')
-                            <i class="fas fa-arrow-up"></i>
-                            @else
-                            <i class="fas fa-arrow-down"></i>
-                            @endif
+                        @if($session->order_direction == 'asc')
+                        <i class="fas fa-arrow-up"></i>
+                        @else
+                        <i class="fas fa-arrow-down"></i>
+                        @endif
                         @endif
                     </button>
                     <input name="actionOrder" type="hidden">
@@ -209,13 +231,13 @@
                         @if(!empty($banners))
                         <section>
                             @foreach($banners as $banner)
-                                <article style="margin-top: 1.5rem">
-                                    <a href="{{ url('/directorio/'.$banner->local->url_amigable) }}">
-                                        <img width="100%" alt="{{ $banner->local->titulo }}" src="{{ url($banner->ruta) }}">
-                                    </a>
-                                </article>
+                            <article style="margin-top: 1.5rem">
+                                <a href="{{ url('/directorio/'.$banner->local->url_amigable) }}">
+                                    <img class="lozad" width="100%" alt="{{ $banner->local->titulo }}" data-src="{{ url($banner->ruta) }}">
+                                </a>
+                            </article>
                             @endforeach
-                            </section>
+                        </section>
                         @endif
                         @show
                     </aside>
@@ -234,97 +256,27 @@
                 <span>|</span>
                 <div> <a target="_blank" href="https://www.mundofranquicia.com/aviso-legal/">Aviso legal</a></div>
                 <span>|</span>
-                <div> <a target="_blank" href="https://www.mundofranquicia.com/aviso-legal/">Política de privacidad</a></div>
+                <div> <a target="_blank" href="https://www.mundofranquicia.com/aviso-legal/">Política de privacidad</a>
+                </div>
                 <span>|</span>
-                <div> <a target="_blank" href="https://www.mundofranquicia.com/aviso-legal/">Política de Cookies</a></div>
+                <div> <a target="_blank" href="https://www.mundofranquicia.com/aviso-legal/">Política de Cookies</a>
+                </div>
             </div>
-
             <div class="footer-logos row">
                 <div class="col-lg-2 footer-logo">
-                    <img src="{{asset('img/footer/logo20anyos.png')}}" alt="">
+                    <img alt="logo-20-anos-mundofranquicia" class="lozad" data-src="{{asset('img/footer/logo20anyos.png')}}" alt="">
                 </div>
                 <div class="col-lg-4 footer-logo">
-                    <img src="{{asset('img/footer/logo-mundofranquicia-negativo.png')}}" alt="">
+                    <img alr="logo-mundofranquicia" class="lozad" data-src="{{asset('img/footer/logo-mundofranquicia-negativo.png')}}" alt="">
                 </div>
                 <div class="col-lg-6 footer-logo">
-                    <img src="{{asset('img/footer/logos-footer-membersof-mf.png')}}" alt="">
+                    <img alt="logo-miembro-de-aef-aemme-gnf" class="lozad" data-src="{{asset('img/footer/logos-footer-membersof-mf.png')}}" alt="">
                 </div>
             </div>
         </div>
     </footer>
-
     <!-- Bootstrap -->
-    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
-    <script src="{{ asset('js/popper.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-
-    <script>
-        var form = $("#form-search");
-        var buttonToggle = $("#section-form-search-toggle");
-        var mask = $("#form-search-wrapper-mask");
-
-        if(isMobile()) {
-            form.slideUp();
-            form.attr("data-is-collapsed", "true")
-            mask.hide();
-        }
-
-        $(window).resize(function() {
-            if(isMobile()) {
-                unBindEvents();
-                bindEvents();
-
-            } else{
-                form.slideDown();
-                form.attr("data-is-collapsed", "false")
-                mask.hide();
-                unBindEvents();
-            }
-        });
-
-        if(isMobile()) {
-           bindEvents();
-        }
-
-        function bindEvents() {
-            mask.click(function(event){
-                event.stopPropagation();
-                form.slideUp();
-                form.attr("data-is-collapsed", "true")
-                mask.hide();
-            });
-
-            buttonToggle.click(function(event){
-                event.stopPropagation();
-                var isCollapsed = form.attr("data-is-collapsed");
-
-                if(isCollapsed == 'true') {
-                    form.slideDown();
-                    form.attr("data-is-collapsed", "false")
-                    mask.show(500);
-                } else {
-                    form.slideUp();
-                    form.attr("data-is-collapsed", "true")
-                    mask.hide();
-                }
-            });
-        }
-
-        function unBindEvents() {
-            mask.unbind();
-            buttonToggle.unbind();
-        }
-
-        function isMobile() {
-            return window.matchMedia("only screen and (max-width: 991px)").matches;
-        }
-
-        $("#section-form-search-toggle a").click(function(event) {
-            event.stopPropagation();
-        });
-
-    </script>
-
+    <script async src="{{ mix('js/app.js') }}"></script>
 </body>
 
 </html>

@@ -1,18 +1,8 @@
-# -> FILTROS
-    ## -> Añadir filtro de precio máximo (dropdown)
+php -d memory_limit=-1 C:/ProgramData/ComposerSetup/bin/composer.phar require beyondcode/laravel-websockets
 
 
-# -> ORDEN (OK)
+openssl req -x509 -sha256 -nodes -days 7300 -newkey rsa:2048 -keyout key.pem -out cert.pem
 
 
-# -> DISEÑO
-    ## -> LISTADO OK
-    ## -> FICHA
-    ## -> ASIDE OK
-    ## -> FOOTER http://fq10.es/ OK
-    ## -> HEADER OK
-    ## -> FILTROS OK
-    ## -> PAGINATION OK
-
-# -> AREA PRIVADA
-    ## -> Poder destacar local !!!!!!!!!!!!!!!!!!!!!!!
+LARAVEL_WEBSOCKETS_SSL_LOCAL_CERT=/home/inmobiliariafranquicias/www/inmobiliaria/cert/cert.pem
+LARAVEL_WEBSOCKETS_SSL_LOCAL_PK=/home/inmobiliariafranquicias/www/inmobiliaria/cert/key.pem

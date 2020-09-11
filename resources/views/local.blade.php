@@ -102,7 +102,7 @@
 @endsection
 
 @section('sidebar')
-<section>
+<section class="aside-local">
     <form class="form-solicitud" method="POST" action="{{ url('/solicitud') }}">
         <div class="form-solicitud-header"><i class="far fa-id-card"></i><h2>Contactar</h2></div>
         <div class="form-solicitud-body">
