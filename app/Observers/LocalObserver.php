@@ -56,7 +56,7 @@ class LocalObserver
 
             // Se notifica via Service Worker a los administradores
             foreach ($guests as $guest) {
-                Notification::send($guest, new Push("Local modificado", "El local " . $local->titulo . " ha sido desactovado", $admin->nombre));
+                Notification::send($guest, new Push("Local modificado", "El local " . $local->titulo . " ha sido desactivado", $admin->nombre));
             }
         } elseif($local->activo == 1) {
             // Se notifica via Service Worker a los administradores
