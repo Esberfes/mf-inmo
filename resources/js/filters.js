@@ -6,17 +6,14 @@ const hideOrShowFilters = value => {
     console.log(value);
     switch (value) {
         case "-1":
-            console.log("en -1");
             precioFilter.show();
             precioAlquilerFilter.show();
             break;
         case "0":
-            console.log("en 0");
             precioFilter.show();
             precioAlquilerFilter.hide();
             break;
         case "1":
-            console.log("en 1");
             precioFilter.hide();
             precioAlquilerFilter.show();
             break;

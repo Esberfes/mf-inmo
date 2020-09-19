@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=yes">
     <meta name="robots" content="index,follow" />
 
     @section('rrss')
@@ -61,19 +61,23 @@
     <script type="module" src="{{ asset('/pwabuilder-sw-register.js') }}"></script>
     @show
 
-    <!-- Base css layout -->
-    <link rel="stylesheet" href="{{asset('css/layout.css')}}">
-
-    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
+    <link rel="preload" as="font" type="font/woff2" href="{{asset('webfonts/NaPecZTIAOhVxoMyOr9n_E7fdMPmDaZRbrw.woff2')}}" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="{{asset('webfonts/fa-solid-900.woff2')}}" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="{{asset('webfonts/fa-regular-400.woff2')}}" crossorigin>
 
     <!-- Font -->
-    <link rel="preload" href="https://fonts.googleapis.com/css?family=Titillium+Web" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Titillium+Web&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"></noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&display=swap"></noscript>
 
     <link rel="preload" href="{{asset('css/font-awesome.css')}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet" href="{{asset('css/font-awesome.css')}}"></noscript>
+
+            <!-- Base css layout -->
+    <link rel="stylesheet" href="{{asset('css/layout.css')}}">
+
+    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
 </head>
 
 <body>
