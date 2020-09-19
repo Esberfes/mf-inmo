@@ -18,6 +18,7 @@ Route::get('/buscar', 'UserController@home_search');
 
 Route::get('/directorio/{url}', 'UserController@directorio_local');
 
+Route::post('/local-solicitud', 'UserController@local_solicitud');
 Route::post('/solicitud', 'UserController@solicitud');
 
 // Admin locales
@@ -63,6 +64,12 @@ Route::post('/admin/poblaciones/editar/{id}', 'AdminController@editar_poblacion_
 Route::get('/admin/poblaciones/crear', 'AdminController@poblaciones_crear');
 Route::post('/admin/poblaciones/crear', 'AdminController@poblaciones_crear_nuevo');
 Route::post('/admin/poblaciones/eliminar/{id}', 'AdminController@eliminar_poblacion');
+
+// Admin locales solicitudes
+Route::get('/admin/locales-solicitudes', 'AdminController@locales_solicitudes');
+Route::post('/admin/locales-solicitudes', 'AdminController@locales_solicitudes_search');
+Route::get('/admin/locales-solicitudes/{pagina}', 'AdminController@locales_solicitudes')->where('pagina', '[0-9]+');
+Route::post('/admin/locales-solicitudes/atender/{id}', 'AdminController@locales_solicitudes_atender');
 
 // Admin solicitudes
 Route::get('/admin/solicitudes', 'AdminController@solicitudes');

@@ -44,7 +44,7 @@
             </div>
             <div class="local-article-titulo">
                 <h1>{{ $local->titulo}}, {{ $local->poblacion->nombre}}</h1>
-                <h2>{{ $local->precio}}€</h2>
+                <h2>{{ number_format($local->precio, 2, ',', '.') }}€</h2>
             </div>
 
             <div class="local-article-descripcion mt-3">
@@ -103,7 +103,7 @@
 
 @section('sidebar')
 <section class="aside-local">
-    <form class="form-solicitud" method="POST" action="{{ url('/solicitud') }}">
+    <form class="form-solicitud" method="POST" action="{{ url('/local-solicitud') }}">
         <div class="form-solicitud-header"><i class="far fa-id-card"></i><h2>Contactar</h2></div>
         <div class="form-solicitud-body">
             <div class="row">

@@ -48,10 +48,6 @@ class LocalesController extends BaseController
             $query_locales->where("id_sector", $filter->sector);
         }
 
-        if ($filter->precio) {
-            $query_locales->where("precio", '<=', $filter->precio);
-        }
-
         if ($filter->relevante != null && $filter->relevante != -1) {
             $query_locales->where("relevante", '=', $filter->relevante);
         }
@@ -60,6 +56,33 @@ class LocalesController extends BaseController
             $query_locales->where("activo", '=', '1');
         } elseif ($filter->activo != -1) {
             $query_locales->where("activo", '=', $filter->activo);
+        }
+
+        if ($filter->mostrar_compra_alquiler == 0) {
+            $query_locales->whereNull("precio_alquiler");
+            if ($filter->precio) {
+                $query_locales->where("precio", '<=', $filter->precio);
+            }
+        } elseif ($filter->mostrar_compra_alquiler == 1) {
+            $query_locales->whereNull("precio");
+            if ($filter->precio_alquiler) {
+                $query_locales->where("precio_alquiler", '<=', $filter->precio_alquiler);
+            }
+        } else {
+            if ($filter->precio) {
+                $query_locales->where(function ($query) use ($filter) {
+                    $query->where("precio", '<=', $filter->precio)
+                        ->orWhereNull('precio');
+                    }
+                );
+            }
+            if ($filter->precio_alquiler) {
+                $query_locales->where(function ($query) use ($filter) {
+                    $query->where("precio_alquiler", '<=', $filter->precio_alquiler)
+                        ->orWhereNull('precio_alquiler');
+                    }
+                );
+            }
         }
 
         if ($filter->busqueda) {
@@ -181,12 +204,24 @@ class LocalesController extends BaseController
                 }
             }
 
+            if (array_key_exists('precio_alquiler', $data)) {
+                if ($data['precio_alquiler'] != 'none') {
+                    $filter->precio_alquiler = $data['precio_alquiler'];
+                } else {
+                    $filter->precio_alquiler = null;
+                }
+            }
+
             if (array_key_exists('relevante', $data)) {
                 $filter->relevante = $data['relevante'];
             }
 
             if (array_key_exists('activo', $data)) {
                 $filter->activo = $data['activo'];
+            }
+
+            if (array_key_exists('mostrar_compra_alquiler', $data)) {
+                $filter->mostrar_compra_alquiler = $data['mostrar_compra_alquiler'];
             }
         }
 
@@ -207,7 +242,8 @@ class LocalesController extends BaseController
         $data = $request->validate([
             'titulo' => 'required|unique:locales,titulo,' . $id,
             'telefono' => 'required',
-            'precio' => 'required',
+            'precio' => 'required_without:precio_alquiler',
+            'precio_alquiler' => '',
             'metros' => 'required',
             'sector' => 'required',
             'poblacion' => 'required',
@@ -216,7 +252,7 @@ class LocalesController extends BaseController
         ], [
             'titulo.required' => 'El valor titulo es obligatorio.',
             'telefono.required' => 'El valor teléfono es obligatorio.',
-            'precio.required' => 'El valor precio es obligatorio.',
+            'precio.required_without' => 'El valor precio de compra o precio de alquiler es obligatorio.',
             'metros.required' => 'El valor metros es obligatorio.',
             'sector.required' => 'El valor sector es obligatorio.',
             'poblacion.required' => 'El valor poblacion es obligatorio.',
@@ -234,6 +270,7 @@ class LocalesController extends BaseController
         $local->url_amigable = Str::slug($data['titulo']);
         $local->telefono = $data['telefono'];
         $local->precio = $data['precio'];
+        $local->precio_alquiler = $data['precio_alquiler'];
         $local->metros = $data['metros'];
         $local->id_sector = $data['sector'];
         $local->id_poblacion = $data['poblacion'];
@@ -253,7 +290,8 @@ class LocalesController extends BaseController
         $data = $request->validate([
             'titulo' => 'required|unique:locales,titulo',
             'telefono' => 'required',
-            'precio' => 'required',
+            'precio' => 'required_without:precio_alquiler',
+            'precio_alquiler' => '',
             'metros' => 'required',
             'sector' => 'required',
             'poblacion' => 'required',
@@ -263,7 +301,7 @@ class LocalesController extends BaseController
             'titulo.required' => 'El valor titulo es obligatorio.',
             'titulo.unique' => 'El valor titulo ya existe en la base de datos.',
             'telefono.required' => 'El valor teléfono es obligatorio.',
-            'precio.required' => 'El valor precio es obligatorio.',
+            'precio.required_without' => 'El valor precio de compra o precio de alquiler es obligatorio.',
             'metros.required' => 'El valor metros es obligatorio.',
             'sector.required' => 'El valor sector es obligatorio.',
             'poblacion.required' => 'El valor poblacion es obligatorio.',
@@ -282,6 +320,7 @@ class LocalesController extends BaseController
             'url_amigable' => Str::slug($data['titulo']),
             'telefono' => $data['telefono'],
             'precio' => $data['precio'],
+            'precio_alquiler' => $data['precio_alquiler'],
             'metros' => $data['metros'],
             'relevante' => 0,
             'activo' => 0,

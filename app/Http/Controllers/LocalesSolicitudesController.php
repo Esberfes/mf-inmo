@@ -3,21 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
-use App\Http\Popos\SolicitudFilter;
-use App\Models\Solicitud;
+use App\Http\Popos\LocalesSolicitudFilter;
+use App\Models\Local;
+use App\Models\Sector;
+use App\Models\LocalSolicitud;
 
 use App\Helpers\Paginacion;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Carbon;
 
-class SolicitudesController extends BaseController
+class LocalesSolicitudesController extends BaseController
 {
     public static function manage_filter_session($key)
     {
         $filter = null;
 
         if (!Session::exists($key)) {
-            $filter = new SolicitudFilter(Session::getId(), null);
+            $filter = new LocalesSolicitudFilter(Session::getId(), null);
             Session::put($key, $filter);
             Session::save();
         } else {
@@ -29,17 +31,26 @@ class SolicitudesController extends BaseController
 
     public static function get_filtered($filter, $page, $max_per_page)
     {
-        $query_solicitudes = Solicitud::select('solicitudes.*');
+        $query_solicitudes = LocalSolicitud::select('locales_datos_solicitudes.*', 'locales.id_sector', 'locales.titulo', 'sectores.titulo')
+            ->leftJoin('locales', 'locales.id', '=', 'id_local')
+            ->leftJoin('sectores', 'locales.id_sector', '=', 'sectores.id');
 
         if ($filter->busqueda) {
             $search = $filter->busqueda;
             $query_solicitudes->where(function ($query)  use ($search) {
                 $query->where('nombre', 'LIKE', "%{$search}%")
+                    ->orWhere('locales.titulo', 'LIKE', "%{$search}%")
                     ->orWhere('email', 'LIKE', "%{$search}%")
-                    ->orWhere('solicitudes.telefono', 'LIKE', "%{$search}%");
+                    ->orWhere('sectores.titulo', 'LIKE', "%{$search}%")
+                    ->orWhere('locales_datos_solicitudes.telefono', 'LIKE', "%{$search}%");
             });
+
+            // dd($query_solicitudes->toSql());
         }
 
+        if ($filter->sector) {
+            $query_solicitudes->where('locales.id_sector', '=', $filter->sector);
+        }
 
         if ($filter->mostrar_atendidos == 0) {
             $query_solicitudes->whereNotNull("atendido_en");
@@ -57,9 +68,11 @@ class SolicitudesController extends BaseController
 
         $solicitudes = $query_solicitudes->skip($paginacion['offset'])->orderBy('creado_en', 'desc')->take($max_per_page)->get();
 
+        $sectores = Sector::orderBy('titulo', 'asc')->get();
 
         return [
             'solicitudes' => $solicitudes,
+            'sectores' => $sectores,
             'paginacion' => $paginacion
         ];
     }
@@ -80,6 +93,13 @@ class SolicitudesController extends BaseController
             $filter->mostrar_atendidos = $data['mostrar_atendidos'];
         }
 
+        if (array_key_exists('sector', $data)) {
+            if ($data['sector'] != 'none') {
+                $filter->sector = $data['sector'];
+            } else {
+                $filter->sector = null;
+            }
+        }
 
         Session::put($session_key, $filter);
         Session::save();
@@ -92,6 +112,7 @@ class SolicitudesController extends BaseController
             'email' => ['required', 'email'],
             'telefono' => 'required',
             'comentario' => '',
+            'id_local' => 'required'
         ], [
             'nombre.required' => 'El nombre de usuario es obligatorio.',
             'email.required' => 'El email es obligatorio.',
@@ -99,7 +120,14 @@ class SolicitudesController extends BaseController
             'telefono.required' => 'El telefono es un campo obligatorio'
         ]);
 
-        Solicitud::create([
+        $local = Local::find($data['id_local']);
+
+        if (empty($local)) {
+            return view('404');
+        }
+
+        LocalSolicitud::create([
+            'id_local' => $data['id_local'],
             'nombre' => $data['nombre'],
             'email' => $data['email'],
             'telefono' => $data['telefono'],
@@ -111,7 +139,7 @@ class SolicitudesController extends BaseController
     {
         $now = Carbon::now(new \DateTimeZone('Europe/Madrid'));
 
-        $solicitud = Solicitud::find($id_solicitud);
+        $solicitud = LocalSolicitud::find($id_solicitud);
 
         if (empty($solicitud)) {
             return view('404');
@@ -120,6 +148,5 @@ class SolicitudesController extends BaseController
         $solicitud->atendido_en = $now;
         $solicitud->save();
     }
-
 
 }

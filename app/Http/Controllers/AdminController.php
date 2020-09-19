@@ -12,6 +12,8 @@ use App\Http\Controllers\SectoresController;
 use App\Http\Controllers\PoblacionesController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UsuariosController;
+use App\Http\Controllers\LocalesSolicitudesController;
+use App\Http\Controllers\SolicitudesController;
 use App\Models\Usuario;
 use App\Models\Local;
 use App\Models\Sector;
@@ -342,6 +344,41 @@ class AdminController extends BaseController
         $poblacion = PoblacionesController::create(request());
 
         return redirect()->route('poblaciones.editar', ['id' => $poblacion->id])->with('success', 'Población creado con éxito, puede continuar editando.');
+    }
+
+    public function locales_solicitudes($pagina = null)
+    {
+        if (!LoginController::check()) {
+            return redirect()->route('login');
+        }
+
+        $filter = LocalesSolicitudesController::manage_filter_session(SessionConstants::ADMIN_LOCALES_SOLICITUDES_FILTER);
+
+        return view('admin.admin-locales-solicitudes', LocalesSolicitudesController::get_filtered($filter, $pagina, $this->por_pagina));
+    }
+
+    public function locales_solicitudes_search()
+    {
+        if (!LoginController::check()) {
+            return redirect()->route('login');
+        }
+
+        $data = request()->all();
+
+        $filter = LocalesSolicitudesController::manage_filter(SessionConstants::ADMIN_LOCALES_SOLICITUDES_FILTER, $data);
+
+        return $this->locales_solicitudes(null);
+    }
+
+    public function locales_solicitudes_atender($id_solicitud)
+    {
+        if (!LoginController::check()) {
+            return redirect()->route('login');
+        }
+
+        LocalesSolicitudesController::update($id_solicitud);
+
+        return redirect()->back()->with('success', 'Solicitud atendida con éxito');
     }
 
     public function solicitudes($pagina = null)

@@ -33,25 +33,40 @@
             </div>
         </div>
         <div class="admin-table-wrapper-body">
-            <form class="admin-table-wrapper-filters" action=" {{ url('/admin/solicitudes') }}" method="POST">
+            <form class="admin-table-wrapper-filters" action=" {{ url('/admin/locales-solicitudes') }}" method="POST">
+                <div class="admin-table-wrapper-filters-group">
+                    <label for="sector">Sector</label>
+                    <select name="sector" class="custom-select">
+                        <option value="none">--Sin filtro--</option>
+                        @if(!empty($sectores))
+                        @foreach($sectores as $sector)
+                        @if(Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_SOLICITUDES_FILTER)->sector == $sector->id)
+                        <option selected value="{{ $sector->id }}">{{ $sector->titulo }}</option>
+                        @else
+                        <option value="{{ $sector->id }}">{{ $sector->titulo }}</option>
+                        @endif
+                        @endforeach
+                        @endif
+                    </select>
+                </div>
                 <div class="admin-table-wrapper-filters-group ">
                     <label for="busqueda">Atendidas</label>
                     <select name="mostrar_atendidos" class="custom-select mr-3">
                         <option
-                            {{ Session::get(\App\Constants\SessionConstants::ADMIN_SOLICITUDES_FILTER)->mostrar_atendidos == -1 ? 'selected' : '' }}
+                            {{ Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_SOLICITUDES_FILTER)->mostrar_atendidos == -1 ? 'selected' : '' }}
                             value="-1">Todas</option>
                         <option
-                            {{ Session::get(\App\Constants\SessionConstants::ADMIN_SOLICITUDES_FILTER)->mostrar_atendidos == 0 ? 'selected' : ''}}
+                            {{ Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_SOLICITUDES_FILTER)->mostrar_atendidos == 0 ? 'selected' : ''}}
                             value="0">Atendidas</option>
                         <option
-                            {{ Session::get(\App\Constants\SessionConstants::ADMIN_SOLICITUDES_FILTER)->mostrar_atendidos == 1 ? 'selected' : ''}}
+                            {{ Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_SOLICITUDES_FILTER)->mostrar_atendidos == 1 ? 'selected' : ''}}
                             value="1">Sin atender</option>
                     </select>
                 </div>
                 <div class="admin-table-wrapper-filters-group ">
                     <label for="busqueda">Busqueda global</label>
                     <input name="busqueda"
-                        value="{{ Session::get(\App\Constants\SessionConstants::ADMIN_SOLICITUDES_FILTER)->busqueda }}"
+                        value="{{ Session::get(\App\Constants\SessionConstants::ADMIN_LOCALES_SOLICITUDES_FILTER)->busqueda }}"
                         type="search" class="form-control" placeholder="--Sin filtro--">
                 </div>
 
@@ -66,6 +81,8 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Local</th>
+                        <th scope="col">Sector</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Email</th>
                         <th scope="col">Telefono</th>
@@ -79,6 +96,8 @@
                     @foreach($solicitudes as $solicitud)
                     <tr>
                         <td scope="row">{{ $solicitud->id }}</td>
+                        <td>{{ $solicitud->local ? $solicitud->local->titulo : '' }}</td>
+                        <td>{{ $solicitud->local && $solicitud->local->sector ? $solicitud->local->sector->titulo : '' }}</td>
                         <td>{{ $solicitud->nombre }}</td>
                         <td>{{ $solicitud->email }}</td>
                         <td>{{ $solicitud->telefono }}</td>
@@ -92,7 +111,7 @@
                             </div>
                         </td>
                         <td>
-                            <form action="{{ url('/admin/solicitudes/atender/'.$solicitud->id) }}" method="post">
+                            <form action="{{ url('/admin/locales-solicitudes/atender/'.$solicitud->id) }}" method="post">
                                 <button {{ $solicitud->atendido_en ? 'disabled' : '' }}
                                     class="btn btn-primary">Atender</button>
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -108,19 +127,19 @@
             <div class="text-center">
                 <ul class="pagination justify-content-center">
                     <li class="page-item"><a class="page-link"
-                            href="{{ url('/admin/solicitudes/'.$paginacion['pagina_anterior']) }}">Anterior</a></li>
+                            href="{{ url('/admin/locales-solicitudes/'.$paginacion['pagina_anterior']) }}">Anterior</a></li>
                     @foreach($paginacion['paginas'] as $pagina)
                     @if($pagina == $paginacion['pagina'])
                     <li class="page-item active"><a class="page-link"
-                            href="{{ url('/admin/solicitudes/'.$pagina) }}">{{ $pagina }}</a>
+                            href="{{ url('/admin/locales-solicitudes/'.$pagina) }}">{{ $pagina }}</a>
                     </li>
                     @else
                     <li class="page-item"><a class="page-link"
-                            href="{{ url('/admin/solicitudes/'.$pagina) }}">{{ $pagina }}</a></li>
+                            href="{{ url('/admin/locales-solicitudes/'.$pagina) }}">{{ $pagina }}</a></li>
                     @endif
                     @endforeach
                     <li class="page-item"><a class="page-link"
-                            href="{{ url('/admin/solicitudes/'.$paginacion['pagina_siguiente']) }}">Siguiente</a></li>
+                            href="{{ url('/admin/locales-solicitudes/'.$paginacion['pagina_siguiente']) }}">Siguiente</a></li>
                 </ul>
             </div>
             @endif

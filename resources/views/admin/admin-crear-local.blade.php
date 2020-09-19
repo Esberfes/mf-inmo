@@ -37,19 +37,25 @@
                         <input readonly disabled type="text" class="form-control" name="url_amigable">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-3">
                     <div class="form-group">
                         <label for="telefono">Teléfono</label>
                         <input type="text" class="form-control" name="telefono" value="{{ old('telefono') }}">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-3">
                     <div class="form-group">
-                        <label for="precio">Precio</label>
+                        <label for="precio">Precio de compra</label>
                         <input type="number" class="form-control" name="precio" step="0.01" value="{{ old('precio') }}">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="precio">Precio de alquiler</label>
+                        <input type="number" class="form-control" name="precio_alquiler" step="0.01" value="{{ old('precio_alquiler') }}">
+                    </div>
+                </div>
+                <div class="col-3">
                     <div class="form-group">
                         <label for="metros">Metros</label>
                         <input type="number" class="form-control" name="metros" step="0.01" value="{{ old('metros') }}">

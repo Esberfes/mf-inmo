@@ -7,11 +7,11 @@
     hightlight   #EB3E4F
 */
 
-
+.flex-basis-0 { flex-basis: 0;}
 body{font-family: 'Titillium Web', sans-serif !important;background: #F5F5F6; font-display: auto;}
 
 *{box-sizing: border-box;}
-
+select { position: relative;}
 
 /* @HEADER SECTION */
 header {
@@ -51,7 +51,19 @@ aside img {
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
 }
 */
-/* @NAV SECTION */
+.cursor-pointer {cursor: pointer;}
+   .select-wrapper { position: relative;}
+.select-empty::after {
+    content: '\f0b0';
+    font-weight: 900;
+    font-family: "Font Awesome 5 Free";
+    display: block;
+    position: absolute;
+    top: 50%;
+    color: rgba(0,0,0,0.3);
+    left: 5px;
+    transform: translateY(-50%);
+}/* @NAV SECTION */
 nav {
 
 }
@@ -61,13 +73,19 @@ nav {
 }
 .form-search .form-search-input-wrapper, .form-search  .form-search-button-wrapper {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     margin: 0.1rem;
 }
 
-.form-search  .form-search-button-wrapper {
+.form-search  .form-search-button-wrapper label, .form-search .form-search-input-wrapper label {
+    color: #818387;
+    font-size: 0.8rem;
+    margin-left: 3px;
+    margin-bottom: 1px;
+}
+.form-search-button-wrapper {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
 }
 
 .form-order-by {
@@ -175,15 +193,24 @@ main section article.home-article-element .home-article-element-body .home-artic
     width: 100%;
 }
 
-main section article.home-article-element .home-article-element-cost {
-
+ .home-article-element-cost {
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+}
+
+.home-article-element-cost-wrapper{
+    margin: 1rem 0;
+}
+
+.home-article-element-cost small {
+    color: #818387;
+    font-size: 0.8rem;
 }
 
 main section article.home-article-element .home-article-element-dimensioncost {
     margin-top: 1rem;
 }
+
 main section article.home-article-element .home-article-element-title {
     margin-top: 2rem;
     font-weight: bold;
@@ -697,6 +724,8 @@ aside img.lozad.loaded {
     }
     .form-search .form-search-input-wrapper, .form-search .form-search-button-wrapper {
         margin-top: 1rem;
+        display: flex;
+        flex-direction: column;
     }
     .form-search button {
         margin: 1.1rem 0;
@@ -754,7 +783,6 @@ aside img.lozad.loaded {
         text-align: center;
     }
     .form-order-by button {
-        flex: 1;
         display: flex;
         align-items: center;
         justify-content: space-around;

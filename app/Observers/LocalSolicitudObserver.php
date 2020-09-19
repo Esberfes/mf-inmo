@@ -3,22 +3,19 @@
 namespace App\Observers;
 
 use App\Models\Usuario;
-use App\Models\Solicitud;
+use App\Models\LocalSolicitud;
 use Notification;
 use App\Guest;
 use App\Jobs\SendEmail;
 use App\Jobs\SendEmailSolicitudAdmins;
 use App\Notifications\Push;
 
-class SolicitudObserver
+class LocalSolicitudObserver
 {
     /**
-     * Handle the solicitud "created" event.
      *
-     * @param  \App\Solicitud  $solicitud
-     * @return void
      */
-    public function created(Solicitud $solicitud)
+    public function created(LocalSolicitud $solicitud)
     {
         $guests = Guest::whereNotNull('id_user')->get();
 
@@ -51,9 +48,9 @@ class SolicitudObserver
      * @param  \App\Solicitud  $solicitud
      * @return void
      */
-    public function updated(Solicitud $solicitud)
+    public function updated(LocalSolicitud $solicitud)
     {
-        //
+    //
     }
 
     /**
@@ -62,9 +59,9 @@ class SolicitudObserver
      * @param  \App\Solicitud  $solicitud
      * @return void
      */
-    public function deleted(Solicitud $solicitud)
+    public function deleted(LocalSolicitud $solicitud)
     {
-        //
+    //
     }
 
     /**
@@ -73,9 +70,9 @@ class SolicitudObserver
      * @param  \App\Solicitud  $solicitud
      * @return void
      */
-    public function restored(Solicitud $solicitud)
+    public function restored(LocalSolicitud $solicitud)
     {
-        //
+    //
     }
 
     /**
@@ -84,8 +81,8 @@ class SolicitudObserver
      * @param  \App\Solicitud  $solicitud
      * @return void
      */
-    public function forceDeleted(Solicitud $solicitud)
+    public function forceDeleted(LocalSolicitud $solicitud)
     {
-        //
+    //
     }
 }

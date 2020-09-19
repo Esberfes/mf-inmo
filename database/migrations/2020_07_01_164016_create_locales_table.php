@@ -18,7 +18,8 @@ class CreateLocalesTable extends Migration
             $table->string('titulo')->unique();
             $table->string('telefono');
             $table->string('url_amigable')->unique();
-            $table->decimal('precio', 12, 2);
+            $table->decimal('precio', 12, 2)->nullable();
+            $table->decimal('precio_alquiler', 12, 2)->nullable();
             $table->decimal('metros', 12, 2);
             $table->boolean('relevante')->default(0);
             $table->boolean('banner_activo')->default(0);

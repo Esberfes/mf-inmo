@@ -11,6 +11,7 @@ use App\Http\Popos\UserSession;
 use App\Models\Local;
 use App\Models\Sector;
 use App\Models\Poblacion;
+use App\Models\LocalSolicitud;
 use App\Models\Solicitud;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Carbon;
@@ -21,9 +22,9 @@ class UserController extends BaseController
 
     const SESSION_LOCALES_FILTER = 'user-local-filter';
 
-    private $por_pagina = 4;
+    private $por_pagina = 5;
 
-    public function solicitud()
+    public function local_solicitud()
     {
         $data = request()->validate([
             'nombre' => 'required',
@@ -44,8 +45,32 @@ class UserController extends BaseController
             return view('404');
         }
 
-        Solicitud::create([
+        LocalSolicitud::create([
             'id_local' => $data['id_local'],
+            'nombre' => $data['nombre'],
+            'email' => $data['email'],
+            'telefono' => $data['telefono'],
+            'comentario' => $data['comentario']
+        ]);
+
+        return redirect()->back()->with('success', 'Solicitud enviada con éxito');
+    }
+
+    public function solicitud()
+    {
+        $data = request()->validate([
+            'nombre' => 'required',
+            'email' => ['required', 'email'],
+            'telefono' => 'required',
+            'comentario' => ''
+        ], [
+            'nombre.required' => 'El nombre de usuario es obligatorio.',
+            'email.required' => 'El email es obligatorio.',
+            'email.email' => 'El email tiene un formato incorrecto.',
+            'telefono.required' => 'El telefono es un campo obligatorio'
+        ]);
+
+        Solicitud::create([
             'nombre' => $data['nombre'],
             'email' => $data['email'],
             'telefono' => $data['telefono'],
@@ -71,7 +96,8 @@ class UserController extends BaseController
         if (!Session::exists($key)) {
             $user_session = new UserSession(Session::getId(), $request->ip(), Carbon::now(new \DateTimeZone('Europe/Madrid')));
             UserController::save_user_session($user_session);
-        } else {
+        }
+        else {
             $user_session = Session::get($key);
         }
 

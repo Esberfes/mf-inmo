@@ -4,9 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Models\Local;
-use App\Models\Solicitud;
+use App\Models\LocalSolicitud;
 use App\Observers\LocalObserver;
-use App\Observers\SolicitudObserver;
+use App\Observers\LocalSolicitudObserver;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -30,6 +30,6 @@ class AppServiceProvider extends ServiceProvider
     {
         date_default_timezone_set('Europe/Madrid');
         Local::observe(LocalObserver::class);
-        Solicitud::observe(SolicitudObserver::class);
+        LocalSolicitud::observe(LocalSolicitudObserver::class);
     }
 }

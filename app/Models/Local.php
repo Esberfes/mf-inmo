@@ -15,6 +15,7 @@ class Local extends Model
         'url_amigable',
         'telefono',
         'precio',
+        'precio_alquiler',
         'metros',
         'extracto',
         'relevante',

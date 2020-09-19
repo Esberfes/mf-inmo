@@ -31,9 +31,22 @@
                         <div class="home-article-element-title">
                             {{ $local->titulo}}, {{ $local->poblacion->nombre}}
                         </div>
-                        <div class="home-article-element-cost">
-                        {{ $local->precio}}€
+
+                        <div class="home-article-element-cost-wrapper">
+                            @if($local->precio != null)
+                            <div title="Precio de compra" class="home-article-element-cost">
+                                <span>{{ number_format($local->precio, 2, ',', '.') }} €</span>
+                                <small> - Precio de compra</small>
+                            </div>
+                            @endif
+                            @if($local->precio_alquiler != null)
+                            <div title="Precio de alquiler" class="home-article-element-cost">
+                                <span>{{ number_format($local->precio_alquiler, 2, ',', '.') }} € / mes </span>
+                                <small> - Precio de alquiler</small>
+                            </div>
+                            @endif
                         </div>
+
                         <div class="home-article-element-dimensioncost">
                             {{ $local->metros}} m² - {{ $local->sector->titulo}}
                         </div>

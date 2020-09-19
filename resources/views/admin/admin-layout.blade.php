@@ -67,12 +67,10 @@
                     </div>
                 </div>
                 <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownSolicitudes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Solicitudes
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownSolicitudes">
-                        <a class="dropdown-item" href="{{ url('/admin/solicitudes') }}">Listar</a>
-                    </div>
+                    <a class="btn btn-primary" href="{{ url('/admin/locales-solicitudes') }}">Locales Solicitudes</a>
+                </div>
+                <div class="dropdown">
+                    <a class="btn btn-primary" href="{{ url('/admin/solicitudes') }}">Solicitudes</a>
                 </div>
                 <div class="dropdown">
                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownUsuarios" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
