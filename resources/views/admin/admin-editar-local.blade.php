@@ -124,7 +124,7 @@
     <div class="card mb-3">
         <div class="card-header mb-3">Media</div>
         <div class="card-body">
-            <form action="{{ url('/admin/locales/editar/' . $local->id . '/media/principal/') }}" method="POST" enctype="multipart/form-data">
+            <form class="form-imagen" action="{{ url('/admin/locales/editar/' . $local->id . '/media/principal/') }}" method="POST" enctype="multipart/form-data">
                 <div class="file-uploader">
                     <label for="file-upload" class="file-upload">
                         <i class="fas fa-cloud-upload-alt"></i> Principal
@@ -145,7 +145,7 @@
                 </div>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
             </form>
-            <form class="mt-5" action="{{ url('/admin/locales/editar/' . $local->id . '/media/banner/') }}" method="POST" enctype="multipart/form-data">
+            <form class="mt-5 form-imagen" action="{{ url('/admin/locales/editar/' . $local->id . '/media/banner/') }}" method="POST" enctype="multipart/form-data">
                 <div class="file-uploader">
                     <label for="file-upload" class="file-upload">
                         <i class="fas fa-cloud-upload-alt"></i> Banner

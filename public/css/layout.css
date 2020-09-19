@@ -710,6 +710,11 @@ aside img.lozad.loaded {
     display: none;
     background-color: rgba(0,0,0,0.5);
 }
+.form-imagen {
+    border: 1px solid rgba(0,0,0,.125);
+    padding: 0.5rem;
+    border-radius: .25rem;
+}
 @media (max-width:991px) {
     #form-search-wrapper-mask {
         display: none;
