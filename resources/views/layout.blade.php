@@ -84,13 +84,14 @@
         <div class="container">
             <div class="header-wrapper d-flex justify-content-lg-between justify-content-center align-items-center">
                 <div class="d-flex align-items-center">
-                    <a href="{{ url('/') }}"><img width="200px" class="logo" src="{{asset('img/card-mf.jpg')}}" alt="logo-inmobiliaria"></a>
+                    <a href="{{ url('/') }}"><img width="200px" class="logo" src="{{asset('img/logo-mundofranquicia-2020.png')}}" alt="logo-inmobiliaria"></a>
                 </div>
                 <div class=" align-items-center d-lg-flex d-none">
-                    <a href="{{ url('/admin') }}"><i style="font-size:25px; color:#FFFFFF;margin-right: 1.4rem;" class="fas fa-user-lock"></i></a>
+                    <a class="d-none" href="{{ url('/admin') }}"><i class="fas fa-user-lock"></i></a>
                 </div>
             </div>
         </div>
+        <div class="header-footer"></div>
     </header>
 
     <nav class="container form-search-wrapper">
@@ -248,7 +249,7 @@
                         @section('sidebar')
                         <section>
                             <form class="form-solicitud" method="POST" action="{{ url('/solicitud') }}">
-                                <div class="form-solicitud-header"><i class="far fa-id-card"></i><h2>Trabaja con nostros</h2></div>
+                                <div class="form-solicitud-header position-static"><i class="far fa-id-card"></i><h2>Trabaja con nostros</h2></div>
                                 <div class="form-solicitud-body">
                                     <div class="row">
                                         <div class="col-12">
