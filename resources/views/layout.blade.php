@@ -66,10 +66,11 @@
     <link rel="preload" as="font" type="font/woff2" href="{{asset('webfonts/fa-regular-400.woff2')}}" crossorigin>
 
     <!-- Font -->
+    <!--
     <link rel="preload" href="https://fonts.googleapis.com/css?family=Titillium+Web&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&display=swap"></noscript>
-
+    -->
     <link rel="preload" href="{{asset('css/font-awesome.css')}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet" href="{{asset('css/font-awesome.css')}}"></noscript>
