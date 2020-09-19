@@ -44,7 +44,12 @@
             </div>
             <div class="local-article-titulo">
                 <h1>{{ $local->titulo}}, {{ $local->poblacion->nombre}}</h1>
-                <h2>{{ number_format($local->precio, 2, ',', '.') }}€</h2>
+                @if ($local->precio != null)
+                <h2>{{ number_format($local->precio, 2, ',', '.') }} € - Precio de compra</h2>
+                @endif
+                @if ($local->precio_alquiler != null)
+                <h2>{{ number_format($local->precio_alquiler, 2, ',', '.') }} €/mes - Precio de alquiler</h2>
+                @endif
             </div>
 
             <div class="local-article-descripcion mt-3">
@@ -109,22 +114,26 @@
             <div class="row">
                 <div class="col-12">
                     <div class="form-group">
-                        <input required placeholder="Nombre" type="text" class="form-control" name="nombre" value="{{ old('nombre') }}">
+                        <label for="nombre">Nombre</label>
+                        <input required type="text" class="form-control" name="nombre" value="{{ old('nombre') }}">
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="form-group">
-                        <input required placeholder="Email" type="email" class="form-control" name="email" value="{{ old('email') }}">
+                        <label for="email">Email</label>
+                        <input required  type="email" class="form-control" name="email" value="{{ old('email') }}">
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="form-group">
-                        <input required placeholder="Teléfono" type="tel" class="form-control" name="telefono" value="{{ old('telefono') }}">
+                        <label for="nombre">Telefono</label>
+                        <input required type="tel" class="form-control" name="telefono" value="{{ old('telefono') }}">
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="form-group">
-                        <textarea placeholder="Comentario" class="form-control" rows="3" name="comentario">{{ old('comentario') }}</textarea>
+                        <label for="nombre">Comentario</label>
+                        <textarea class="form-control" rows="3" name="comentario">{{ old('comentario') }}</textarea>
                     </div>
                 </div>
                 <div class="col-12">

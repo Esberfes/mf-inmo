@@ -97,7 +97,7 @@ nav {
     margin: 0.1rem;
 }
 
-.form-search  .form-search-button-wrapper label, .form-search .form-search-input-wrapper label {
+.form-search  .form-search-button-wrapper label, .form-search .form-search-input-wrapper label, aside label {
     color: #818387;
     font-size: 0.8rem;
     margin-left: 3px;
@@ -332,7 +332,6 @@ main section .form-solicitud-header {
     margin-bottom: 1rem;
     display: flex;
     align-items: center;
-    position: sticky;
     top: 0;
     z-index: 90;
     background-color: #FFF;

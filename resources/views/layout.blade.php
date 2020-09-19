@@ -82,7 +82,7 @@
         <div class="container">
             <div class="header-wrapper d-flex justify-content-lg-between justify-content-center align-items-center">
                 <div class="d-flex align-items-center">
-                    <a href="{{ url('/') }}"><img width="200px" class="logo" src="{{asset('img/logo-mundofranquicia-2020.png')}}" alt="logo-inmobiliaria"></a>
+                    <a href="{{ url('/') }}"><img width="200px" class="logo" src="{{asset('img/logo-mundofranquicia-2020.png')}}" alt="Ir a la home"></a>
                 </div>
                 <div class=" align-items-center d-lg-flex d-none">
                     <a class="d-none" href="{{ url('/admin') }}"><i class="fas fa-user-lock"></i></a>
@@ -252,22 +252,26 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <input required placeholder="Nombre" type="text" class="form-control" name="nombre" value="{{ old('nombre') }}">
+                                                <label for="nombre">Nombre</label>
+                                                <input required type="text" class="form-control" name="nombre" value="{{ old('nombre') }}">
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <input required placeholder="Email" type="email" class="form-control" name="email" value="{{ old('email') }}">
+                                                <label for="email">Email</label>
+                                                <input required  type="email" class="form-control" name="email" value="{{ old('email') }}">
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <input required placeholder="Teléfono" type="tel" class="form-control" name="telefono" value="{{ old('telefono') }}">
+                                                <label for="nombre">Telefono</label>
+                                                <input required type="tel" class="form-control" name="telefono" value="{{ old('telefono') }}">
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <textarea placeholder="Comentario" class="form-control" rows="3" name="comentario">{{ old('comentario') }}</textarea>
+                                                <label for="nombre">Comentario</label>
+                                                <textarea class="form-control" rows="3" name="comentario">{{ old('comentario') }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -329,16 +333,16 @@
             <div class="footer-links">
                 <div>© 2020</div>
                 <span>|</span>
-                <div> <a target="_blank" href="https://www.mundofranquicia.com/aviso-legal/">Aviso legal</a></div>
+                <div> <a target="_blank" rel="noreferrer" href="https://www.mundofranquicia.com/aviso-legal/">Aviso legal</a></div>
                 <span>|</span>
-                <div> <a target="_blank" href="https://www.mundofranquicia.com/aviso-legal/">Política de privacidad</a>
+                <div> <a target="_blank" rel="noreferrer" href="https://www.mundofranquicia.com/aviso-legal/">Política de privacidad</a>
                 </div>
                 <span>|</span>
-                <div> <a target="_blank" href="https://www.mundofranquicia.com/aviso-legal/">Política de Cookies</a>
+                <div> <a target="_blank" rel="noreferrer"  href="https://www.mundofranquicia.com/aviso-legal/">Política de Cookies</a>
                 </div>
             </div>
             <div class="footer-logos row">
-                <div class="col-lg-2 footer-logo">
+                <div class="col-lg-2 footer-logo text-center">
                     <img alt="logo-20-anos-mundofranquicia" class="lozad" data-src="{{asset('img/footer/logo20anyos.png')}}" alt="">
                 </div>
                 <div class="col-lg-4 footer-logo">
