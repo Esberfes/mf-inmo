@@ -45,7 +45,7 @@
             <div class="local-article-titulo">
                 <h1>{{ $local->titulo}}, {{ $local->poblacion->nombre}}</h1>
                 @if ($local->precio != null)
-                <h2>{{ number_format($local->precio, 2, ',', '.') }} € - Precio de compra</h2>
+                <h2>{{ number_format($local->precio, 2, ',', '.') }} € - Precio de traspaso</h2>
                 @endif
                 @if ($local->precio_alquiler != null)
                 <h2>{{ number_format($local->precio_alquiler, 2, ',', '.') }} €/mes - Precio de alquiler</h2>

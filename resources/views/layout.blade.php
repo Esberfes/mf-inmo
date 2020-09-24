@@ -141,7 +141,7 @@
                         </div>
 
                         <div id="precio" class="col-lg col-12 form-search-input-wrapper">
-                            <label for="precio">Precio máximo compra</label>
+                            <label for="precio">Precio máximo traspaso</label>
                             <div class="select-wrapper">
                                 <select name="precio" class="custom-select">
                                     <option value="none"></option>
@@ -173,7 +173,7 @@
                         </div>
 
                         <div class="col-lg col-12 form-search-input-wrapper">
-                            <label for="precio_alquiler">Filtro compra/alquiler</label>
+                            <label for="precio_alquiler">Filtro traspaso/alquiler</label>
                             <select name="mostrar_compra_alquiler" class="custom-select">
                                 <option {{ $session->mostrar_compra_alquiler == -1 ? 'selected' : '' }} value="-1">Compra y alquiler</option>
                                 <option {{ $session->mostrar_compra_alquiler == 0 ? 'selected' : '' }} value="0">Compra</option>
