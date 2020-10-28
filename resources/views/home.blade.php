@@ -36,7 +36,7 @@
                             @if($local->precio != null)
                             <div title="Precio de compra" class="home-article-element-cost">
                                 <span>{{ number_format($local->precio, 2, ',', '.') }} €</span>
-                                <small> - Precio de compra</small>
+                                <small> - Precio de traspaso</small>
                             </div>
                             @endif
                             @if($local->precio_alquiler != null)

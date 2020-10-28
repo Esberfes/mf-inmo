@@ -175,8 +175,8 @@
                         <div class="col-lg col-12 form-search-input-wrapper">
                             <label for="precio_alquiler">Filtro traspaso/alquiler</label>
                             <select name="mostrar_compra_alquiler" class="custom-select">
-                                <option {{ $session->mostrar_compra_alquiler == -1 ? 'selected' : '' }} value="-1">Compra y alquiler</option>
-                                <option {{ $session->mostrar_compra_alquiler == 0 ? 'selected' : '' }} value="0">Compra</option>
+                                <option {{ $session->mostrar_compra_alquiler == -1 ? 'selected' : '' }} value="-1">Traspaso y alquiler</option>
+                                <option {{ $session->mostrar_compra_alquiler == 0 ? 'selected' : '' }} value="0">Traspaso</option>
                                 <option {{ $session->mostrar_compra_alquiler == 1 ? 'selected' : '' }} value="1">Alquiler</option>
                             </select>
                         </div>
