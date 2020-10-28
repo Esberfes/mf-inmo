@@ -46,7 +46,7 @@
                     </div>
                     <div class="col-3">
                         <div class="form-group">
-                            <label for="precio">Precio de compra</label>
+                            <label for="precio">Precio de traspaso</label>
                             <input type="number" class="form-control" name="precio" step="0.01" value="{{ $local->precio }}">
                         </div>
                     </div>

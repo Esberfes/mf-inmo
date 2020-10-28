@@ -32,7 +32,7 @@ class LocalFilter
         $this->busqueda = $busqueda;
         $this->precio = $precio;
         $this->relevante = -1;
-        $this->activo = 1;
+        $this->activo = -1;
         $this->precio_alquiler = null;
         $this->mostrar_compra_alquiler = -1;
     }

@@ -169,7 +169,7 @@
 
     </form>
 
-    @if(!empty($local->caracteristicas))
+    @if(!empty($local->caracteristicas)  && $local->caracteristicas->count() > 0)
     <article class="mt-3">
         <ul class="list-group">
             <li class="list-group-item active"><i class="fas fa-list"></i> <h2>Caracteristicas</h2></li>
@@ -180,7 +180,7 @@
     </article>
     @endif
 
-    @if(!empty($local->edificios))
+    @if(!empty($local->edificios) && $local->edificios->count() > 0)
     <article class="mt-3">
         <ul class="list-group">
             <li class="list-group-item active"><i class="far fa-building"></i> <h2>Edificio</h2></li>
@@ -191,7 +191,7 @@
     </article>
     @endif
 
-    @if(!empty($local->equipamientos))
+    @if(!empty($local->equipamientos) && $local->equipamientos->count() > 0)
     <article class="mt-3">
         <ul class="list-group">
             <li class="list-group-item active"><i class="fas fa-boxes"></i><h2>Equipamiento</h2></li>
