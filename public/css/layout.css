@@ -40,10 +40,10 @@ header i {
 }
 
 header .header-wrapper {
-    padding: 0rem 1.25rem;
+    padding: 0rem .1rem;
 }
 header  .header-wrapper .logo {
-    margin-left: 0.4rem;
+    margin: 0.6rem 0rem;
 }
 .toast-container {
     display: flex;
@@ -151,6 +151,9 @@ main section article {
 }
 .page-item.active .page-link {
     background-color: #646465 !important;
+}
+.page-item.active a {
+    color: #FFF !important;
 }
 /* @MAIN SECTION - HOME ARTICLE */
 .section-form-search {

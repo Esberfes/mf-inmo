@@ -33,6 +33,6 @@ class SolicitudMailAdmin extends Mailable
     {
         return $this->from(env('MAIL_FROM_ADDRESS', 'info@mundofranquicia.com'), 'mundoFranquicia inmobiliaria')
         ->subject('Nueva solicitud de contacto para ' . $this->solicitud->local->titulo)
-        ->view('mails.solicitud-admin');
+        ->view('mails.solicitud-local-admin');
     }
 }
